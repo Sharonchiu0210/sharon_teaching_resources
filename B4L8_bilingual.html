@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B4 L8 — Problem-Solution</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    background: #F7F4EF;
+    color: #1C1208;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 16px 60px;
+  }
+  .app { width: 100%; max-width: 640px; }
+
+  .progress-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+  .progress-bar { flex: 1; height: 4px; background: #DDD8CE; border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #4A2E10; border-radius: 2px; transition: width 0.4s ease; }
+  .progress-label { font-size: 12px; color: #9C8870; white-space: nowrap; }
+
+  .card { background: white; border-radius: 16px; padding: 32px 28px; border: 1px solid #E8E2D8; }
+
+  .step-tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #9C8870; margin-bottom: 12px; }
+
+  .question { font-size: 18px; font-weight: 600; color: #1C1208; line-height: 1.4; margin-bottom: 4px; }
+  .question-zh { font-size: 13px; color: #9C8870; margin-bottom: 18px; line-height: 1.5; }
+
+  .sub { font-size: 14px; color: #7A6A58; margin-bottom: 20px; line-height: 1.6; }
+  .sub-zh { font-size: 12px; color: #B0A090; display: block; margin-top: 2px; }
+
+  .scenario {
+    background: #F7F4EF;
+    border-left: 3px solid #C4A882;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #3A2A18;
+    margin-bottom: 22px;
+  }
+  .scenario .hint { font-size: 11px; color: #9C8870; font-style: italic; }
+
+  .choices { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .choice-btn {
+    background: white;
+    border: 1.5px solid #DDD8CE;
+    border-radius: 10px;
+    padding: 13px 16px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #1C1208;
+    transition: border-color 0.15s, background 0.15s;
+    line-height: 1.5;
+    font-family: inherit;
+  }
+  .choice-btn .ch-en { font-weight: 600; display: block; }
+  .choice-btn .ch-zh { font-size: 12px; color: #9C8870; display: block; margin-top: 2px; }
+  .choice-btn:hover { border-color: #C4A882; background: #FAF7F2; }
+  .choice-btn.correct { border-color: #5C8A3C; background: #F0F8E8; }
+  .choice-btn.correct .ch-en { color: #2D5018; }
+  .choice-btn.wrong { border-color: #C45A3C; background: #FDF0EC; }
+  .choice-btn.wrong .ch-en { color: #6B2010; }
+  .choice-btn.revealed { border-color: #5C8A3C; background: #F0F8E8; }
+  .choice-btn:disabled { cursor: default; }
+
+  .feedback { display: none; padding: 13px 15px; border-radius: 10px; font-size: 13.5px; line-height: 1.6; margin-bottom: 18px; }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #F0F8E8; color: #2D5018; border: 1px solid #A8D080; }
+  .feedback.no { background: #FDF0EC; color: #6B2010; border: 1px solid #E8A888; }
+  .feedback .fb-en { font-weight: 600; display: block; margin-bottom: 3px; }
+  .feedback .fb-zh { font-size: 12px; opacity: 0.8; }
+
+  .sort-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .sort-item {
+    background: white;
+    border: 1.5px solid #DDD8CE;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13.5px;
+    color: #1C1208;
+    cursor: grab;
+    user-select: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .sort-item:active { cursor: grabbing; opacity: 0.8; }
+  .sort-item .handle { color: #C4A882; font-size: 15px; flex-shrink: 0; margin-top: 2px; }
+  .sort-item .si-en { font-weight: 600; display: block; }
+  .sort-item .si-zh { font-size: 12px; color: #9C8870; display: block; }
+  .sort-item.dragging { opacity: 0.4; border-style: dashed; }
+  .sort-item.over { border-color: #4A2E10; background: #FAF7F2; }
+
+  /* fill frame */
+  .fill-frame { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+  .fill-block {
+    border: 1px solid #E8E2D8;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .fill-block-header {
+    background: #4A2E10;
+    color: #F7F4EF;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .fill-block-header .fh-zh { font-weight: 400; opacity: 0.7; margin-left: 6px; font-size: 11px; }
+  .fill-block-body { padding: 14px; background: #FAF7F2; }
+  .starter {
+    font-size: 13.5px;
+    color: #3A2A18;
+    margin-bottom: 6px;
+    line-height: 1.8;
+  }
+  .starter .hint-zh { font-size: 11px; color: #9C8870; display: block; }
+  .fill-input-inline {
+    border: none;
+    border-bottom: 1.5px solid #C4A882;
+    background: transparent;
+    font-size: 13.5px;
+    color: #1C1208;
+    padding: 1px 4px;
+    width: 160px;
+    outline: none;
+    font-family: inherit;
+  }
+  .fill-input-inline:focus { border-color: #4A2E10; }
+  textarea.fill-area {
+    width: 100%;
+    border: 1.5px solid #DDD8CE;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 13.5px;
+    font-family: inherit;
+    color: #1C1208;
+    resize: vertical;
+    min-height: 72px;
+    outline: none;
+    background: white;
+    line-height: 1.6;
+    margin-top: 6px;
+  }
+  textarea.fill-area:focus { border-color: #4A2E10; }
+
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #4A2E10;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-family: inherit;
+  }
+  .nav-btn:hover { background: #3A2008; }
+  .nav-btn:disabled { background: #DDD8CE; color: #9C8870; cursor: default; }
+  .nav-btn.secondary { background: transparent; color: #7A6A58; border: 1.5px solid #DDD8CE; }
+  .nav-btn.secondary:hover { background: #FAF7F2; }
+  .btn-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+  .completion { text-align: center; padding: 16px 0; }
+  .completion .big { font-size: 48px; margin-bottom: 12px; }
+  .completion h2 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+  .completion p { font-size: 14px; color: #7A6A58; line-height: 1.7; }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+    <div class="progress-label" id="prog-label">0 / 7</div>
+  </div>
+  <div class="card" id="card"></div>
+</div>
+
+<script>
+const STEPS = [
+
+  {
+    type: 'intro',
+    tag: 'B4 L8 · Warm-up',
+    qEn: 'Which problem feels most real to you?',
+    qZh: '哪個問題你最有感？選一個。',
+    subEn: 'Pick one — there\'s no wrong answer.',
+    subZh: '選一個就好，沒有對錯。',
+    choices: [
+      { en: 'Too many students choose science — arts teachers are disappearing.', zh: '理科太熱，文科老師快不夠用了' },
+      { en: 'Low birth rate: many schools may close soon.', zh: '少子化：很多學校快倒了' },
+      { en: 'Phone addiction: avg. high schooler scrolls 6 hrs a day.', zh: '手機成癮：高中生平均每天滑 6 小時' },
+      { en: 'Labor shortage: factories can\'t find enough workers.', zh: '缺工：工廠找不到人' },
+    ],
+    correct: null
+  },
+
+  {
+    type: 'mcq',
+    tag: 'Step 1 of 6 · Structure',
+    qEn: 'How many parts does a problem-solution essay usually have?',
+    qZh: '一篇 problem-solution 文章通常有幾個部分？',
+    subEn: 'Think first, then choose.',
+    subZh: '先想一想，再選。',
+    choices: [
+      { en: '2 parts', zh: '2 個' },
+      { en: '3 parts', zh: '3 個' },
+      { en: '4 parts', zh: '4 個' },
+      { en: '5 parts', zh: '5 個' },
+    ],
+    correct: 2,
+    fb: {
+      ok: { en: 'Correct! The four parts are: Introduction → Negative Impact → Solutions → Conclusion.', zh: '正確！四個部分：介紹問題 → 負面影響 → 解法 → 結論。' },
+      no: { en: 'Not quite. Think about it: you need to introduce the problem, explain its impact, offer solutions, and wrap up.', zh: '再想想。你需要介紹問題、說明影響、提出解法、最後收尾，共四個部分。' }
+    }
+  },
+
+  {
+    type: 'sort',
+    tag: 'Step 2 of 6 · Structure',
+    qEn: 'Put these four parts in the correct order.',
+    qZh: '把四個部分拖成正確的順序。',
+    subEn: 'Drag to reorder. 拖動排列。',
+    items: [
+      { id: 'a', en: '③ Propose solutions', zh: '提出解決方案' },
+      { id: 'b', en: '① Introduce the problem', zh: '介紹問題是什麼' },
+      { id: 'd', en: '④ Conclusion: can it be solved?', zh: '結論：能解決嗎？' },
+      { id: 'c', en: '② Explain the negative impact', zh: '說明問題的負面影響' },
+    ],
+    correctOrder: ['b','c','a','d'],
+    fb: {
+      ok: { en: 'Perfect order! This is the skeleton of every problem-solution essay.', zh: '完全正確！這就是每篇 problem-solution 文章的骨架。' },
+      no: { en: 'Not quite. The correct order: Introduce → Negative Impact → Solutions → Conclusion.', zh: '順序不對。正確是：介紹問題 → 負面影響 → 解法 → 結論。' }
+    }
+  },
+
+  {
+    type: 'mcq',
+    tag: 'Step 3 of 6 · Reading',
+    qEn: 'Read this paragraph. Which part is it?',
+    qZh: '讀這段文字，它屬於哪個部分？',
+    scenario: `Taiwan is <strong>suffering from</strong> a phenomenon called the "science fever." <span class="hint">（suffering from = 飽受……之苦）</span> This occurs when students <strong>overwhelmingly choose</strong> science over arts subjects. In 2015, the trend started to accelerate. By 2023, the proportion of students choosing STEM <strong>had grown to twice as large as</strong> that in 2013. <span class="hint">（twice as large as = 是……的兩倍）</span> As expected, tech companies benefited, but arts programs and their teachers bore the cost.`,
+    choices: [
+      { en: '① Introduction', zh: '介紹問題' },
+      { en: '② Negative Impact', zh: '負面影響' },
+      { en: '③ Solutions', zh: '解法' },
+      { en: '④ Conclusion', zh: '結論' },
+    ],
+    correct: 0,
+    fb: {
+      ok: { en: 'Correct! This paragraph names the problem, explains when it started, and gives data. That\'s exactly what an Introduction does.', zh: '正確！這段說了問題叫什麼、什麼時候開始、有多嚴重。這就是 Introduction 的功能。' },
+      no: { en: 'Look again — this paragraph names the problem and gives data about its growth. That\'s an Introduction, not impact or solutions.', zh: '再看看——這段在介紹問題本身和數據，不是在說誰受傷或怎麼解決。' }
+    }
+  },
+
+  {
+    type: 'mcq',
+    tag: 'Step 4 of 6 · Reading',
+    qEn: 'What about this paragraph?',
+    qZh: '這段呢？屬於哪個部分？',
+    scenario: `<strong>Complaints</strong> about the problem are common. <span class="hint">（complaints = 抱怨、投訴）</span> "These days, I can't fill my English class," said Mr. Chen, a cram school owner. "I used to have 30 students. Now I have three." Residents are also <strong>fed up with</strong> the situation. <span class="hint">（be fed up with = 對……感到厭煩）</span> Some arts teachers have even <strong>been forced to</strong> change careers. Ms. Lin, a history teacher with 12 years of experience, was unable to find a full-time position for two years in a row.`,
+    choices: [
+      { en: '① Introduction', zh: '介紹問題' },
+      { en: '② Negative Impact', zh: '負面影響' },
+      { en: '③ Solutions', zh: '解法' },
+      { en: '④ Conclusion', zh: '結論' },
+    ],
+    correct: 1,
+    fb: {
+      ok: { en: 'Yes! This paragraph shows who is hurt and how — with real names and examples. That\'s Negative Impact.', zh: '對！這段用真實案例說明誰受到傷害。Negative Impact 一定要有受害者和具體例子。' },
+      no: { en: 'Notice the structure: real victims (Mr. Chen, Ms. Lin) + specific examples. This is Negative Impact, not Introduction or Solutions.', zh: '注意：這段有受害者（陳先生、林老師）+ 具體案例。這是 Negative Impact，不是 Introduction 或 Solutions。' }
+    }
+  },
+
+  {
+    type: 'fill',
+    tag: 'Step 5 of 6 · Your Turn',
+    qEn: 'Now write your own. Use the sentence starters below.',
+    qZh: '換你了！用下面的句子開頭，用英文填寫你自己的例子。',
+    subEn: 'Choose any Taiwan social problem you know. Write in English — use the starters to help you.',
+    subZh: '選一個你有感的台灣社會問題，用英文填。句子開頭已幫你寫好了。',
+  },
+
+  {
+    type: 'done'
+  }
+
+];
+
+let current = 0;
+let answered = false;
+let dragSrc = null;
+let fillData = {};
+
+function updateProgress() {
+  const total = STEPS.length - 1;
+  const pct = Math.round((current / total) * 100);
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = current + ' / ' + total;
+}
+
+function render() {
+  updateProgress();
+  const s = STEPS[current];
+  const card = document.getElementById('card');
+  answered = false;
+
+  if (s.type === 'done') {
+    card.innerHTML = `<div class="completion">
+      <div class="big">✓</div>
+      <h2>Well done!</h2>
+      <p>You've learned the four-part structure<br>and practised it with real English sentences.<br><br>
+      <span style="font-size:12px;color:#B0A090;">把 Step 5 的框架帶去下一堂課，<br>會繼續把它寫成完整的文章。</span></p>
+    </div>`;
+    return;
+  }
+
+  let html = `<div class="step-tag">${s.tag}</div>
+    <div class="question">${s.qEn}</div>
+    <div class="question-zh">${s.qZh}</div>`;
+
+  if (s.subEn) {
+    html += `<div class="sub">${s.subEn} <span class="sub-zh">${s.subZh || ''}</span></div>`;
+  }
+
+  if (s.scenario) {
+    html += `<div class="scenario">${s.scenario}</div>`;
+  }
+
+  if (s.type === 'intro' || s.type === 'mcq') {
+    html += `<div class="choices" id="choices">`;
+    s.choices.forEach((c, i) => {
+      html += `<button class="choice-btn" onclick="pick(${i})">
+        <span class="ch-en">${c.en}</span>
+        <span class="ch-zh">${c.zh}</span>
+      </button>`;
+    });
+    html += `</div>`;
+    html += `<div class="feedback" id="fb"></div>`;
+    html += `<div class="btn-row"><button class="nav-btn" id="next-btn" onclick="next()" disabled>Continue →</button></div>`;
+  }
+
+  else if (s.type === 'sort') {
+    html += `<div class="sort-list" id="sort-list">`;
+    const shuffled = [...s.items];
+    shuffled.forEach(item => {
+      html += `<div class="sort-item" draggable="true" data-id="${item.id}">
+        <span class="handle">⠿</span>
+        <span><span class="si-en">${item.en}</span><span class="si-zh">${item.zh}</span></span>
+      </div>`;
+    });
+    html += `</div>`;
+    html += `<div class="feedback" id="fb"></div>`;
+    html += `<div class="btn-row">
+      <button class="nav-btn secondary" onclick="checkSort()">Check order 確認順序</button>
+      <button class="nav-btn hidden" id="next-btn" onclick="next()">Continue →</button>
+    </div>`;
+  }
+
+  else if (s.type === 'fill') {
+    html += `<div class="fill-frame">`;
+
+    html += `<div class="fill-block">
+      <div class="fill-block-header">① Introduction <span class="fh-zh">介紹問題</span></div>
+      <div class="fill-block-body">
+        <div class="starter">
+          <strong>___</strong> is suffering from a phenomenon called <strong>"___"</strong>.
+          <span class="hint-zh">（主詞：台灣 / 年輕人 / 高中生… ｜ 現象名稱）</span>
+        </div>
+        <textarea class="fill-area" id="f_intro" placeholder='e.g. Taiwan is suffering from a phenomenon called "low birth rate."'>${fillData['f_intro']||''}</textarea>
+        <div class="starter" style="margin-top:8px;">
+          This occurs when <strong>___</strong>.
+          <span class="hint-zh">（什麼情況下這個問題會發生？）</span>
+        </div>
+        <textarea class="fill-area" id="f_occurs" placeholder="e.g. This occurs when young couples choose not to have children.">${fillData['f_occurs']||''}</textarea>
+      </div>
+    </div>`;
+
+    html += `<div class="fill-block">
+      <div class="fill-block-header">② Negative Impact <span class="fh-zh">負面影響</span></div>
+      <div class="fill-block-body">
+        <div class="starter">
+          Many <strong>___</strong> are fed up with <strong>___</strong>.
+          <span class="hint-zh">（誰受害？對什麼感到厭煩？）</span>
+        </div>
+        <textarea class="fill-area" id="f_impact1" placeholder="e.g. Many young teachers are fed up with the lack of job opportunities.">${fillData['f_impact1']||''}</textarea>
+        <div class="starter" style="margin-top:8px;">
+          Some <strong>___</strong> have even been forced to <strong>___</strong>.
+          <span class="hint-zh">（更嚴重的後果）</span>
+        </div>
+        <textarea class="fill-area" id="f_impact2" placeholder="e.g. Some arts teachers have even been forced to change careers.">${fillData['f_impact2']||''}</textarea>
+      </div>
+    </div>`;
+
+    html += `<div class="fill-block">
+      <div class="fill-block-header">③ Solutions <span class="fh-zh">解法</span></div>
+      <div class="fill-block-body">
+        <div class="starter">
+          The good news is that <strong>___</strong> are aware of the problem.
+          <span class="hint-zh">（誰意識到這個問題？政府？學校？）</span>
+        </div>
+        <textarea class="fill-area" id="f_sol" placeholder="e.g. The good news is that the government is aware of the problem. They believe that only by offering more subsidies can the situation improve.">${fillData['f_sol']||''}</textarea>
+      </div>
+    </div>`;
+
+    html += `</div>`;
+    html += `<div class="btn-row"><button class="nav-btn" onclick="saveFill()">Done — next step ✓</button></div>`;
+  }
+
+  card.innerHTML = html;
+  if (s.type === 'sort') initDrag();
+}
+
+function pick(i) {
+  if (answered) return;
+  const s = STEPS[current];
+  answered = true;
+  const btns = document.querySelectorAll('.choice-btn');
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById('fb');
+  const nextBtn = document.getElementById('next-btn');
+
+  if (s.type === 'intro') {
+    btns[i].style.borderColor = '#C4A882';
+    btns[i].style.background = '#FAF7F2';
+    nextBtn.disabled = false;
+    return;
+  }
+
+  const isOk = i === s.correct;
+  if (isOk) {
+    btns[i].classList.add('correct');
+    fb.innerHTML = `<span class="fb-en">✓ ${s.fb.ok.en}</span><span class="fb-zh">${s.fb.ok.zh}</span>`;
+    fb.className = 'feedback show ok';
+  } else {
+    btns[i].classList.add('wrong');
+    btns[s.correct].classList.add('revealed');
+    fb.innerHTML = `<span class="fb-en">✗ ${s.fb.no.en}</span><span class="fb-zh">${s.fb.no.zh}</span>`;
+    fb.className = 'feedback show no';
+  }
+  nextBtn.disabled = false;
+}
+
+function checkSort() {
+  const list = document.getElementById('sort-list');
+  const order = [...list.querySelectorAll('.sort-item')].map(el => el.dataset.id);
+  const s = STEPS[current];
+  const ok = JSON.stringify(order) === JSON.stringify(s.correctOrder);
+  const fb = document.getElementById('fb');
+  const nextBtn = document.getElementById('next-btn');
+  if (ok) {
+    fb.innerHTML = `<span class="fb-en">✓ ${s.fb.ok.en}</span><span class="fb-zh">${s.fb.ok.zh}</span>`;
+    fb.className = 'feedback show ok';
+    nextBtn.classList.remove('hidden');
+    document.querySelector('.nav-btn.secondary').disabled = true;
+  } else {
+    fb.innerHTML = `<span class="fb-en">✗ ${s.fb.no.en}</span><span class="fb-zh">${s.fb.no.zh}</span>`;
+    fb.className = 'feedback show no';
+  }
+}
+
+function saveFill() {
+  ['f_intro','f_occurs','f_impact1','f_impact2','f_sol'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) fillData[id] = el.value;
+  });
+  next();
+}
+
+function next() {
+  if (current < STEPS.length - 1) {
+    current++;
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function initDrag() {
+  const list = document.getElementById('sort-list');
+  list.querySelectorAll('.sort-item').forEach(item => {
+    item.addEventListener('dragstart', e => { dragSrc = item; item.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; });
+    item.addEventListener('dragend', () => { item.classList.remove('dragging'); list.querySelectorAll('.sort-item').forEach(i => i.classList.remove('over')); });
+    item.addEventListener('dragover', e => { e.preventDefault(); list.querySelectorAll('.sort-item').forEach(i => i.classList.remove('over')); if (item !== dragSrc) item.classList.add('over'); });
+    item.addEventListener('drop', e => {
+      e.preventDefault();
+      if (dragSrc && item !== dragSrc) {
+        const all = [...list.querySelectorAll('.sort-item')];
+        const si = all.indexOf(dragSrc), ti = all.indexOf(item);
+        list.insertBefore(dragSrc, si < ti ? item.nextSibling : item);
+      }
+      list.querySelectorAll('.sort-item').forEach(i => i.classList.remove('over'));
+    });
+  });
+}
+
+render();
+</script>
+</body>
+</html>
