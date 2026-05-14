@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>115學測作文練習</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    background: #F7F4EF;
+    color: #1C1208;
+    min-height: 100vh;
+    padding: 24px 16px 60px;
+  }
+  .app { max-width: 480px; margin: 0 auto; }
+
+  /* progress */
+  .progress-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+  .progress-bar { flex: 1; height: 4px; background: #DDD8CE; border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #4A2E10; border-radius: 2px; transition: width 0.4s ease; }
+  .progress-label { font-size: 12px; color: #9C8870; white-space: nowrap; }
+
+  /* page title */
+  .page-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #9C8870; margin-bottom: 6px; }
+  .page-title { font-size: 20px; font-weight: 700; color: #1C1208; margin-bottom: 4px; }
+  .page-title-zh { font-size: 13px; color: #9C8870; margin-bottom: 20px; }
+
+  /* flip card */
+  .flip-wrap { perspective: 1000px; margin-bottom: 20px; }
+  .flip-inner {
+    position: relative;
+    width: 100%;
+    min-height: 180px;
+    transition: transform 0.5s ease;
+    transform-style: preserve-3d;
+  }
+  .flip-inner.flipped { transform: rotateY(180deg); }
+  .flip-front, .flip-back {
+    position: absolute;
+    width: 100%;
+    min-height: 180px;
+    border-radius: 14px;
+    padding: 20px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .flip-front {
+    background: #4A2E10;
+    color: #F7F4EF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+  }
+  .flip-front .card-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #C4A882; margin-bottom: 10px; }
+  .flip-front .card-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  .flip-front .card-zh { font-size: 13px; color: #C4A882; margin-bottom: 16px; }
+  .flip-front .tap-hint { font-size: 11px; color: #A0826A; }
+
+  .flip-back {
+    background: #FAF7F2;
+    border: 1.5px solid #E8E2D8;
+    transform: rotateY(180deg);
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .flip-back .back-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #9C8870; margin-bottom: 12px; }
+
+  /* card content height fix */
+  .flip-wrap { perspective: 1000px; margin-bottom: 20px; }
+  .flip-inner { position: relative; transition: transform 0.5s ease; transform-style: preserve-3d; }
+  .flip-front, .flip-back { position: relative; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 14px; padding: 20px; }
+  .flip-inner { display: grid; }
+  .flip-inner > * { grid-area: 1/1; }
+  .flip-back { transform: rotateY(180deg); }
+
+  /* expression list */
+  .exp-section { margin-bottom: 14px; }
+  .exp-section-title { font-size: 11px; font-weight: 700; color: #4A2E10; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .exp-item { font-size: 13px; line-height: 1.7; color: #3A2A18; padding: 5px 0; border-bottom: 1px solid #EEE8E0; }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-item .en { font-weight: 600; display: block; }
+  .exp-item .zh { font-size: 11px; color: #9C8870; display: block; }
+  .exp-item .eg { font-size: 11.5px; color: #6B8A4A; font-style: italic; display: block; margin-top: 2px; }
+
+  /* demo text (page 2) */
+  .demo-box {
+    background: #FAF7F2;
+    border: 1.5px solid #E8E2D8;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .demo-label { font-size: 11px; font-weight: 700; color: #9C8870; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+  .demo-text { font-size: 14px; line-height: 1.9; color: #2A1A08; }
+  .demo-text .hl { background: #FFF0D0; border-radius: 3px; padding: 0 2px; }
+
+  /* write area */
+  .write-box { background: white; border: 1.5px solid #E8E2D8; border-radius: 14px; padding: 18px; margin-bottom: 20px; }
+  .write-label { font-size: 11px; font-weight: 700; color: #9C8870; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+  .write-label-zh { font-size: 12px; color: #B0A090; margin-bottom: 12px; }
+  textarea {
+    width: 100%;
+    border: 1px solid #E0D8CC;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #1C1208;
+    resize: vertical;
+    min-height: 120px;
+    outline: none;
+    background: #FDFBF8;
+    line-height: 1.7;
+  }
+  textarea:focus { border-color: #4A2E10; }
+  .word-count { font-size: 11px; color: #B0A090; text-align: right; margin-top: 4px; }
+
+  /* full essay (page 4) */
+  .essay-box {
+    background: white;
+    border: 1.5px solid #E8E2D8;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .essay-label { font-size: 11px; font-weight: 700; color: #9C8870; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+  .essay-para { font-size: 14px; line-height: 1.9; color: #2A1A08; margin-bottom: 16px; }
+  .essay-para:last-child { margin-bottom: 0; }
+  .essay-empty { font-size: 13px; color: #C0B0A0; font-style: italic; }
+
+  /* nav */
+  .nav-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #4A2E10; color: white; border: none;
+    border-radius: 10px; padding: 13px 22px;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    transition: background 0.15s; font-family: inherit; width: 100%;
+    justify-content: center; margin-bottom: 10px;
+  }
+  .nav-btn:hover { background: #3A2008; }
+  .nav-btn.secondary {
+    background: transparent; color: #7A6A58;
+    border: 1.5px solid #DDD8CE;
+  }
+  .nav-btn.secondary:hover { background: #FAF7F2; }
+
+  .copy-msg { font-size: 12px; color: #6B8A4A; text-align: center; margin-top: 6px; display: none; }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:25%"></div></div>
+    <div class="progress-label" id="prog-label">1 / 4</div>
+  </div>
+
+  <div id="pages">
+
+    <!-- ══ PAGE 1 ══ -->
+    <div id="page1">
+      <div class="page-tag">Part 1 of 4 · First Paragraph</div>
+      <div class="page-title">Describe the Phenomenon</div>
+      <div class="page-title-zh">描述現象——圖片在說什麼？</div>
+
+      <div class="flip-wrap">
+        <div class="flip-inner" id="card1">
+          <div class="flip-front" onclick="flip('card1')">
+            <div class="card-label">Think First 寫之前先想想</div>
+            <div style="text-align:center; width:100%; margin-bottom:14px;">
+              <div style="font-size:14px; line-height:2.2; color:#F7F4EF;">
+                What do you see in the pictures?<br>
+                What are people doing with their pets?<br>
+                How do people treat their pets now?<br>
+                How is this different from the past?
+              </div>
+            </div>
+            <div class="tap-hint">👆 點我翻開看片語</div>
+          </div>
+          <div class="flip-back" onclick="flip('card1')">
+            <div class="back-label">片語參考 · Key Phrases</div>
+            <div class="exp-item"><span class="en">have sprung up</span><span class="zh">大量湧現</span></div>
+            <div class="exp-item"><span class="en">increasingly common</span><span class="zh">越來越普遍</span></div>
+            <div class="exp-item"><span class="en">be treated as</span><span class="zh">被視為</span></div>
+            <div class="exp-item"><span class="en">play a role in</span><span class="zh">在……扮演角色</span></div>
+            <div class="exp-item"><span class="en">not only ... but also</span><span class="zh">不只……也……</span></div>
+            <div class="exp-item"><span class="en">no longer simply</span><span class="zh">不再只是</span></div>
+            <div class="exp-item"><span class="en">as shown in the pictures</span><span class="zh">如圖所示</span></div>
+            <div style="text-align:center; margin-top:12px; font-size:11px; color:#B0A090;">👆 點我翻回</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="write-box">
+        <div class="write-label">Your Writing</div>
+        <div class="write-label-zh">第一段：描述圖片中呈現的現象（用英文寫）</div>
+        <textarea id="w1" placeholder="In recent years, keeping pets has become increasingly common in Taiwan. As shown in the pictures, pets are no longer simply animals; they have become..." oninput="countWords('w1','wc1')"></textarea>
+        <div class="word-count" id="wc1">0 words</div>
+      </div>
+
+      <button class="nav-btn" onclick="goTo(2)">Next → Reasons 原因</button>
+    </div>
+
+    <!-- ══ PAGE 2 ══ -->
+    <div id="page2" class="hidden">
+      <div class="page-tag">Part 2 of 4 · Second Paragraph (1/2)</div>
+      <div class="page-title">Reasons</div>
+      <div class="page-title-zh">原因——為什麼會這樣？</div>
+
+      <div class="demo-box">
+        <div class="demo-label">📖 示範句 — 直接參考，不用自己寫這段</div>
+        <div class="demo-text">
+          There are several reasons why pets have taken on such an important role in people's lives.
+          <span class="hl">To begin with</span>, as Taiwan's birth rate continues to decline, many couples choose to raise pets instead of having children, treating them as substitutes for family members.
+          <span class="hl">Furthermore</span>, in an increasingly fast-paced and stressful society, pets provide emotional comfort and companionship that many people find difficult to obtain elsewhere.
+          <span class="hl">In addition</span>, the rise of social media has made it easier for pet owners to share their experiences, which has further promoted the culture of pet ownership among younger generations.
+        </div>
+      </div>
+
+      <button class="nav-btn" onclick="goTo(3)">Next → Effects 影響</button>
+      <button class="nav-btn secondary" onclick="goTo(1)">← Back</button>
+    </div>
+
+    <!-- ══ PAGE 3 ══ -->
+    <div id="page3" class="hidden">
+      <div class="page-tag">Part 3 of 4 · Second Paragraph (2/2)</div>
+      <div class="page-title">Effects</div>
+      <div class="page-title-zh">影響——這帶來什麼結果？</div>
+
+      <div class="flip-wrap">
+        <div class="flip-inner" id="card3">
+          <div class="flip-front" onclick="flip('card3')">
+            <div class="card-label">Think First 寫之前先想想</div>
+            <div style="text-align:center; width:100%; margin-bottom:14px;">
+              <div style="font-size:14px; line-height:2.2; color:#F7F4EF;">
+                Is this trend good or bad?<br>
+                Who benefits? Who suffers?<br>
+                What problems can this cause?<br>
+                How can we solve it?
+              </div>
+            </div>
+            <div class="tap-hint">👆 點我翻開看片語</div>
+          </div>
+          <div class="flip-back" onclick="flip('card3')">
+            <div class="back-label">片語參考 · Key Phrases</div>
+            <div class="exp-item"><span class="en">have a positive / negative impact on</span><span class="zh">對……產生正/負面影響</span></div>
+            <div class="exp-item"><span class="en">result in</span><span class="zh">導致；造成</span></div>
+            <div class="exp-item"><span class="en">be fed up with</span><span class="zh">對……感到厭煩</span></div>
+            <div class="exp-item"><span class="en">on the one hand ... on the other hand</span><span class="zh">一方面……另一方面</span></div>
+            <div class="exp-item"><span class="en">strike a balance between A and B</span><span class="zh">在A和B之間取得平衡</span></div>
+            <div class="exp-item"><span class="en">only by ... can ...</span><span class="zh">只有透過……才能……</span></div>
+            <div class="exp-item"><span class="en">strive to</span><span class="zh">努力去做</span></div>
+            <div style="text-align:center; margin-top:12px; font-size:11px; color:#B0A090;">👆 點我翻回</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="write-box">
+        <div class="write-label">Your Writing</div>
+        <div class="write-label-zh">影響的部分（接在示範句後面，用英文寫）</div>
+        <textarea id="w3" placeholder="This trend has had both positive and negative effects. On the one hand, ..." oninput="countWords('w3','wc3')"></textarea>
+        <div class="word-count" id="wc3">0 words</div>
+      </div>
+
+      <button class="nav-btn" onclick="goTo(4)">See My Essay → 看完整文章</button>
+      <button class="nav-btn secondary" onclick="goTo(2)">← Back</button>
+    </div>
+
+    <!-- ══ PAGE 4 ══ -->
+    <div id="page4" class="hidden">
+      <div class="page-tag">Part 4 of 4 · Full Essay</div>
+      <div class="page-title">Your Complete Essay</div>
+      <div class="page-title-zh">你的完整作文</div>
+
+      <div class="essay-box">
+        <div class="essay-label">第一段 · Paragraph 1 — Phenomenon</div>
+        <div class="essay-para" id="ep1"><span class="essay-empty">（你在第一頁寫的內容會出現在這裡）</span></div>
+      </div>
+
+      <div class="essay-box">
+        <div class="essay-label">第二段 · Paragraph 2 — Reasons</div>
+        <div class="essay-para" id="ep2">There are several reasons why pets have taken on such an important role in people's lives. To begin with, as Taiwan's birth rate continues to decline, many couples choose to raise pets instead of having children, treating them as substitutes for family members. Furthermore, in an increasingly fast-paced and stressful society, pets provide emotional comfort and companionship that many people find difficult to obtain elsewhere. In addition, the rise of social media has made it easier for pet owners to share their experiences, which has further promoted the culture of pet ownership among younger generations.</div>
+      </div>
+
+      <div class="essay-box">
+        <div class="essay-label">第二段（續）· Paragraph 2 — Effects</div>
+        <div class="essay-para" id="ep3"><span class="essay-empty">（你在第三頁寫的內容會出現在這裡）</span></div>
+      </div>
+
+      <button class="nav-btn" onclick="copyEssay()" style="background:#5C7A3C;">📋 Copy Essay 複製全文</button>
+      <div class="copy-msg" id="copy-msg">✓ 已複製到剪貼簿！</div>
+      <button class="nav-btn secondary" onclick="goTo(3)">← Back to Edit</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let currentPage = 1;
+
+function goTo(n) {
+  if (n === 4) buildEssay();
+  document.getElementById('page' + currentPage).classList.add('hidden');
+  document.getElementById('page' + n).classList.remove('hidden');
+  currentPage = n;
+  document.getElementById('prog').style.width = (n * 25) + '%';
+  document.getElementById('prog-label').textContent = n + ' / 4';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function flip(id) {
+  document.getElementById(id).classList.toggle('flipped');
+}
+
+function countWords(taId, wcId) {
+  const text = document.getElementById(taId).value.trim();
+  const count = text ? text.split(/\s+/).length : 0;
+  document.getElementById(wcId).textContent = count + ' word' + (count !== 1 ? 's' : '');
+}
+
+function buildEssay() {
+  const p1 = document.getElementById('w1').value.trim();
+  const p3 = document.getElementById('w3').value.trim();
+
+  const ep1 = document.getElementById('ep1');
+  const ep3 = document.getElementById('ep3');
+
+  ep1.innerHTML = p1 || '<span class="essay-empty">（第一頁還沒有填內容）</span>';
+  ep3.innerHTML = p3 || '<span class="essay-empty">（第三頁還沒有填內容）</span>';
+}
+
+function copyEssay() {
+  const p1 = document.getElementById('w1').value.trim();
+  const p2 = `There are several reasons why pets have taken on such an important role in people's lives. To begin with, as Taiwan's birth rate continues to decline, many couples choose to raise pets instead of having children, treating them as substitutes for family members. Furthermore, in an increasingly fast-paced and stressful society, pets provide emotional comfort and companionship that many people find difficult to obtain elsewhere. In addition, the rise of social media has made it easier for pet owners to share their experiences, which has further promoted the culture of pet ownership among younger generations.`;
+  const p3 = document.getElementById('w3').value.trim();
+
+  const full = [p1, p2, p3].filter(Boolean).join('\n\n');
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(full).then(() => {
+      const msg = document.getElementById('copy-msg');
+      msg.style.display = 'block';
+      setTimeout(() => msg.style.display = 'none', 2500);
+    });
+  }
+}
+</script>
+</body>
+</html>
