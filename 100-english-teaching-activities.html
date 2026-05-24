@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>100 個課堂英語教學活動資料庫 · AI 時代版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+TC:wght@400;500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f1ea;
+    --bg-soft: #efe7dc;
+    --paper: #fbf7f1;
+    --ink: #3a2e26;
+    --ink-soft: #6b5a4e;
+    --ink-mute: #9c8a7c;
+    --accent: #8b5e3c;
+    --accent-soft: #c89b7b;
+    --line: #d9cdbf;
+    --tag-bg: #ece2d3;
+    --tag-ink: #6b5a4e;
+    --highlight: #b87b4a;
+    --ai-bg: #e8ddc8;
+    --ai-ink: #6b4a2c;
+    --shadow: 0 1px 2px rgba(58, 46, 38, 0.04), 0 8px 24px rgba(58, 46, 38, 0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans TC', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle at 20% 30%, rgba(139, 94, 60, 0.03) 0%, transparent 40%),
+                      radial-gradient(circle at 80% 70%, rgba(184, 123, 74, 0.02) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { position: relative; z-index: 1; }
+
+  header {
+    padding: 80px 24px 48px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+  }
+
+  .eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 500;
+    font-size: clamp(28px, 5vw, 44px);
+    color: var(--ink);
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.85;
+  }
+
+  .meta {
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--ink-mute);
+    letter-spacing: 0.05em;
+  }
+
+  .meta span::before { content: '·'; margin-right: 10px; color: var(--accent-soft); }
+  .meta span:first-child::before { content: ''; margin: 0; }
+
+  .controls {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--line);
+    padding: 20px 24px;
+    backdrop-filter: blur(8px);
+    background: rgba(246, 241, 234, 0.95);
+  }
+
+  .controls-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .search-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .search-box {
+    flex: 1;
+    min-width: 240px;
+    position: relative;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    transition: border-color 0.2s;
+  }
+
+  .search-box input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .search-box::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid var(--ink-mute);
+    border-radius: 50%;
+  }
+
+  .search-box::after {
+    content: '';
+    position: absolute;
+    left: 27px;
+    top: 60%;
+    width: 8px;
+    height: 1.5px;
+    background: var(--ink-mute);
+    transform: rotate(45deg);
+  }
+
+  .count {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--ink-mute);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .count strong {
+    font-weight: 500;
+    color: var(--accent);
+    font-size: 18px;
+  }
+
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter-label {
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+
+  .chip {
+    padding: 6px 14px;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .chip:hover { border-color: var(--accent-soft); color: var(--ink); }
+
+  .chip.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .chip.ai-chip {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .chip.ai-chip.active {
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent);
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 28px 26px 24px;
+    position: relative;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .card.ai-card {
+    background: linear-gradient(135deg, var(--paper) 0%, #f9f1e3 100%);
+    border-color: #d4c3a8;
+  }
+
+  .card:hover {
+    border-color: var(--accent-soft);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+
+  .card-num {
+    position: absolute;
+    top: 24px;
+    right: 26px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--accent-soft);
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .ai-badge {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: var(--ai-ink);
+    background: var(--ai-bg);
+    padding: 2px 8px;
+    border-radius: 100px;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .card-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    padding-right: 50px;
+  }
+
+  .card-zh {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 15px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+    padding-right: 50px;
+  }
+
+  .divider {
+    width: 24px;
+    height: 1px;
+    background: var(--accent-soft);
+    margin-bottom: 16px;
+  }
+
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    text-transform: lowercase;
+  }
+
+  .how {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .focus-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+
+  .focus-tag {
+    font-size: 11.5px;
+    color: var(--tag-ink);
+    background: var(--tag-bg);
+    padding: 3px 9px;
+    border-radius: 2px;
+    letter-spacing: 0.03em;
+  }
+
+  .english-app {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line);
+  }
+
+  .english-app .section-label {
+    color: var(--highlight);
+  }
+
+  .english-app p {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  .meta-mini {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    color: var(--ink-mute);
+    font-style: italic;
+    letter-spacing: 0.05em;
+  }
+
+  .meta-mini span::before { content: '· '; color: var(--accent-soft); }
+  .meta-mini span:first-child::before { content: ''; }
+
+  .empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 80px 24px;
+    color: var(--ink-mute);
+  }
+
+  .empty p:first-child {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 48px 24px;
+    text-align: center;
+    background: var(--paper);
+  }
+
+  footer p {
+    font-size: 13px;
+    color: var(--ink-mute);
+    line-height: 1.85;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  footer .principle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    margin-top: 12px;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  @media (max-width: 640px) {
+    header { padding: 60px 20px 36px; }
+    main { padding: 28px 16px 60px; }
+    .grid { grid-template-columns: 1fr; gap: 16px; }
+    .card { padding: 24px 22px 22px; }
+    .card-num { font-size: 24px; }
+    .card-en { font-size: 20px; }
+    .meta { gap: 20px; }
+    .filter-row { gap: 6px; }
+    .chip { padding: 5px 12px; font-size: 12.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">A Resource for English Teachers</div>
+  <h1>100 個課堂英語教學活動<br>實體 × AI 時代版</h1>
+  <p class="subtitle">前半部是不需要 AI 的實體互動活動，後半部是 AI 時代的英語教學設計。<br>每個活動都附上玩法、學習重點與英文科應用建議，可直接帶到高中課堂。</p>
+  <div class="meta">
+    <span>100 Activities</span>
+    <span>For High School English</span>
+    <span>Searchable &amp; Filterable</span>
+  </div>
+</header>
+
+<section class="controls">
+  <div class="controls-inner">
+    <div class="search-row">
+      <div class="search-box">
+        <input type="text" id="search" placeholder="搜尋活動名稱、技能、應用場景…">
+      </div>
+      <div class="count"><strong id="count">100</strong> / 100</div>
+    </div>
+    <div class="filter-row" id="type-filters">
+      <span class="filter-label">類型</span>
+      <button class="chip active" data-type="all">全部</button>
+      <button class="chip" data-type="physical">實體互動</button>
+      <button class="chip ai-chip" data-type="ai">AI 整合</button>
+    </div>
+    <div class="filter-row" id="skill-filters">
+      <span class="filter-label">技能</span>
+      <button class="chip active" data-filter="all">全部</button>
+      <button class="chip" data-filter="vocabulary">單字</button>
+      <button class="chip" data-filter="speaking">口說</button>
+      <button class="chip" data-filter="listening">聽力</button>
+      <button class="chip" data-filter="reading">閱讀</button>
+      <button class="chip" data-filter="writing">寫作</button>
+      <button class="chip" data-filter="grammar">文法</button>
+      <button class="chip" data-filter="review">複習</button>
+      <button class="chip" data-filter="critical">思辨</button>
+      <button class="chip" data-filter="sel">內在覺察</button>
+    </div>
+    <div class="filter-row" id="scene-filters">
+      <span class="filter-label">場景</span>
+      <button class="chip active" data-scene="all">全部</button>
+      <button class="chip" data-scene="warmup">課前暖身</button>
+      <button class="chip" data-scene="main">主課活動</button>
+      <button class="chip" data-scene="review">段考複習</button>
+      <button class="chip" data-scene="closing">下課總結</button>
+      <button class="chip" data-scene="homework">課後延伸</button>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  <p>此資料庫專為高中英文老師整理，可自由使用、分享、改編。</p>
+  <p class="principle">AI 是學生的檢查鏡，不是答案機。</p>
+</footer>
+
+</div>
+
+<script>
+const activities = [
+  // ===== 實體互動類（48 個）=====
+  {n:1, en:"Vocabulary Relay", zh:"詞彙接力賽", how:"學生跑去拿單字卡，再向隊友用英文解釋。", focus:["單字","口說","合作"], skills:["vocabulary","speaking"], scenes:["main","review"], time:"15-20 min", level:"全程度", app:"段考前字彙複習很適合。可指定：只能用英文解釋、必須用到指定句型（It is something that... / It is used for...）。"},
+  {n:2, en:"Gallery Walk", zh:"畫廊走讀", how:"學生分組製作海報後，輪流走讀其他組的作品並留言。", focus:["閱讀","觀察","討論"], skills:["reading","writing"], scenes:["main"], time:"20-25 min", level:"中高", app:"議題式閱讀（性別、AI、環境）後特別合適。每位學生在便利貼上留下一句英文 reflection 給其他組。"},
+  {n:3, en:"Find Someone Who", zh:"尋找符合的人", how:"學生互相提問，找出符合線索的同學。", focus:["口說","聆聽","社交"], skills:["speaking","listening","grammar"], scenes:["warmup","main"], time:"10-15 min", level:"全程度", app:"練習現在完成式（Have you ever...?）、頻率副詞、條件句。也適合開學第一週讓學生彼此認識。"},
+  {n:4, en:"Four Corners", zh:"四角站位", how:"學生移動到不同角落表達答案或立場。", focus:["判斷","移動","討論"], skills:["speaking","critical"], scenes:["warmup","main"], time:"10-15 min", level:"全程度", app:"議題快速暖身。例如 AI is helpful / harmful / both / not sure，學生站位後請代表用英文簡短說明理由。"},
+  {n:5, en:"Human Sentence Build", zh:"人體造句", how:"學生拿著單字卡，排出完整句子。", focus:["句型","文法","合作"], skills:["grammar","vocabulary"], scenes:["main","review"], time:"10-15 min", level:"初中", app:"教 word order、子句、被動式特別有感。體育班動態活動的首選，把抽象文法變成身體動作。"},
+  {n:6, en:"Flashcard Slap", zh:"搶答拍卡", how:"兩位學生聽提示後，搶拍正確字卡。", focus:["快速反應","聆聽","單字"], skills:["vocabulary","listening"], scenes:["warmup","review"], time:"5-10 min", level:"全程度", app:"段考前單字複習必備。提示可用中文、英文定義、例句挖空、同義／反義詞。"},
+  {n:7, en:"Running Dictation", zh:"跑跑聽寫", how:"一位學生看牆上的句子後跑回來口述，另一位寫下。", focus:["聆聽","記憶","拼字"], skills:["listening","writing"], scenes:["main"], time:"15-20 min", level:"中高", app:"課文重點句的記憶與拼寫練習。也能改為 chunks dictation，把課文重要片語拆段貼牆。"},
+  {n:8, en:"Board Race", zh:"白板接力賽", how:"小組接力到白板寫下正確答案。", focus:["複習","速度","合作"], skills:["vocabulary","review"], scenes:["review"], time:"10-15 min", level:"全程度", app:"段考前複習單字、不規則動詞變化、片語接龍都好用。可指定主題增加挑戰。"},
+  {n:9, en:"Mystery Bag", zh:"觸覺描述練習", how:"學生摸袋中物品，用英文描述質感與形狀讓同學猜。", focus:["口說","感官描述","單字"], skills:["speaking","vocabulary"], scenes:["main"], time:"10-15 min", level:"中高", app:"練習形容詞與 It feels like... / It might be... 句型。也可放與課文有關的物件，引導文本連結。"},
+  {n:10, en:"Hot Seat", zh:"猜詞熱座", how:"一位學生坐在熱座，隊友給提示讓其猜詞。", focus:["口說","推理","合作"], skills:["speaking","vocabulary"], scenes:["main","review"], time:"15-20 min", level:"中高", app:"段考字彙統整復習的招牌。規則：不能說中文、不能用該字字根、必須用完整句子提示。"},
+  {n:11, en:"Question Toss", zh:"問題拋球", how:"學生互拋軟球，回答接到的問題。", focus:["口說","聆聽","輪流"], skills:["speaking","listening"], scenes:["warmup"], time:"10-15 min", level:"全程度", app:"開學第一週或新單元暖身。問題可從課文延伸（What would you do if you were the dabbawala?）。"},
+  {n:12, en:"Stand Up If…", zh:"如果符合就站起來", how:"當句子符合自己時，學生站起來。", focus:["聆聽","表達","班級互動"], skills:["listening","sel"], scenes:["warmup"], time:"5-10 min", level:"全程度", app:"練習條件句、頻率副詞，順便了解班級。例：Stand up if you have ever used AI to write homework. 之後接小討論。"},
+  {n:13, en:"Geometry Word Hunt", zh:"教室物件單字尋寶", how:"學生找出教室中可以用指定英文描述的物品。", focus:["觀察","單字","造句"], skills:["vocabulary","speaking"], scenes:["warmup","main"], time:"10-15 min", level:"初中", app:"練習介系詞（on, under, between）、形容詞、there is/are 句型。也可指定字根字尾來找。"},
+  {n:14, en:"Emotion Role Play", zh:"情緒角色扮演", how:"學生抽到情緒卡後表演，他人用英文猜並造句。", focus:["情緒詞","口說","創意"], skills:["vocabulary","speaking","sel"], scenes:["warmup"], time:"10-15 min", level:"全程度", app:"從基本情緒詞進階到細緻詞（frustrated, overwhelmed, grateful, conflicted）。連結 In My Inner Home 系列，從身體先記住字。"},
+  {n:15, en:"Emotion Charades", zh:"情緒猜猜看", how:"學生表演情緒，其他同學用英文猜並描述情境。", focus:["情緒","同理","表達"], skills:["vocabulary","sel"], scenes:["warmup"], time:"10-15 min", level:"全程度", app:"延伸練習：猜到後請學生說出 I felt this way when... 連結個人經驗。也可成對表演兩個人的互動情緒。"},
+  {n:16, en:"Compliment Circle", zh:"讚美圓圈", how:"學生圍成圈，對同學說一句具體的英文稱讚。", focus:["善意","口說","班級氛圍"], skills:["speaking","sel"], scenes:["closing"], time:"10-15 min", level:"全程度", app:"練習 You're + adj.、I appreciate that you... 句型。學期末或合作專案結束後特別合適。"},
+  {n:17, en:"Team Puzzle Race", zh:"課文段落拼圖", how:"把課文段落剪成拼圖，小組需先讀懂內容才能拼對順序。", focus:["閱讀","邏輯","合作"], skills:["reading","review"], scenes:["main","review"], time:"15-20 min", level:"中高", app:"訓練段落連貫性與邏輯敏感度。也可拆句子內 chunks，學生重組長句。"},
+  {n:18, en:"Problem-Solving Skits", zh:"問題情境短劇", how:"小組演出衝突情境並用英文示範解決方法。", focus:["情境英文","溝通","創意"], skills:["speaking","sel"], scenes:["main"], time:"25-30 min", level:"中高", app:"設計校園衝突情境（朋友吵架、考試壓力、AI 抄作業）。學生演出 problem + solution，自然帶出議題討論。"},
+  {n:19, en:"Story Sequencing Walk", zh:"故事排序走讀", how:"學生走到不同卡片前，排列課文事件順序。", focus:["排序","閱讀","理解"], skills:["reading"], scenes:["main","review"], time:"15-20 min", level:"全程度", app:"練習敘事連貫性。排完後請學生加上 transition words（First, Next, However, Finally），訓練邏輯銜接。"},
+  {n:20, en:"Picture Talk Carousel", zh:"圖片轉盤口說", how:"每張圖貼牆，學生 3 分鐘描述後輪換到下一張。", focus:["口說","觀察","單字"], skills:["speaking","vocabulary"], scenes:["main"], time:"20-25 min", level:"中高", app:"訓練 describe + interpret + speculate 三層次。也適合 visual literacy 訓練，搭配新聞照片或藝術作品。"},
+  {n:21, en:"Word Wall Challenge", zh:"單字牆挑戰", how:"利用教室固定 word wall，請學生造句、解釋、串故事。", focus:["單字","流暢度","複習"], skills:["vocabulary","reading","review"], scenes:["main","review"], time:"10-15 min", level:"全程度", app:"建議教室後方固定維護一面 word wall，每週更新。隨機抽人造句、用三個字串成故事、找出反義字。"},
+  {n:22, en:"Word Stress Hunt", zh:"重音節尋寶", how:"學生在課文中找出 stress 在第一／第二／第三音節的單字並分類。", focus:["發音","音韻","分類"], skills:["vocabulary"], scenes:["warmup"], time:"10-15 min", level:"中高", app:"訓練單字發音節奏，特別是多音節學術字。也可改為 silent letter hunt（knife, hour, lamb）、cognate hunt（與中文借詞）。"},
+  {n:23, en:"Map Route Relay", zh:"地圖路線接力", how:"學生依英文線索指令，畫出正確路線。", focus:["方位","祈使句","合作"], skills:["vocabulary","listening"], scenes:["main"], time:"15-20 min", level:"中高", app:"練習 directions（go straight, turn left, on your right）、介系詞、祈使句。可延伸到 give directions roleplay。"},
+  {n:24, en:"Around the World Review", zh:"環遊世界搶答", how:"學生在教室不同站點輪轉，每站不同題型。", focus:["複習","移動","參與"], skills:["review","vocabulary"], scenes:["review"], time:"25-30 min", level:"全程度", app:"段考總複習神器。設四到六站：單字、文法、克漏字、閱讀短文、聽力。小組計時輪轉。"},
+  {n:25, en:"Culture Corner Sharing", zh:"文化角分享", how:"學生帶一樣家鄉物品或圖片，用英文分享 3 分鐘。", focus:["文化","口說","尊重"], skills:["speaking","reading"], scenes:["main"], time:"25-30 min", level:"中高", app:"課文涉及國際主題後最適合（dabbawalas、food culture、festivals）。可指定學生加上一個比較句（My culture... but theirs...）。"},
+  {n:26, en:"Timeline Walk", zh:"時間線走讀", how:"學生把事件卡排在教室時間線上。", focus:["排序","時態","討論"], skills:["reading","review"], scenes:["main","review"], time:"15-20 min", level:"中高", app:"練習時態（過去式、過去完成式、現在完成式）的最佳活動。也可用於人物傳記課文（事件排序＋時態判斷）。"},
+  {n:27, en:"Traffic Light Answers", zh:"紅黃綠答題法", how:"學生舉紅黃綠卡表達理解程度。", focus:["自我檢核","回饋","參與"], skills:["sel"], scenes:["closing"], time:"5 min", level:"全程度", app:"形成性評量好工具。每節課最後三秒舉卡，老師立刻知道誰要補救。可搭配 exit ticket 做更深層回饋。"},
+  {n:28, en:"Dice Discussion", zh:"擲骰討論", how:"學生擲骰子，回答對應的英文討論題。", focus:["口說","思考","輪流"], skills:["speaking","critical"], scenes:["warmup","main"], time:"15-20 min", level:"中高", app:"6 題分層：1-2 簡單事實、3-4 偏好理由、5-6 抽象思辨。連結思辨力 IP。"},
+  {n:29, en:"Task Card Scoot", zh:"任務卡走動活動", how:"學生依序走到任務卡前完成題目，帶答案紙繞教室一圈。", focus:["複習","移動","自主"], skills:["review","writing"], scenes:["review"], time:"20-25 min", level:"全程度", app:"段考前複習神器。動靜結合，比坐著做題不易累。每張卡片一道題，可混合單字、文法、克漏字。"},
+  {n:30, en:"Pass the Question", zh:"傳球問答", how:"學生傳球，音樂停止時回答問題。", focus:["聆聽","口說","注意力"], skills:["speaking","listening"], scenes:["warmup"], time:"10-15 min", level:"全程度", app:"用音樂帶節奏，學生較放鬆。題目可從課文人物視角延伸（If you were the main character, would you...?）。"},
+  {n:31, en:"Clip Card Rotation", zh:"夾子卡輪轉", how:"學生用夾子夾出正確答案，再輪到下一站。", focus:["檢核","複習","選擇"], skills:["grammar","vocabulary","review"], scenes:["review"], time:"20-25 min", level:"全程度", app:"段考前複習選擇題的安靜版。介系詞、時態、字義辨析適合。學生帶夾子比寫字省力，速度更快。"},
+  {n:32, en:"Peer Teaching Corners", zh:"同儕教學角", how:"小老師在不同角落教導一個小主題或文法點。", focus:["領導","解說","合作"], skills:["speaking","review"], scenes:["main","review"], time:"25-30 min", level:"中高", app:"段考前最強複習。教過一遍才是真懂。連結到「能溝通的人，才會有選擇權」IP。"},
+  {n:33, en:"Vocabulary Toss", zh:"詞彙投擲", how:"學生投擲豆袋到單字墊上，再用該字造句。", focus:["單字","造句","移動"], skills:["vocabulary","speaking"], scenes:["main","review"], time:"15-20 min", level:"全程度", app:"體育班最愛。可加碼：投到哪個字就必須用該字＋一個指定句型造句。同時練單字、文法、口說。"},
+  {n:34, en:"Spin and Speak", zh:"轉盤口說", how:"學生轉轉盤並說出轉到的主題。", focus:["口說","自信","表達"], skills:["speaking","vocabulary"], scenes:["warmup","main"], time:"10-15 min", level:"全程度", app:"自製六格主題：My Hobby / My Hero / A Memory / A Wish / Something I Learned / A Question I Have。連結內在語言系列。"},
+  {n:35, en:"Memory Match Walk", zh:"走動記憶配對", how:"學生在教室走動，找出相同配對卡。", focus:["記憶","配對","移動"], skills:["vocabulary"], scenes:["main","review"], time:"15-20 min", level:"全程度", app:"卡片可設計為：英中對譯、同義字、反義字、字根字尾組合、片語意思配對。紙條卷的活化版。"},
+  {n:36, en:"Sorting Hoop Game", zh:"呼拉圈分類", how:"學生把卡片或物品依類別放入呼拉圈。", focus:["分類","單字","合作"], skills:["vocabulary","grammar"], scenes:["main","review"], time:"15-20 min", level:"全程度", app:"分類詞性、時態、正向／負向情緒、事實／意見。具象化抽象分類概念，學生身體先記得。"},
+  {n:37, en:"Caption This", zh:"看圖下標題", how:"學生看圖片並寫出一句簡短標題。", focus:["寫作","創意","觀察"], skills:["writing","speaking"], scenes:["main"], time:"15-20 min", level:"中高", app:"練習簡潔英文表達。可選新聞、藝術作品、迷因。延伸：寫三種版本（新聞標題／詩意標題／幽默標題），訓練語感層次。"},
+  {n:38, en:"Build-and-Explain", zh:"積木解說挑戰", how:"學生用積木做出一個 concept，再用英文 1 分鐘解釋。", focus:["口說","創意","STEM"], skills:["speaking","writing"], scenes:["main"], time:"25-30 min", level:"全程度", app:"主題如 my dream school / a future city / a feeling。連結「英文是學給人用的，不是學給機器讀的」IP。"},
+  {n:39, en:"Exit Ticket Stations", zh:"離堂回饋站", how:"學生離開前到站點完成簡短回饋任務。", focus:["反思","評量","複習"], skills:["writing","sel"], scenes:["closing"], time:"5-10 min", level:"全程度", app:"三站經典：① One thing I learned ② One question I still have ③ Rate your understanding (1-5)。下課前完成，老師隔天有資料調整教學。"},
+  {n:40, en:"Puzzle Piece Opinion", zh:"拼圖觀點交流", how:"拼圖印上句型起手式，學生填完合成整面牆。", focus:["分享","寫作","合作"], skills:["writing","speaking","sel"], scenes:["main"], time:"25-30 min", level:"中高", app:"起手式如 I think... / Because... / For example... / In my opinion... / On the other hand...。視覺化論證結構。"},
+  {n:41, en:"Category Relay", zh:"分類接力", how:"小組接力把卡片放到正確分類。", focus:["分類","速度","合作"], skills:["vocabulary","review"], scenes:["review"], time:"15-20 min", level:"全程度", app:"段考前單字總複習。可分類主題（emotion / action / nature / abstract）、詞性、字根字尾、難易程度。"},
+  {n:42, en:"Sentence Strip Order", zh:"句條排序", how:"學生把句條排成正確順序。", focus:["文法","排序","閱讀"], skills:["reading","grammar"], scenes:["main"], time:"10-15 min", level:"全程度", app:"練習段落邏輯與連接詞（First, However, As a result, Finally）。也可拆單句內 word order 排序，練複雜句構。"},
+  {n:43, en:"True or False Move", zh:"真偽移動賽", how:"學生聽句子後移動到正確或錯誤那一邊。", focus:["理解","聆聽","判讀"], skills:["listening","review","critical"], scenes:["review"], time:"10-15 min", level:"全程度", app:"課文細節 check、文法規則 check、訊息判讀（連結 TRAAP！）。例：This source is reliable because... → True / False。"},
+  {n:44, en:"Creative Object Use Challenge", zh:"物件創意用途挑戰", how:"學生想出日常物品的 5 種新用途，再選一種寫成 30 字英文廣告。", focus:["創意","口說","彈性思考"], skills:["speaking","writing","critical"], scenes:["main"], time:"15-20 min", level:"中高", app:"divergent thinking 訓練。連結創意 × 表達力 IP。也可改成 reframe a problem 練習，訓練視角轉換。"},
+  {n:45, en:"Classroom Escape Mini Quest", zh:"教室迷你解謎任務", how:"小組解開教室中的線索，完成英文迷你任務。", focus:["解題","合作","複習"], skills:["reading","review"], scenes:["review"], time:"40-50 min", level:"中高", app:"段考前複習壓軸。線索結合單字謎題、文法填空、克漏字、閱讀理解。每解一關才能拿到下一個線索。一節課玩完整單元。"},
+  {n:46, en:"Inner Weather Check-in", zh:"內在天氣回報", how:"學生用英文簡短描述今天的「內在天氣」（sunny / cloudy / stormy / foggy）並說明原因。", focus:["情緒覺察","內在語言","口說"], skills:["speaking","sel"], scenes:["warmup"], time:"5-10 min", level:"全程度", app:"每堂課開頭三分鐘，學生輪流一句話：Today my weather is... because... 把英文變成內在語言的工具，連結 self-care 系列。"},
+  {n:47, en:"Two Truths and a Wonder", zh:"兩個真實與一個疑問", how:"學生輪流分享兩件關於自己的事與一個尚未有答案的疑問。", focus:["口說","真誠","聆聽"], skills:["speaking","sel"], scenes:["warmup","closing"], time:"15-20 min", level:"中高", app:"比傳統 Two Truths and a Lie 更深。Wonder 部分可以是任何困惑（Why do people lie? / What is courage?）。練習坦誠表達。"},
+  {n:48, en:"Silent Discussion", zh:"無聲書寫對話", how:"在大張紙上寫下一個議題，學生輪流書寫回應與評論，全程不說話。", focus:["寫作","思辨","聆聽他人"], skills:["writing","reading","critical"], scenes:["main"], time:"20-25 min", level:"中高", app:"訓練真正的書寫思考。內向學生特別受益。議題可從課文延伸（Is technology making us lonelier?）。連結思辨力 IP。"},
+
+  // ===== AI 整合類（52 個）=====
+  {n:49, en:"Pre-Reading AI Brief", zh:"AI 讀前簡報", ai:true, how:"讀課文前，請學生用 AI 生成 3 個與課文主題相關的關鍵概念與背景知識（限 100 字以內）。", focus:["背景知識","讀前準備","AI 鷹架"], skills:["reading","vocabulary"], scenes:["warmup","main"], time:"10-15 min", level:"全程度", app:"AI 是替你開門的人，但門後面那個房間還是用英文佈置的。學生帶著背景知識進入課文，閱讀效率高很多。教師可指定 prompt 模板。"},
+  {n:50, en:"AI Vocabulary Preview", zh:"AI 單字預習", ai:true, how:"學生在閱讀前，把不認識的單字輸入 AI，要求 AI 用最簡單的英文（不超過 10 字）解釋每個字。", focus:["單字","讀前","AI 鷹架"], skills:["vocabulary","reading"], scenes:["warmup"], time:"10-15 min", level:"中高", app:"訓練學生使用 AI 取得「可理解的輸入」，而非直接查中文。指定句型：Use only words a 5th grader knows. 避免 AI 越解釋越難。"},
+  {n:51, en:"Stuck-Point AI Help", zh:"卡點求助 AI", ai:true, how:"學生獨自閱讀，遇到讀不懂的段落時，先標記，再請 AI 用簡單英文解釋該段，最後自己重讀。", focus:["閱讀","自主","AI 鷹架"], skills:["reading"], scenes:["main"], time:"20-30 min", level:"中高", app:"核心紀律：學生必須先自己讀，卡住才求助；求助後必須回到原文重讀。AI 是檢查鏡，不是答案機。"},
+  {n:52, en:"AI Comprehension Check", zh:"AI 理解檢核", ai:true, how:"讀完課文後，學生用自己的英文向 AI 摘要主旨，請 AI 指出哪裡理解錯了。", focus:["閱讀","摘要","AI 鷹察"], skills:["reading","writing"], scenes:["main"], time:"15-20 min", level:"中高", app:"翻轉傳統：不是 AI 給答案，而是學生先輸出，AI 當鏡子。Prompt 模板：Here is my summary. Tell me which parts are wrong or incomplete."},
+  {n:53, en:"AI Debate Sparring", zh:"AI 辯論陪練", ai:true, how:"學生選一個議題，請 AI 扮演反方角色辯論，學生需用英文回應 3 個回合。", focus:["思辨","口說","辯論"], skills:["speaking","writing","critical"], scenes:["main"], time:"20-30 min", level:"中高", app:"AI 不會臉色難看，學生可以放心練習反駁與論證。事後請學生反思：哪個回合自己最弱？延伸到課堂真人辯論。"},
+  {n:54, en:"Three-Round AI Refine", zh:"三輪 AI 修改", ai:true, how:"學生寫一段英文後：第一輪請 AI 只指出文法錯誤；第二輪自己改完再請 AI 指出表達不自然處；第三輪 polish style。", focus:["寫作","自我修改","AI 鷹架"], skills:["writing"], scenes:["main","homework"], time:"30-40 min", level:"中高", app:"訓練學生「分階段使用 AI」而非一次全交。每輪都要學生先動腦再交給 AI。培養寫作的後設認知。"},
+  {n:55, en:"AI Persona Conversation", zh:"AI 角色對話", ai:true, how:"設定 AI 為課文中的角色（例如 dabbawala / Atticus / Jane Eyre），學生用英文訪問該角色。", focus:["閱讀","角色","口說"], skills:["speaking","reading"], scenes:["main"], time:"20-25 min", level:"中高", app:"學生需先讀懂課文才能問出好問題。Prompt 模板：Pretend you are [character]. Stay in character. Answer only based on the story. 加深文本理解。"},
+  {n:56, en:"Detect the AI Errors", zh:"找出 AI 的錯誤", ai:true, how:"老師預先請 AI 生成一段有錯誤的英文文本（事實錯誤或文化偏誤），學生分組找出問題並修正。", focus:["思辨","判讀","AI 素養"], skills:["reading","critical"], scenes:["main"], time:"20-25 min", level:"中高", app:"連結 TRAAP 系統。讓學生明白：AI 會自信地說錯話。培養 AI 時代必備的不盲信能力。"},
+  {n:57, en:"Prompt Engineering Lab", zh:"提問工程實驗室", ai:true, how:"給學生一個學習目標（例如：理解 photosynthesis 的英文解釋），讓他們設計 3 種不同 prompt 並比較結果。", focus:["提問","思辨","表達"], skills:["writing","critical"], scenes:["main"], time:"25-30 min", level:"中高", app:"講話越模糊的人，越用不好 AI。這活動把這句話變成親身體驗。學生會發現：問得清楚＝得到清楚的答案。連結語言精準度 IP。"},
+  {n:58, en:"AI as Writing Coach", zh:"AI 寫作教練", ai:true, how:"學生寫完一段後，請 AI 問三個問題幫助深化內容（不能改寫，只能問問題）。學生再根據問題重寫。", focus:["寫作","深化思考","AI 鷹架"], skills:["writing","critical"], scenes:["main","homework"], time:"30-40 min", level:"中高", app:"Prompt 模板：Don't rewrite. Only ask me three questions that could make my writing deeper. AI 變成 Socratic tutor，不是代寫機。"},
+  {n:59, en:"Voice-to-Text Speaking Diary", zh:"口說日記語音轉文字", ai:true, how:"學生每天用英文口說 2 分鐘錄音，AI 轉成文字，學生比對自己想說的與實際說出的差距。", focus:["口說","自我覺察","流暢度"], skills:["speaking","writing"], scenes:["homework"], time:"5-10 min /day", level:"中高", app:"訓練「想說 vs 說出來」的落差意識。一週後請學生整理自己最常卡關的句型，老師可針對個別差異補強。"},
+  {n:60, en:"AI Pronunciation Mirror", zh:"AI 發音鏡子", ai:true, how:"學生對 AI 朗讀句子，AI 轉成文字。若 AI 聽錯，代表發音不清。學生調整後再試。", focus:["發音","自我修正","回饋"], skills:["speaking"], scenes:["homework"], time:"10-15 min", level:"全程度", app:"低焦慮的發音練習。AI 不會嘲笑學生口音，但會誠實地「聽錯」。用語音輸入法即可，不需特殊工具。"},
+  {n:61, en:"AI-Generated Reading + Real Reading Compare", zh:"AI 文本 vs 真實文本對照", ai:true, how:"同一主題，學生先讀 AI 生成版，再讀真實作者寫的版本，比較風格、深度、細節差異。", focus:["閱讀","判讀","AI 素養"], skills:["reading","critical"], scenes:["main"], time:"25-30 min", level:"中高", app:"訓練學生辨識「AI 風」與「人類書寫」的差別。讓學生看見：好的寫作不只是文法對，而是有獨特觀察。連結你的 IP 主軸。"},
+  {n:62, en:"AI Translation Trap", zh:"AI 翻譯陷阱", ai:true, how:"給學生一句中文，讓 AI 翻成英文，學生再回譯成中文。對照原文，討論意思流失了什麼。", focus:["翻譯","文化","判讀"], skills:["writing","critical"], scenes:["main"], time:"20-25 min", level:"中高", app:"回應「AI 都能翻譯了，為什麼還要學英文？」。讓學生親眼看見：直譯會丟掉文化、語氣、雙關。連結你的旗艦貼文主軸。"},
+  {n:63, en:"AI Image + Caption Writing", zh:"AI 圖像配文寫作", ai:true, how:"學生用 AI 生成一張圖（依課文主題），再寫一段英文 caption。同學閱讀後，要能猜出圖長什麼樣。", focus:["寫作","視覺","描述力"], skills:["writing","speaking"], scenes:["main"], time:"25-30 min", level:"中高", app:"訓練具體描述能力。寫得越清楚，同學猜得越接近原圖。練習形容詞、空間描述、氛圍詞。"},
+  {n:64, en:"AI Interview Prep", zh:"AI 面試預演", ai:true, how:"請 AI 模擬大學面試官或求職面試官，用英文提問。學生即時回答後，請 AI 給回饋。", focus:["口說","面試","實戰"], skills:["speaking"], scenes:["homework"], time:"20-30 min", level:"中高", app:"高三特別有用。Prompt 模板：You are a college admissions interviewer. Ask me 5 questions one at a time. After my answers, give specific feedback."},
+  {n:65, en:"AI Pair Reading", zh:"AI 配讀夥伴", ai:true, how:"學生與 AI 輪流讀課文段落，AI 讀完問學生一個理解問題，學生答完換學生問 AI 問題。", focus:["閱讀","互動","理解"], skills:["reading","speaking"], scenes:["homework"], time:"15-20 min", level:"全程度", app:"沒有同儕陪讀也能練。重點是學生「問問題」的能力。學會問問題的學生，才會主動學習。"},
+  {n:66, en:"AI Reverse-Engineering Essay", zh:"AI 文章反向拆解", ai:true, how:"請 AI 寫一篇短文，學生拆解：論點是什麼？支持的證據？結論？再評估是否站得住腳。", focus:["閱讀","結構","思辨"], skills:["reading","critical"], scenes:["main"], time:"25-30 min", level:"中高", app:"訓練閱讀理解的最後一哩：不只看懂字，還要看出結構。連結到學測寫作與大考英文閱讀題。"},
+  {n:67, en:"AI Mood Translator", zh:"AI 心情翻譯", ai:true, how:"學生用中文寫下今天的心情（一段），請 AI 翻成英文。再請學生改一改，讓 AI 翻譯更貼近自己的語氣。", focus:["內在語言","寫作","個人化"], skills:["writing","sel"], scenes:["homework"], time:"15-20 min", level:"中高", app:"連結 In My Inner Home 系列。讓學生發現：要 AI 翻得準，自己得先把中文寫清楚。AI 是表達力的鏡子。"},
+  {n:68, en:"AI Counter-Argument Generator", zh:"AI 反方論點產生器", ai:true, how:"學生寫完一篇 opinion essay 後，請 AI 列出 5 個最強的反方論點，學生再寫一段回應。", focus:["論證","思辨","寫作"], skills:["writing","critical"], scenes:["main","homework"], time:"30-40 min", level:"中高", app:"訓練「預想對手」的能力。讓學生明白：好的論證不是只說自己對，而是回應別人為什麼可能不同意。"},
+  {n:69, en:"AI Grammar Detective", zh:"AI 文法偵探", ai:true, how:"老師給一段英文（含錯誤），學生先自己找錯，再請 AI 找錯，比對兩者差異。", focus:["文法","自我檢核","判讀"], skills:["grammar","critical"], scenes:["main","review"], time:"15-20 min", level:"中高", app:"避免學生過度依賴 AI 改作業。看見：AI 也會漏錯、誤判。訓練學生「不盲信」的態度。"},
+  {n:70, en:"Steel Man with AI", zh:"AI 助攻最強對方論點", ai:true, how:"學生選一個自己不同意的立場，請 AI 用最有說服力的方式論述該立場（steel man），學生需理解後再回應。", focus:["思辨","同理","論證"], skills:["reading","writing","critical"], scenes:["main"], time:"25-30 min", level:"中高", app:"訓練 charitable interpretation。讓學生先把對方論點變強，再回應。這是真正的思辨力。連結思辨 IP 主軸。"},
+  {n:71, en:"AI Vocabulary Sentence Bank", zh:"AI 例句銀行", ai:true, how:"學生請 AI 為一個新單字產生 5 個不同情境的例句，自己挑選最好的兩句寫進筆記，並說明為什麼。", focus:["單字","語感","判斷"], skills:["vocabulary","writing"], scenes:["homework"], time:"15-20 min", level:"中高", app:"訓練 collocation 與語感。學生需要「判斷」哪個例句最自然，而不是全部抄下。培養語言鑑賞力。"},
+  {n:72, en:"AI Style Imitation", zh:"AI 文體模仿", ai:true, how:"選一位作家，請 AI 分析他的文體特徵（句長、用字、節奏）。學生寫一段模仿該作家風格的英文。", focus:["寫作","文體","語感"], skills:["writing","reading"], scenes:["main","homework"], time:"30-40 min", level:"中高", app:"訓練文學感受力。從 Hemingway 的短句到 Woolf 的長句，學生親身體會風格的差異。連結文學分析主軸。"},
+  {n:73, en:"AI Conversation Recorder", zh:"AI 對話紀錄分析", ai:true, how:"學生與 AI 用英文對話後，截圖整段對話，標出：① 我自己沒說好的地方 ② AI 用了哪些我不會的句型 ③ 下次想學的表達。", focus:["反思","自我評估","口說"], skills:["writing","speaking"], scenes:["homework"], time:"20-25 min", level:"中高", app:"從「用 AI」進化到「向 AI 學習」。學生不只是溝通，更從互動中採集語言。"},
+  {n:74, en:"AI vs Class Vote", zh:"AI 答案 vs 班級投票", ai:true, how:"老師問一個開放問題，班級先投票或討論，再看 AI 的答案，比較有何異同。", focus:["討論","判讀","思辨"], skills:["speaking","critical"], scenes:["main"], time:"15-20 min", level:"全程度", app:"讓學生看見：AI 答案是「平均值」，不是「最好的答案」。班級的多元觀點往往比 AI 更豐富。培養對 AI 的健康距離感。"},
+  {n:75, en:"AI Email Roleplay", zh:"AI 信件角色扮演", ai:true, how:"AI 扮演特定角色寄信給學生（教授拒絕推薦信、客戶投訴、朋友邀約），學生用英文回信。", focus:["寫作","語體","實戰"], skills:["writing"], scenes:["main","homework"], time:"25-30 min", level:"中高", app:"練習不同語體（正式／半正式／日常）。AI 扮演的角色越具體，學生越能感受語境差異。應用於職場英文預備。"},
+  {n:76, en:"Listening Gist with AI", zh:"AI 摘要對照聽力", ai:true, how:"學生聽一段英文音檔後自己用英文摘要，再請 AI 摘要同一段，對照漏聽或誤聽之處。", focus:["聽力","摘要","自我檢核"], skills:["listening","writing"], scenes:["main","homework"], time:"20-25 min", level:"中高", app:"傳統聽力測驗只看對錯。這活動讓學生看見：我聽到什麼、漏了什麼。培養 active listening。"},
+  {n:77, en:"AI Cultural Comparison", zh:"AI 跨文化比較", ai:true, how:"學生問 AI 某個概念在不同文化的差異（例如 'family', 'success', 'shame'），再用英文寫一段比較台灣與另一文化。", focus:["文化","寫作","比較"], skills:["writing","reading"], scenes:["main"], time:"25-30 min", level:"中高", app:"訓練跨文化敏感度。注意提醒學生：AI 的描述是 generalization，需查證。連結 TRAAP 中的 Accuracy。"},
+  {n:78, en:"AI Self-Quiz Generator", zh:"AI 自測題產生器", ai:true, how:"學生讀完課文後，請 AI 出 5 題不同層次的問題（事實、推論、評論），自己答完再對照。", focus:["複習","自主","檢核"], skills:["reading","review"], scenes:["homework"], time:"15-20 min", level:"中高", app:"培養自主學習。Prompt 模板：Create 5 questions about this text: 2 factual, 2 inferential, 1 evaluative. Don't give answers yet. 段考前最佳工具。"},
+  {n:79, en:"Three-Voice AI Discussion", zh:"AI 三方觀點討論", ai:true, how:"請 AI 同時扮演三個不同立場（樂觀派／悲觀派／中立派）討論同一議題，學生加入成為第四方。", focus:["思辨","多元","口說"], skills:["speaking","writing","critical"], scenes:["main"], time:"25-30 min", level:"中高", app:"訓練多角度思考。學生不只是選邊，而是看到完整光譜。可用於 AI 倫理、教育議題、社會議題討論。"},
+  {n:80, en:"AI Word Origin Story", zh:"AI 字源故事", ai:true, how:"學生請 AI 講某個英文單字的字源故事（500 字以內），記下三個有趣細節，向同學口頭分享。", focus:["字源","記憶","口說"], skills:["vocabulary","speaking"], scenes:["main","homework"], time:"20-25 min", level:"中高", app:"枯燥的字根字尾變成有趣故事。學生記得字源後，遇到新字更容易猜意思。連結到字彙策略訓練。"},
+  {n:81, en:"AI Reflection Question Bank", zh:"AI 反思問題庫", ai:true, how:"學生告訴 AI 今天學了什麼，請 AI 問三個深化反思的問題，學生用英文回答其中一題。", focus:["反思","內在","寫作"], skills:["writing","sel"], scenes:["closing","homework"], time:"10-15 min", level:"中高", app:"取代制式反思單。AI 的問題比模板更貼近學生狀態。每堂課後三分鐘，累積成一本個人化反思日誌。"},
+  {n:82, en:"AI Storytelling Branch", zh:"AI 分支故事", ai:true, how:"學生與 AI 接龍寫故事，每段結尾學生決定走向，請 AI 寫下一段。完成後修改成最終版本。", focus:["寫作","創意","選擇"], skills:["writing","reading"], scenes:["main","homework"], time:"30-40 min", level:"中高", app:"學生是導演，AI 是執行。訓練敘事決策力與英文表達。可結合課文續寫、改寫結局。"},
+  {n:83, en:"AI Vocab in Context Hunt", zh:"AI 情境單字追蹤", ai:true, how:"學生請 AI 用某個目標單字寫 3 個不同情境的短段落，分析該字在不同情境下的細微差異。", focus:["單字","語感","情境"], skills:["vocabulary","reading"], scenes:["main"], time:"20-25 min", level:"中高", app:"破解「一字多義」的死記。同一個字在商業、文學、口語中用法不同。培養語境敏感度。"},
+  {n:84, en:"Compare Two AIs", zh:"兩款 AI 對比", ai:true, how:"同一個問題問兩款不同 AI（如 ChatGPT 與 Gemini），比較答案的差異、立場、用字。", focus:["判讀","比較","AI 素養"], skills:["reading","critical"], scenes:["main"], time:"20-25 min", level:"中高", app:"打破「AI 是中立的」迷思。學生看見：不同 AI 訓練資料不同，答案會有偏向。培養 AI 多源查證的習慣。"},
+  {n:85, en:"AI Audience Adapter", zh:"AI 受眾轉換", ai:true, how:"學生寫一段英文後，請 AI 改寫成三種版本：寫給 8 歲小孩／寫給大學教授／寫給朋友。比較差異。", focus:["寫作","受眾","語體"], skills:["writing"], scenes:["main"], time:"25-30 min", level:"中高", app:"訓練「為誰而寫」的意識。同一個觀點，給不同人看，要用不同語言。培養讀者意識。"},
+  {n:86, en:"AI Pattern Spotter", zh:"AI 句型偵探", ai:true, how:"學生選一篇喜歡的英文文章，請 AI 找出該作者最常用的 5 個句型結構，自己模仿造句。", focus:["句型","語感","模仿"], skills:["writing","reading"], scenes:["main","homework"], time:"25-30 min", level:"中高", app:"從「讀過」進化到「採集」。把欣賞的文章變成自己的句型庫。寫作進步最快的方法之一。"},
+  {n:87, en:"AI Misconception Hunt", zh:"AI 迷思獵人", ai:true, how:"老師預先準備學生常見的英文迷思（中式英文、文法誤用），讓學生問 AI 「我這樣說對嗎？」記錄 AI 怎麼回應。", focus:["文法","自我修正","AI 素養"], skills:["grammar","critical"], scenes:["main"], time:"20-25 min", level:"中高", app:"訓練學生用 AI 自我除錯。但也提醒：AI 有時會說「沒問題」其實有問題，要交叉查證。"},
+  {n:88, en:"AI Voice Coach", zh:"AI 語氣教練", ai:true, how:"學生寫一段英文後，請 AI 分析語氣（confident / hesitant / aggressive / warm），再改寫成另一種語氣。", focus:["語氣","寫作","風格"], skills:["writing"], scenes:["main","homework"], time:"25-30 min", level:"中高", app:"高階寫作訓練。同樣的意思，語氣不同，效果天差地遠。連結到職場溝通、email 寫作、面試表達。"},
+  {n:89, en:"AI as Devil's Advocate", zh:"AI 唱反調", ai:true, how:"學生提出一個觀點，請 AI 質疑、挑戰、找漏洞。學生再強化自己的論點。", focus:["思辨","論證","防禦力"], skills:["writing","speaking","critical"], scenes:["main"], time:"25-30 min", level:"中高", app:"Prompt 模板：Be a tough critic. Find every weakness in my argument. 訓練面對質疑的能力。論點先被 AI 質疑過，到課堂發表更有自信。"},
+  {n:90, en:"AI Listening Transcript Closet", zh:"AI 聽力逐字稿衣櫃", ai:true, how:"學生聽英文 podcast 5 分鐘，請 AI 提供逐字稿，圈出三個自己沒聽出的句子，分析為何沒聽出。", focus:["聽力","分析","補強"], skills:["listening","reading"], scenes:["homework"], time:"20-25 min", level:"中高", app:"從「聽不懂」進化到「知道為什麼聽不懂」。三種常見原因：連音、不熟的字、文化背景。針對性練習。"},
+  {n:91, en:"AI Personality Match", zh:"AI 性格配對", ai:true, how:"學生用英文描述自己，請 AI 推測適合的職業／興趣／書／電影，學生用英文評估準不準。", focus:["口說","自我描述","評估"], skills:["writing","speaking","sel"], scenes:["main"], time:"20-25 min", level:"中高", app:"輕鬆又有趣，學生對自己感興趣，所以願意用英文描述。同時練習形容詞、自我覺察、批判性接收 AI 答案。"},
+  {n:92, en:"AI-Generated Discussion Starter", zh:"AI 討論引信", ai:true, how:"老師讓 AI 為課堂主題生成 10 個討論問題，師生共同篩選最值得討論的 3 題。", focus:["討論","判斷","協作"], skills:["speaking","critical"], scenes:["main"], time:"15-20 min", level:"中高", app:"把 AI 當備課助手，但保留教師判斷權。學生看見：好問題需要篩選，不是所有 AI 生成都值得討論。"},
+  {n:93, en:"AI Etymology Family Tree", zh:"AI 字族家譜", ai:true, how:"學生選一個字根（如 spect / port / dict），請 AI 列出該字根衍生的 10 個字，畫成家譜並造句。", focus:["字根","字彙","系統"], skills:["vocabulary","writing"], scenes:["main","homework"], time:"25-30 min", level:"中高", app:"從「背單字」進化到「認識字族」。一次認識一群字。學生會發現：英文字其實有家族系統。"},
+  {n:94, en:"AI Photo Description Loop", zh:"AI 圖片描述循環", ai:true, how:"學生看一張照片，用英文描述給 AI，請 AI 根據描述畫出圖。比對與原圖差異。", focus:["描述","精準","視覺"], skills:["writing","vocabulary"], scenes:["main"], time:"20-25 min", level:"中高", app:"訓練描述精準度。學生會立刻發現：自己描述太模糊，AI 畫出的東西就會偏。連結語言精準度 IP。"},
+  {n:95, en:"AI Boundary Practice", zh:"AI 邊界練習", ai:true, how:"AI 扮演強勢請託者（同事推工作、朋友借錢、推銷員），學生用英文有禮地拒絕。", focus:["口說","拒絕","界線"], skills:["speaking","writing","sel"], scenes:["main","homework"], time:"20-25 min", level:"中高", app:"練習說 No 的英文。學生會發現：客氣的拒絕需要更精準的語言。連結到你的人際邊界觀點。"},
+  {n:96, en:"AI Quote Hunter", zh:"AI 名言獵人", ai:true, how:"學生問 AI 某主題的名言（friendship, courage, AI），請 AI 提供來源，學生再查證是否真的存在。", focus:["判讀","查證","AI 素養"], skills:["reading","critical"], scenes:["main","homework"], time:"15-20 min", level:"中高", app:"AI 編造名言是出名的問題。讓學生親自踩雷一次，學到一輩子的查證習慣。連結 TRAAP 中的 Accuracy。"},
+  {n:97, en:"AI Bias Mirror", zh:"AI 偏見鏡", ai:true, how:"請 AI 描述「一個老師」「一個 CEO」「一個工程師」，觀察 AI 生成的人物有什麼樣的預設（性別、種族、年齡）。", focus:["思辨","偏見","AI 素養"], skills:["reading","critical"], scenes:["main"], time:"20-25 min", level:"中高", app:"讓學生看見：AI 的「平均答案」反映訓練資料的偏見。培養對 AI 生成內容的批判敏感度。連結到性別議題教材。"},
+  {n:98, en:"Reverse Prompting", zh:"反向提問", ai:true, how:"給學生一段 AI 生成的英文，請他們反推：原本的 prompt 可能是什麼？再對照真正的 prompt。", focus:["提問","逆向","思辨"], skills:["reading","writing","critical"], scenes:["main"], time:"20-25 min", level:"中高", app:"理解 AI 的「輸入－輸出」關係。學會反推 prompt 後，自己的提問會更精準。連結 prompt engineering 訓練。"},
+  {n:99, en:"AI Glossary Building", zh:"AI 個人詞彙手冊", ai:true, how:"學生整理本週遇到的新字詞，請 AI 用簡單英文解釋＋造句，學生選擇最適合自己的版本存進個人字典。", focus:["單字","自主","累積"], skills:["vocabulary","writing"], scenes:["homework"], time:"15-20 min /week", level:"中高", app:"取代生字本。AI 給多個版本，學生「挑選」適合自己程度的，建立個人化詞彙系統。長期累積效果驚人。"},
+  {n:100, en:"AI-Free Reflection", zh:"無 AI 反思", ai:true, how:"每週一次，學生完全不用 AI 寫一段 100 字英文反思（任何主題），事後與用 AI 寫的對照。", focus:["自主","真實","本心"], skills:["writing","sel"], scenes:["homework"], time:"15-20 min /week", level:"中高", app:"在 AI 時代，更要保留「沒有 AI 也能寫」的能力。讓學生看見：自己的英文進步了多少。也是內在語言的保留地。這是這份資料庫最重要的一個活動。"}
+];
+
+const grid = document.getElementById('grid');
+const search = document.getElementById('search');
+const countEl = document.getElementById('count');
+const typeFilters = document.getElementById('type-filters');
+const skillFilters = document.getElementById('skill-filters');
+const sceneFilters = document.getElementById('scene-filters');
+
+let activeType = 'all';
+let activeSkill = 'all';
+let activeScene = 'all';
+let query = '';
+
+function render() {
+  const filtered = activities.filter(a => {
+    if (activeType === 'ai' && !a.ai) return false;
+    if (activeType === 'physical' && a.ai) return false;
+    if (activeSkill !== 'all' && !a.skills.includes(activeSkill)) return false;
+    if (activeScene !== 'all' && !a.scenes.includes(activeScene)) return false;
+    if (query) {
+      const hay = (a.en + ' ' + a.zh + ' ' + a.how + ' ' + a.app + ' ' + a.focus.join(' ')).toLowerCase();
+      if (!hay.includes(query.toLowerCase())) return false;
+    }
+    return true;
+  });
+
+  countEl.textContent = filtered.length;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="empty"><p>No matches found</p><p>試試別的關鍵字或篩選條件</p></div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(a => `
+    <article class="card ${a.ai ? 'ai-card' : ''}">
+      <div class="card-num">${String(a.n).padStart(3, '0')}</div>
+      ${a.ai ? '<span class="ai-badge">AI Integrated</span>' : ''}
+      <h3 class="card-en">${a.en}</h3>
+      <p class="card-zh">${a.zh}</p>
+      <div class="divider"></div>
+      <div class="section-label">how to play</div>
+      <p class="how">${a.how}</p>
+      <div class="focus-row">
+        ${a.focus.map(f => `<span class="focus-tag">${f}</span>`).join('')}
+      </div>
+      <div class="english-app">
+        <div class="section-label">英文科應用</div>
+        <p>${a.app}</p>
+        <div class="meta-mini">
+          <span>${a.time}</span>
+          <span>${a.level}</span>
+        </div>
+      </div>
+    </article>
+  `).join('');
+}
+
+search.addEventListener('input', e => {
+  query = e.target.value;
+  render();
+});
+
+typeFilters.addEventListener('click', e => {
+  if (!e.target.classList.contains('chip')) return;
+  typeFilters.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  e.target.classList.add('active');
+  activeType = e.target.dataset.type;
+  render();
+});
+
+skillFilters.addEventListener('click', e => {
+  if (!e.target.classList.contains('chip')) return;
+  skillFilters.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  e.target.classList.add('active');
+  activeSkill = e.target.dataset.filter;
+  render();
+});
+
+sceneFilters.addEventListener('click', e => {
+  if (!e.target.classList.contains('chip')) return;
+  sceneFilters.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  e.target.classList.add('active');
+  activeScene = e.target.dataset.scene;
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
