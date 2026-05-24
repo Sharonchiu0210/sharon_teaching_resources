@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>作文批改</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap');
+
+  :root {
+    --cream: #f5f0e8;
+    --warm-white: #faf8f4;
+    --brown-deep: #2c1f0e;
+    --brown-mid: #5c3d1e;
+    --brown-light: #8b6340;
+    --tan: #c4975a;
+    --tan-light: #e8d5b5;
+    --tan-pale: #f0e6d0;
+    --red-mark: #c0392b;
+    --green-ok: #27694a;
+    --shadow: rgba(44,31,14,0.1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--brown-deep);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  header {
+    background: var(--brown-deep);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  header h1 {
+    font-family: 'Lora', serif;
+    font-size: 1.05rem;
+    color: var(--tan-light);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  header span {
+    font-size: 0.74rem;
+    color: var(--brown-light);
+    font-weight: 300;
+    letter-spacing: 0.06em;
+  }
+
+  .main {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* LEFT */
+  .left {
+    border-right: 1px solid var(--tan-light);
+    display: flex;
+    flex-direction: column;
+    background: var(--warm-white);
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 13px 20px 11px;
+    border-bottom: 1px solid var(--tan-pale);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .panel-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brown-light);
+  }
+
+  .upload-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .upload-zone.empty:hover { background: var(--tan-pale); }
+  .upload-zone.has-image { cursor: default; justify-content: flex-start; }
+
+  #file-input { display: none; }
+
+  .upload-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 32px;
+  }
+
+  .upload-icon {
+    width: 48px; height: 48px;
+    border: 2px dashed var(--tan);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--tan);
+    font-size: 1.3rem;
+  }
+
+  .upload-text {
+    font-size: 0.85rem;
+    color: var(--brown-light);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .upload-text strong {
+    display: block;
+    color: var(--brown-mid);
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+  }
+
+  #preview-img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: none;
+    padding: 10px;
+  }
+
+  .clear-btn {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--brown-deep); color: var(--tan-light);
+    border: none; border-radius: 4px;
+    padding: 4px 9px;
+    font-size: 0.7rem; font-family: inherit;
+    cursor: pointer; display: none;
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+
+  .left-footer {
+    padding: 12px 16px;
+    border-top: 1px solid var(--tan-pale);
+    display: flex; gap: 8px; align-items: center;
+    flex-shrink: 0;
+  }
+
+  .topic-input {
+    flex: 1;
+    border: 1px solid var(--tan-light); border-radius: 6px;
+    padding: 7px 11px;
+    font-family: inherit; font-size: 0.84rem;
+    color: var(--brown-deep); background: var(--cream);
+    outline: none; transition: border 0.2s;
+  }
+
+  .topic-input:focus { border-color: var(--tan); }
+  .topic-input::placeholder { color: var(--brown-light); opacity: 0.55; }
+
+  .grade-btn {
+    background: var(--brown-deep); color: var(--tan-light);
+    border: none; border-radius: 6px;
+    padding: 7px 20px;
+    font-family: 'Lora', serif; font-size: 0.88rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap; letter-spacing: 0.03em;
+  }
+
+  .grade-btn:hover { background: var(--brown-mid); }
+  .grade-btn:active { transform: scale(0.97); }
+  .grade-btn:disabled { opacity: 0.38; cursor: not-allowed; transform: none; }
+
+  /* RIGHT */
+  .right {
+    display: flex; flex-direction: column;
+    background: var(--warm-white);
+    overflow: hidden;
+  }
+
+  .right-header {
+    padding: 13px 22px 11px;
+    border-bottom: 1px solid var(--tan-pale);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .copy-btn {
+    background: transparent;
+    border: 1px solid var(--tan-light); border-radius: 5px;
+    padding: 4px 13px;
+    font-size: 0.73rem; font-family: inherit;
+    color: var(--brown-mid); cursor: pointer;
+    transition: all 0.15s; letter-spacing: 0.04em;
+  }
+
+  .copy-btn:hover { background: var(--tan-pale); border-color: var(--tan); }
+  .copy-btn.copied { background: var(--green-ok); color: white; border-color: var(--green-ok); }
+
+  .result-area {
+    flex: 1; overflow-y: auto;
+    padding: 20px 22px;
+  }
+
+  .result-area::-webkit-scrollbar { width: 4px; }
+  .result-area::-webkit-scrollbar-track { background: transparent; }
+  .result-area::-webkit-scrollbar-thumb { background: var(--tan-light); border-radius: 2px; }
+
+  /* States */
+  .placeholder-msg {
+    height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--brown-light); opacity: 0.45;
+    text-align: center; gap: 8px;
+  }
+
+  .placeholder-msg .icon { font-size: 1.8rem; }
+  .placeholder-msg p { font-size: 0.82rem; line-height: 1.6; }
+
+  .loading-state {
+    height: 100%;
+    display: none; flex-direction: column;
+    align-items: center; justify-content: center; gap: 14px;
+  }
+
+  .loading-dots { display: flex; gap: 6px; }
+
+  .loading-dots span {
+    width: 7px; height: 7px;
+    background: var(--tan); border-radius: 50%;
+    animation: bounce 1.2s infinite;
+  }
+
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%,80%,100% { transform: translateY(0); opacity: 0.35; }
+    40% { transform: translateY(-7px); opacity: 1; }
+  }
+
+  .loading-msg {
+    font-size: 0.82rem; font-family: 'Lora', serif;
+    font-style: italic; color: var(--brown-light);
+  }
+
+  .error-msg {
+    background: #fde8e8; border: 1px solid #f0b8b8;
+    border-radius: 6px; padding: 12px 14px;
+    font-size: 0.82rem; color: var(--red-mark); display: none;
+  }
+
+  /* Result */
+  .result-content { display: none; }
+
+  /* Score grid */
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+
+  .score-item {
+    background: var(--cream);
+    border: 1px solid var(--tan-pale);
+    border-radius: 7px;
+    padding: 9px 6px;
+    text-align: center;
+  }
+
+  .score-item .s-label {
+    font-size: 0.6rem; color: var(--brown-light);
+    letter-spacing: 0.03em; margin-bottom: 3px;
+    line-height: 1.3;
+  }
+
+  .score-item .s-val {
+    font-family: 'Lora', serif;
+    font-size: 1.25rem; font-weight: 600;
+    color: var(--brown-deep);
+  }
+
+  .score-item .s-max { font-size: 0.6rem; color: var(--brown-light); }
+
+  .score-total {
+    background: var(--brown-deep);
+    border-color: var(--brown-deep);
+  }
+
+  .score-total .s-label { color: var(--tan-light); opacity: 0.65; }
+  .score-total .s-val { color: var(--tan-light); font-size: 1.45rem; }
+  .score-total .s-max { color: var(--tan-light); opacity: 0.45; }
+
+  /* Issues */
+  .section { margin-bottom: 18px; }
+
+  .section-title {
+    font-size: 0.65rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--brown-light);
+    margin-bottom: 8px; padding-bottom: 5px;
+    border-bottom: 1px solid var(--tan-pale);
+  }
+
+  .issue-item {
+    display: flex; gap: 9px;
+    margin-bottom: 8px; padding: 9px 11px;
+    border-radius: 6px; background: var(--cream);
+    border-left: 3px solid transparent;
+  }
+
+  .issue-item.high { border-left-color: var(--red-mark); }
+  .issue-item.mid { border-left-color: var(--tan); }
+  .issue-item.low { border-left-color: var(--tan-light); }
+
+  .issue-tag {
+    font-size: 0.62rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    white-space: nowrap; padding: 2px 5px;
+    border-radius: 3px; height: fit-content; margin-top: 1px;
+  }
+
+  .tag-high { background: #fde8e8; color: var(--red-mark); }
+  .tag-mid  { background: #fdf3e3; color: var(--brown-mid); }
+  .tag-low  { background: var(--tan-pale); color: var(--brown-light); }
+
+  .issue-body { flex: 1; }
+
+  .issue-body p {
+    font-size: 0.83rem; line-height: 1.55;
+    color: var(--brown-deep);
+  }
+
+  .issue-body .orig {
+    font-family: 'Lora', serif; font-style: italic;
+    color: var(--red-mark); font-size: 0.8rem; margin-top: 3px;
+  }
+
+  .issue-body .fix {
+    font-family: 'Lora', serif; font-style: italic;
+    color: var(--green-ok); font-size: 0.8rem; margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>作文批改</h1>
+  <span>大考中心評分標準 &nbsp;·&nbsp; 教師版</span>
+</header>
+
+<div class="main">
+
+  <div class="left">
+    <div class="panel-header">
+      <span class="panel-label">學生作文</span>
+      <span style="font-size:0.72rem;color:var(--brown-light)">上傳照片</span>
+    </div>
+
+    <div class="upload-zone empty" id="upload-zone">
+      <input type="file" id="file-input" accept="image/*">
+      <div class="upload-prompt" id="upload-prompt">
+        <div class="upload-icon">↑</div>
+        <div class="upload-text">
+          <strong>點擊上傳照片</strong>
+          支援 JPG、PNG<br>手寫或打字稿皆可
+        </div>
+      </div>
+      <img id="preview-img" alt="作文預覽">
+      <button class="clear-btn" id="clear-btn">換一張</button>
+    </div>
+
+    <div class="left-footer">
+      <input class="topic-input" id="topic-input" type="text" placeholder="作文題目（選填）">
+      <button class="grade-btn" id="grade-btn" disabled>批改</button>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="right-header">
+      <span class="panel-label">批改結果</span>
+      <button class="copy-btn" id="copy-btn">複製</button>
+    </div>
+
+    <div class="result-area" id="result-area">
+
+      <div class="placeholder-msg" id="placeholder">
+        <div class="icon">✎</div>
+        <p>上傳作文照片<br>點擊「批改」開始分析</p>
+      </div>
+
+      <div class="loading-state" id="loading">
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+        <div class="loading-msg" id="loading-msg">正在讀取作文…</div>
+      </div>
+
+      <div class="error-msg" id="error-msg"></div>
+
+      <div class="result-content" id="result-content">
+        <div class="score-grid" id="score-grid"></div>
+        <div class="section" id="issues-section">
+          <div class="section-title">問題分析</div>
+          <div id="issues-list"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const uploadZone = document.getElementById('upload-zone');
+const fileInput  = document.getElementById('file-input');
+const uploadPrompt = document.getElementById('upload-prompt');
+const previewImg = document.getElementById('preview-img');
+const clearBtn   = document.getElementById('clear-btn');
+const gradeBtn   = document.getElementById('grade-btn');
+const topicInput = document.getElementById('topic-input');
+const placeholder = document.getElementById('placeholder');
+const loading    = document.getElementById('loading');
+const loadingMsg = document.getElementById('loading-msg');
+const errorMsg   = document.getElementById('error-msg');
+const resultContent = document.getElementById('result-content');
+const copyBtn    = document.getElementById('copy-btn');
+
+let imageBase64 = null;
+let lastResult  = null;
+
+// Upload
+uploadZone.addEventListener('click', () => {
+  if (uploadZone.classList.contains('empty')) fileInput.click();
+});
+
+fileInput.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    imageBase64 = ev.target.result.split(',')[1];
+    previewImg.src = ev.target.result;
+    previewImg.style.display = 'block';
+    uploadPrompt.style.display = 'none';
+    clearBtn.style.display = 'block';
+    uploadZone.classList.remove('empty');
+    uploadZone.classList.add('has-image');
+    gradeBtn.disabled = false;
+  };
+  reader.readAsDataURL(file);
+});
+
+clearBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  imageBase64 = null;
+  previewImg.style.display = 'none';
+  previewImg.src = '';
+  uploadPrompt.style.display = 'flex';
+  clearBtn.style.display = 'none';
+  uploadZone.classList.add('empty');
+  uploadZone.classList.remove('has-image');
+  fileInput.value = '';
+  gradeBtn.disabled = true;
+});
+
+// Copy
+copyBtn.addEventListener('click', () => {
+  if (!lastResult) return;
+  const text = buildCopyText(lastResult);
+  navigator.clipboard.writeText(text).then(() => {
+    copyBtn.textContent = '已複製';
+    copyBtn.classList.add('copied');
+    setTimeout(() => { copyBtn.textContent = '複製'; copyBtn.classList.remove('copied'); }, 1800);
+  });
+});
+
+function buildCopyText(r) {
+  const s = r.scores;
+  let t = `【大考評分】${s.level || ''}　${s.total}/20\n`;
+  t += `內容 ${s.content}/5　組織 ${s.organization}/5　文法 ${s.grammar}/4　字彙 ${s.vocabulary}/4　體例 ${s.format}/2\n\n`;
+  t += `【問題分析】\n`;
+  (r.issues || []).forEach(i => {
+    const lv = i.level === 'high' ? '高' : i.level === 'mid' ? '中' : '低';
+    t += `▸ [${lv}] ${i.type}　${i.description}\n`;
+    if (i.original)   t += `  ✗ ${i.original}\n`;
+    if (i.suggestion) t += `  → ${i.suggestion}\n`;
+    t += '\n';
+  });
+  return t.trim();
+}
+
+// Grade
+gradeBtn.addEventListener('click', async () => {
+  if (!imageBase64) return;
+
+  placeholder.style.display = 'none';
+  errorMsg.style.display = 'none';
+  resultContent.style.display = 'none';
+  loading.style.display = 'flex';
+  gradeBtn.disabled = true;
+
+  const msgs = ['正在讀取手寫內容…','分析文法與句構…','對照大考評分標準…','整理批改意見…'];
+  let mi = 0;
+  const ticker = setInterval(() => { loadingMsg.textContent = msgs[++mi % msgs.length]; }, 2000);
+
+  const topic = topicInput.value.trim();
+
+  const systemPrompt = `你是台灣高中英文老師的批改助手。輸出對象是老師，語氣直接有依據。
+
+依照大考中心（CEEC）英文作文五項評分標準批改。
+特別留意：句構是否單調、介系詞片語是否足夠、段落銜接是否流暢。
+
+只輸出 JSON，不要有其他文字或 markdown：
+{
+  "scores": {
+    "content": 整數,
+    "organization": 整數,
+    "grammar": 整數,
+    "vocabulary": 整數,
+    "format": 整數,
+    "total": 整數,
+    "level": "特優/優/可/差/劣"
+  },
+  "issues": [
+    {
+      "level": "high/mid/low",
+      "type": "文法/詞彙/句構/論點/銜接/介系詞/體例",
+      "description": "中文說明問題",
+      "original": "原句片段（選填）",
+      "suggestion": "英文改寫建議（若有）"
+    }
+  ]
+}
+
+評分標準：
+內容 5分：主題切題、有具體細節支持
+組織 5分：開頭發展結尾清楚、銜接詞得當
+文法與句構 4分：文法正確性、句型變化
+字彙與拼字 4分：用字精確、拼字正確
+體例 2分：格式、標點、大小寫
+字數明顯不足或未分段扣1分。`;
+
+  const userContent = [
+    { type: "image", source: { type: "base64", media_type: "image/jpeg", data: imageBase64 } },
+    { type: "text", text: topic ? `題目：${topic}\n\n請批改這篇學生英文作文。` : `請批改這篇學生英文作文。` }
+  ];
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1200,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userContent }]
+      })
+    });
+
+    clearInterval(ticker);
+    loading.style.display = 'none';
+
+    if (!res.ok) throw new Error(`API ${res.status}`);
+
+    const data = await res.json();
+    const raw = data.content.map(c => c.text || '').join('');
+    const result = JSON.parse(raw.replace(/```json|```/g, '').trim());
+    lastResult = result;
+    renderResult(result);
+    gradeBtn.disabled = false;
+
+  } catch (err) {
+    clearInterval(ticker);
+    loading.style.display = 'none';
+    errorMsg.style.display = 'block';
+    errorMsg.textContent = `批改失敗：${err.message}。請確認圖片清晰後重試。`;
+    gradeBtn.disabled = false;
+  }
+});
+
+function renderResult(r) {
+  const s = r.scores;
+  const scoreGrid = document.getElementById('score-grid');
+  const items = [
+    { label: '內容', val: s.content, max: 5 },
+    { label: '組織', val: s.organization, max: 5 },
+    { label: '文法', val: s.grammar, max: 4 },
+    { label: '字彙', val: s.vocabulary, max: 4 },
+    { label: '體例', val: s.format, max: 2 },
+  ];
+  scoreGrid.innerHTML = items.map(i => `
+    <div class="score-item">
+      <div class="s-label">${i.label}</div>
+      <div class="s-val">${i.val}</div>
+      <div class="s-max">/ ${i.max}</div>
+    </div>`).join('') + `
+    <div class="score-item score-total">
+      <div class="s-label">${s.level || '合計'}</div>
+      <div class="s-val">${s.total}</div>
+      <div class="s-max">/ 20</div>
+    </div>`;
+
+  const issuesList = document.getElementById('issues-list');
+  const tagMap = { high: ['tag-high','高'], mid: ['tag-mid','中'], low: ['tag-low','低'] };
+  issuesList.innerHTML = (r.issues || []).map(i => {
+    const [tc, tl] = tagMap[i.level] || ['tag-low', i.level];
+    return `
+      <div class="issue-item ${i.level}">
+        <span class="issue-tag ${tc}">${tl}</span>
+        <div class="issue-body">
+          <p><strong>${i.type}</strong>　${i.description}</p>
+          ${i.original   ? `<p class="orig">✗ ${i.original}</p>` : ''}
+          ${i.suggestion ? `<p class="fix">→ ${i.suggestion}</p>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+
+  resultContent.style.display = 'block';
+}
+</script>
+</body>
+</html>
