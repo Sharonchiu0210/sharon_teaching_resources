@@ -1,512 +1,1133 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>B4 L8 — Problem-Solution</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>B4 L8 — Problem-Solution Warmup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Noto+Serif+TC:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, 'Helvetica Neue', sans-serif;
-    background: #F7F4EF;
-    color: #1C1208;
-    min-height: 100vh;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 32px 16px 60px;
-  }
-  .app { width: 100%; max-width: 640px; }
+:root {
+  --bg: #F5EFE6;
+  --bg-soft: #FBF7EE;
+  --card: #FFFCF5;
+  --ink: #3A2E26;
+  --ink-soft: #7A6A5C;
+  --ink-faint: #B5A799;
+  --accent: #A87850;
+  --accent-soft: #C99A77;
+  --accent-bg: #EFE3D2;
+  --line: #E5DDD0;
+  --line-soft: #EFE9DD;
+  --ok: #7A9266;
+  --ok-bg: #E8EEDF;
+  --warn: #B8674F;
+  --warn-bg: #F4E2D9;
+  --shadow: 0 1px 2px rgba(58,46,38,0.04), 0 4px 12px rgba(58,46,38,0.04);
+}
 
-  .progress-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
-  .progress-bar { flex: 1; height: 4px; background: #DDD8CE; border-radius: 2px; overflow: hidden; }
-  .progress-fill { height: 100%; background: #4A2E10; border-radius: 2px; transition: width 0.4s ease; }
-  .progress-label { font-size: 12px; color: #9C8870; white-space: nowrap; }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-  .card { background: white; border-radius: 16px; padding: 32px 28px; border: 1px solid #E8E2D8; }
+html, body { background: var(--bg); }
 
-  .step-tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #9C8870; margin-bottom: 12px; }
+body {
+  font-family: "DM Sans", "Noto Serif TC", -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  color: var(--ink);
+  line-height: 1.65;
+  font-size: 16px;
+  padding: 24px 18px 80px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
 
-  .question { font-size: 18px; font-weight: 600; color: #1C1208; line-height: 1.4; margin-bottom: 4px; }
-  .question-zh { font-size: 13px; color: #9C8870; margin-bottom: 18px; line-height: 1.5; }
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+}
 
-  .sub { font-size: 14px; color: #7A6A58; margin-bottom: 20px; line-height: 1.6; }
-  .sub-zh { font-size: 12px; color: #B0A090; display: block; margin-top: 2px; }
+/* HEADER */
+header {
+  margin-bottom: 28px;
+}
+.brand {
+  font-family: "Fraunces", "Noto Serif TC", serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  letter-spacing: 0.01em;
+  margin-bottom: 4px;
+}
+.brand-zh {
+  font-family: "Noto Serif TC", serif;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  margin-bottom: 18px;
+}
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.progress-bar {
+  flex: 1;
+  height: 3px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  width: 16.6%;
+}
+.progress-text {
+  font-family: "Fraunces", serif;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+  min-width: 36px;
+  text-align: right;
+}
 
-  .scenario {
-    background: #F7F4EF;
-    border-left: 3px solid #C4A882;
-    border-radius: 0 8px 8px 0;
-    padding: 14px 16px;
-    font-size: 14px;
-    line-height: 1.8;
-    color: #3A2A18;
-    margin-bottom: 22px;
-  }
-  .scenario .hint { font-size: 11px; color: #9C8870; font-style: italic; }
+/* STEP */
+.step {
+  display: none;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 32px 24px;
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.step.active { display: block; }
 
-  .choices { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-  .choice-btn {
-    background: white;
-    border: 1.5px solid #DDD8CE;
-    border-radius: 10px;
-    padding: 13px 16px;
-    text-align: left;
-    cursor: pointer;
-    font-size: 14px;
-    color: #1C1208;
-    transition: border-color 0.15s, background 0.15s;
-    line-height: 1.5;
-    font-family: inherit;
-  }
-  .choice-btn .ch-en { font-weight: 600; display: block; }
-  .choice-btn .ch-zh { font-size: 12px; color: #9C8870; display: block; margin-top: 2px; }
-  .choice-btn:hover { border-color: #C4A882; background: #FAF7F2; }
-  .choice-btn.correct { border-color: #5C8A3C; background: #F0F8E8; }
-  .choice-btn.correct .ch-en { color: #2D5018; }
-  .choice-btn.wrong { border-color: #C45A3C; background: #FDF0EC; }
-  .choice-btn.wrong .ch-en { color: #6B2010; }
-  .choice-btn.revealed { border-color: #5C8A3C; background: #F0F8E8; }
-  .choice-btn:disabled { cursor: default; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  .feedback { display: none; padding: 13px 15px; border-radius: 10px; font-size: 13.5px; line-height: 1.6; margin-bottom: 18px; }
-  .feedback.show { display: block; }
-  .feedback.ok { background: #F0F8E8; color: #2D5018; border: 1px solid #A8D080; }
-  .feedback.no { background: #FDF0EC; color: #6B2010; border: 1px solid #E8A888; }
-  .feedback .fb-en { font-weight: 600; display: block; margin-bottom: 3px; }
-  .feedback .fb-zh { font-size: 12px; opacity: 0.8; }
+.eyebrow {
+  font-family: "Fraunces", serif;
+  font-size: 11.5px;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+h1 {
+  font-family: "Fraunces", "Noto Serif TC", serif;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.h1-zh {
+  font-family: "Noto Serif TC", serif;
+  font-size: 15px;
+  color: var(--ink-soft);
+  font-weight: 400;
+  margin-bottom: 22px;
+  letter-spacing: 0.02em;
+}
+h2 {
+  font-family: "Fraunces", "Noto Serif TC", serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 22px;
+  margin-bottom: 8px;
+}
 
-  .sort-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-  .sort-item {
-    background: white;
-    border: 1.5px solid #DDD8CE;
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-size: 13.5px;
-    color: #1C1208;
-    cursor: grab;
-    user-select: none;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    line-height: 1.5;
-  }
-  .sort-item:active { cursor: grabbing; opacity: 0.8; }
-  .sort-item .handle { color: #C4A882; font-size: 15px; flex-shrink: 0; margin-top: 2px; }
-  .sort-item .si-en { font-weight: 600; display: block; }
-  .sort-item .si-zh { font-size: 12px; color: #9C8870; display: block; }
-  .sort-item.dragging { opacity: 0.4; border-style: dashed; }
-  .sort-item.over { border-color: #4A2E10; background: #FAF7F2; }
+p { margin-bottom: 14px; color: var(--ink); }
+.lead { font-size: 16px; color: var(--ink-soft); line-height: 1.75; }
+.zh { font-family: "Noto Serif TC", serif; color: var(--ink-soft); font-size: 14.5px; line-height: 1.85; }
 
-  /* fill frame */
-  .fill-frame { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
-  .fill-block {
-    border: 1px solid #E8E2D8;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .fill-block-header {
-    background: #4A2E10;
-    color: #F7F4EF;
-    padding: 8px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-  }
-  .fill-block-header .fh-zh { font-weight: 400; opacity: 0.7; margin-left: 6px; font-size: 11px; }
-  .fill-block-body { padding: 14px; background: #FAF7F2; }
-  .starter {
-    font-size: 13.5px;
-    color: #3A2A18;
-    margin-bottom: 6px;
-    line-height: 1.8;
-  }
-  .starter .hint-zh { font-size: 11px; color: #9C8870; display: block; }
-  .fill-input-inline {
-    border: none;
-    border-bottom: 1.5px solid #C4A882;
-    background: transparent;
-    font-size: 13.5px;
-    color: #1C1208;
-    padding: 1px 4px;
-    width: 160px;
-    outline: none;
-    font-family: inherit;
-  }
-  .fill-input-inline:focus { border-color: #4A2E10; }
-  textarea.fill-area {
-    width: 100%;
-    border: 1.5px solid #DDD8CE;
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 13.5px;
-    font-family: inherit;
-    color: #1C1208;
-    resize: vertical;
-    min-height: 72px;
-    outline: none;
-    background: white;
-    line-height: 1.6;
-    margin-top: 6px;
-  }
-  textarea.fill-area:focus { border-color: #4A2E10; }
+.note {
+  background: var(--accent-bg);
+  border-left: 3px solid var(--accent);
+  padding: 16px 18px;
+  border-radius: 0 10px 10px 0;
+  margin: 20px 0;
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+.note strong { color: var(--accent); font-weight: 600; }
 
-  .nav-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #4A2E10;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 13px 22px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.15s;
-    font-family: inherit;
-  }
-  .nav-btn:hover { background: #3A2008; }
-  .nav-btn:disabled { background: #DDD8CE; color: #9C8870; cursor: default; }
-  .nav-btn.secondary { background: transparent; color: #7A6A58; border: 1.5px solid #DDD8CE; }
-  .nav-btn.secondary:hover { background: #FAF7F2; }
-  .btn-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+/* PILLS - the four parts overview */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 4px;
+}
+.pill {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-family: "Fraunces", serif;
+  font-size: 13.5px;
+  color: var(--ink);
+  font-weight: 500;
+}
 
-  .completion { text-align: center; padding: 16px 0; }
-  .completion .big { font-size: 48px; margin-bottom: 12px; }
-  .completion h2 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
-  .completion p { font-size: 14px; color: #7A6A58; line-height: 1.7; }
+/* SORT ACTIVITY (Step 2) */
+.sort-section { margin: 20px 0 8px; }
+.sort-label {
+  font-family: "Fraunces", serif;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.sort-pool {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+  min-height: 8px;
+}
+.sort-card {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.sort-card:hover, .sort-card:active {
+  border-color: var(--accent-soft);
+  background: var(--bg-soft);
+  transform: translateY(-1px);
+}
+.sort-card .en {
+  font-family: "Fraunces", serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+.sort-card .zh-sub {
+  font-family: "Noto Serif TC", serif;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
 
-  .hidden { display: none !important; }
+.sort-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sort-slot {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  min-height: 64px;
+}
+.slot-num {
+  font-family: "Fraunces", serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink-faint);
+  width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-variant-numeric: tabular-nums;
+}
+.slot-drop {
+  flex: 1;
+  background: var(--bg);
+  border: 1.5px dashed var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  color: var(--ink-faint);
+  font-size: 14px;
+  font-family: "Noto Serif TC", serif;
+  cursor: default;
+  transition: all 0.2s;
+}
+.slot-drop.filled {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-style: solid;
+  color: var(--ink);
+  cursor: pointer;
+}
+.slot-drop.filled:hover {
+  border-color: var(--warn);
+  background: var(--warn-bg);
+}
+.slot-drop.correct {
+  background: var(--ok-bg);
+  border-color: var(--ok);
+  color: var(--ink);
+  cursor: default;
+}
+.slot-drop.wrong {
+  background: var(--warn-bg);
+  border-color: var(--warn);
+  color: var(--ink);
+  cursor: default;
+}
+.slot-content .en {
+  font-family: "Fraunces", serif;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.slot-content .zh-sub {
+  font-family: "Noto Serif TC", serif;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.feedback {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 10px;
+  font-size: 14.5px;
+  line-height: 1.75;
+  display: none;
+}
+.feedback.show { display: block; }
+.feedback.ok {
+  background: var(--ok-bg);
+  border-left: 3px solid var(--ok);
+}
+.feedback.no {
+  background: var(--warn-bg);
+  border-left: 3px solid var(--warn);
+}
+.feedback strong { font-family: "Fraunces", serif; font-weight: 600; }
+
+/* EXAMPLE READING (Step 3) */
+.passage {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 20px;
+  margin: 20px 0;
+  font-family: "Fraunces", "Noto Serif TC", serif;
+  font-size: 15.5px;
+  line-height: 1.85;
+}
+.passage p { margin-bottom: 14px; }
+.passage p:last-child { margin-bottom: 0; }
+.seg {
+  padding: 2px 6px;
+  border-radius: 4px;
+  border-bottom: 2px solid;
+  display: inline;
+}
+.seg-1 { background: #F4E8DA; border-color: #C99A77; }
+.seg-2 { background: #F4DDD3; border-color: #B8674F; }
+.seg-3 { background: #E4E8D4; border-color: #7A9266; }
+.seg-4 { background: #DEE5DC; border-color: #5A7B6D; }
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0 4px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+.legend-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border-bottom: 2px solid;
+  flex-shrink: 0;
+}
+
+/* MATCH ACTIVITY (Step 4) */
+.match-item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.match-sentence {
+  font-family: "Fraunces", serif;
+  font-size: 15.5px;
+  line-height: 1.65;
+  margin-bottom: 4px;
+}
+.match-sentence-zh {
+  font-family: "Noto Serif TC", serif;
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+}
+.match-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.match-opt {
+  background: var(--bg);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-family: "Fraunces", serif;
+  font-size: 13.5px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+  color: var(--ink);
+}
+.match-opt:hover { border-color: var(--accent-soft); }
+.match-opt.picked {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+.match-opt.correct {
+  background: var(--ok-bg);
+  border-color: var(--ok);
+  color: var(--ok);
+  font-weight: 600;
+}
+.match-opt.wrong {
+  background: var(--warn-bg);
+  border-color: var(--warn);
+  color: var(--warn);
+}
+
+/* WRITE (Step 5) */
+.topic-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 22px;
+}
+.topic-btn {
+  background: var(--bg);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-family: "Fraunces", serif;
+  font-size: 13.5px;
+  cursor: pointer;
+  color: var(--ink);
+  transition: all 0.15s;
+}
+.topic-btn:hover { border-color: var(--accent-soft); }
+.topic-btn.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg-soft);
+}
+
+.write-block {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.write-tag {
+  font-family: "Fraunces", serif;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.write-tag-zh {
+  font-family: "Noto Serif TC", serif;
+  color: var(--ink-faint);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  margin-left: 6px;
+}
+.starter {
+  font-family: "Fraunces", serif;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--ink);
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+.starter-zh {
+  font-family: "Noto Serif TC", serif;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+}
+.starter input {
+  border: none;
+  border-bottom: 1.5px solid var(--accent-soft);
+  background: transparent;
+  font-family: "Fraunces", serif;
+  font-size: 15px;
+  color: var(--accent);
+  padding: 2px 4px;
+  min-width: 80px;
+  width: auto;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.starter input:focus { border-bottom-color: var(--accent); }
+.starter input::placeholder { color: var(--ink-faint); opacity: 0.7; font-style: italic; }
+
+/* OUTPUT (Step 6) */
+.output-meta {
+  font-family: "Fraunces", serif;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.output-box {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px 22px;
+  font-family: "Fraunces", "Noto Serif TC", serif;
+  font-size: 15.5px;
+  line-height: 1.85;
+  color: var(--ink);
+  white-space: pre-wrap;
+  margin-bottom: 18px;
+  min-height: 200px;
+}
+.output-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* BUTTONS */
+.btn {
+  border: none;
+  cursor: pointer;
+  font-family: "Fraunces", "Noto Serif TC", serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  padding: 11px 22px;
+  border-radius: 10px;
+  transition: all 0.15s;
+  letter-spacing: 0.01em;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--bg-soft);
+}
+.btn-primary:hover { background: #2A2018; }
+.btn-primary:disabled {
+  background: var(--ink-faint);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1.5px solid var(--line);
+}
+.btn-ghost:hover { background: var(--bg-soft); border-color: var(--ink-soft); }
+.btn-accent {
+  background: var(--accent);
+  color: var(--bg-soft);
+}
+.btn-accent:hover { background: #8E6240; }
+.btn-small {
+  padding: 8px 14px;
+  font-size: 13.5px;
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 22px;
+}
+.nav .btn:only-child { margin-left: auto; }
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  body { padding: 18px 14px 70px; }
+  .step { padding: 26px 20px; border-radius: 16px; }
+  h1 { font-size: 22px; }
+  .h1-zh { font-size: 14px; }
+  .passage { padding: 18px 16px; font-size: 15px; }
+  .match-options { grid-template-columns: 1fr 1fr; }
+  .match-opt { font-size: 12.5px; padding: 7px 8px; }
+  .btn { padding: 10px 16px; font-size: 14px; }
+  .sort-card .en { font-size: 15px; }
+}
+
+/* COPY TOAST */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--ink);
+  color: var(--bg-soft);
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-family: "Fraunces", "Noto Serif TC", serif;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(58,46,38,0.2);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none;
+  z-index: 100;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="progress-wrap">
-    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
-    <div class="progress-label" id="prog-label">0 / 7</div>
-  </div>
-  <div class="card" id="card"></div>
+<div class="container">
+
+  <header>
+    <div class="brand">B4 L8 — Problem-Solution Warmup</div>
+    <div class="brand-zh">英文寫作架構暖身　·　Sharon&rsquo;s English Lab</div>
+    <div class="progress">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText">1 / 6</div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============ STEP 1: WELCOME ============ -->
+    <section class="step active" data-step="1">
+      <div class="eyebrow">Step 1 · Why structure</div>
+      <h1>Before you read, learn the shape.</h1>
+      <div class="h1-zh">在讀文章之前，先認識它的形狀。</div>
+
+      <p class="lead">A problem-solution article almost always moves through four parts. If you know the shape, you know what to look for &mdash; in the textbook, in your own writing, and in anything AI writes for you.</p>
+      <p class="zh">一篇 problem-solution 的文章，通常會走過四個段落。先看懂這個形狀，你才有辦法判斷課本怎麼鋪陳、自己怎麼寫，以及 AI 寫的東西哪裡有問題。</p>
+
+      <div class="pills">
+        <div class="pill">Introduce the problem</div>
+        <div class="pill">Negative impact</div>
+        <div class="pill">Propose solutions</div>
+        <div class="pill">Conclusion</div>
+      </div>
+
+      <div class="note">
+        <strong>Why now &mdash; before reading?</strong><br>
+        AI can write a whole article in three seconds. But if you don&rsquo;t know the shape, you can&rsquo;t tell whether it wrote a good one. Structure is the lens.
+        <br><br>
+        <span class="zh">AI 三秒鐘可以生一篇。但你不懂結構，就看不出它寫得好不好。結構，是你的判斷工具。</span>
+      </div>
+    </section>
+
+    <!-- ============ STEP 2: SORT ============ -->
+    <section class="step" data-step="2">
+      <div class="eyebrow">Step 2 · Structure</div>
+      <h1>Put these four parts in order.</h1>
+      <div class="h1-zh">把這四個段落排成正確的順序。</div>
+
+      <p class="lead">Tap a card to add it. Tap a placed card to take it back.</p>
+      <p class="zh">點上方卡片加入下方順序；點下方已選的卡片可以拿回來。</p>
+
+      <div class="sort-section">
+        <div class="sort-label">Cards</div>
+        <div class="sort-pool" id="sortPool"></div>
+
+        <div class="sort-label">Your order</div>
+        <div class="sort-slots" id="sortSlots"></div>
+      </div>
+
+      <div class="feedback" id="sortFeedback"></div>
+
+      <div style="margin-top: 18px;">
+        <button class="btn btn-accent" id="checkSortBtn">Check order　確認順序</button>
+        <button class="btn btn-ghost btn-small" id="resetSortBtn" style="margin-left: 8px;">Reset</button>
+      </div>
+    </section>
+
+    <!-- ============ STEP 3: EXAMPLE ============ -->
+    <section class="step" data-step="3">
+      <div class="eyebrow">Step 3 · See it in action</div>
+      <h1>One short example, fully labeled.</h1>
+      <div class="h1-zh">先看一個完整的小範例，每一段都標好顏色。</div>
+
+      <div class="legend">
+        <div class="legend-item"><div class="legend-swatch seg-1" style="background:#F4E8DA;border-color:#C99A77"></div><span>Introduce the problem　介紹問題</span></div>
+        <div class="legend-item"><div class="legend-swatch seg-2" style="background:#F4DDD3;border-color:#B8674F"></div><span>Negative impact　負面影響</span></div>
+        <div class="legend-item"><div class="legend-swatch seg-3" style="background:#E4E8D4;border-color:#7A9266"></div><span>Propose solutions　提出解法</span></div>
+        <div class="legend-item"><div class="legend-swatch seg-4" style="background:#DEE5DC;border-color:#5A7B6D"></div><span>Conclusion　結論</span></div>
+      </div>
+
+      <div class="passage">
+        <p><span class="seg seg-1">Taiwan is suffering from a phenomenon called the &ldquo;science craze.&rdquo; This occurs when high school students rush to pick science tracks while humanities classes shrink year by year.</span></p>
+        <p><span class="seg seg-2">Many humanities teachers are fed up with empty classrooms. Some have even been forced to switch subjects or leave the profession entirely.</span></p>
+        <p><span class="seg seg-3">To address this issue, schools could redesign humanities courses to feel more connected to real-world problems. The government could also fund cross-disciplinary programs that mix science with the arts.</span></p>
+        <p><span class="seg seg-4">If we act now, the humanities may finally regain their place in students&rsquo; futures. But real change takes time &mdash; and a different way of measuring what counts as a &ldquo;useful&rdquo; subject.</span></p>
+      </div>
+
+      <p class="zh">注意每段都有一個明確功能。第一段「給名字」，第二段「給後果」，第三段「給做法」，第四段「給判斷」。順序不能亂。</p>
+    </section>
+
+    <!-- ============ STEP 4: MATCH ============ -->
+    <section class="step" data-step="4">
+      <div class="eyebrow">Step 4 · You try it</div>
+      <h1>Which part does each sentence belong to?</h1>
+      <div class="h1-zh">下面四個句子，分別屬於哪一段功能？</div>
+
+      <p class="zh" style="margin-bottom:18px;">這是另一個主題：教師荒。每一句點選它應該放在哪一段。</p>
+
+      <div id="matchList"></div>
+
+      <div class="feedback" id="matchFeedback"></div>
+
+      <div style="margin-top:8px;">
+        <button class="btn btn-accent" id="checkMatchBtn">Check answers　確認答案</button>
+      </div>
+    </section>
+
+    <!-- ============ STEP 5: WRITE ============ -->
+    <section class="step" data-step="5">
+      <div class="eyebrow">Step 5 · Your turn</div>
+      <h1>Fill in your own four-part frame.</h1>
+      <div class="h1-zh">用 sentence starters 寫出你自己的四段架構。</div>
+
+      <p class="zh" style="margin-bottom:8px;">先選一個你想寫的主題（或自己加一個），再填空。寫完到最後一頁，可以一鍵複製整篇。</p>
+
+      <div class="topic-picker" id="topicPicker">
+        <button class="topic-btn active" data-topic="low birth rate">low birth rate　低出生率</button>
+        <button class="topic-btn" data-topic="teacher shortage">teacher shortage　教師荒</button>
+        <button class="topic-btn" data-topic="science craze">science craze　理科熱潮</button>
+        <button class="topic-btn" data-topic="overtourism">overtourism　過度觀光</button>
+        <button class="topic-btn" data-topic="">My own topic ✎</button>
+      </div>
+
+      <input type="text" id="customTopic" placeholder="Type your own topic here..." style="display:none; width:100%; padding:10px 14px; border:1.5px solid var(--line); border-radius:10px; font-family:'Fraunces',serif; font-size:14.5px; background:var(--bg); margin-bottom:18px;">
+
+      <!-- INTRO -->
+      <div class="write-block">
+        <div class="write-tag">① Introduction <span class="write-tag-zh">介紹問題</span></div>
+        <div class="starter">
+          <input type="text" data-key="w1_subject" placeholder="Taiwan / Young people..." size="14">
+          is suffering from a phenomenon called &ldquo;<input type="text" data-key="w1_name" placeholder="the problem name" size="18">&rdquo;.
+        </div>
+        <div class="starter-zh">主詞（誰受影響）+ 現象名稱</div>
+        <div class="starter">
+          This occurs when <input type="text" data-key="w1_when" placeholder="what causes it" size="30">.
+        </div>
+        <div class="starter-zh">什麼情況下發生</div>
+      </div>
+
+      <!-- IMPACT -->
+      <div class="write-block">
+        <div class="write-tag">② Negative impact <span class="write-tag-zh">負面影響</span></div>
+        <div class="starter">
+          Many <input type="text" data-key="w2_who" placeholder="who suffers" size="14"> are fed up with <input type="text" data-key="w2_what" placeholder="what bothers them" size="18">.
+        </div>
+        <div class="starter-zh">誰受害？對什麼感到厭煩？</div>
+        <div class="starter">
+          Some <input type="text" data-key="w2_who2" placeholder="people / group" size="12"> have even been forced to <input type="text" data-key="w2_action" placeholder="more serious result" size="18">.
+        </div>
+        <div class="starter-zh">更嚴重的後果</div>
+      </div>
+
+      <!-- SOLUTIONS -->
+      <div class="write-block">
+        <div class="write-tag">③ Propose solutions <span class="write-tag-zh">提出解法</span></div>
+        <div class="starter">
+          To address this issue, <input type="text" data-key="w3_actor" placeholder="who acts" size="14"> could <input type="text" data-key="w3_action" placeholder="what they do" size="18">.
+        </div>
+        <div class="starter-zh">第一個做法</div>
+        <div class="starter">
+          In addition, <input type="text" data-key="w3_actor2" placeholder="another actor" size="14"> should consider <input type="text" data-key="w3_action2" placeholder="another action" size="18">.
+        </div>
+        <div class="starter-zh">第二個做法</div>
+      </div>
+
+      <!-- CONCLUSION -->
+      <div class="write-block">
+        <div class="write-tag">④ Conclusion <span class="write-tag-zh">結論</span></div>
+        <div class="starter">
+          If we take action now, <input type="text" data-key="w4_who" placeholder="who benefits" size="14"> may finally <input type="text" data-key="w4_outcome" placeholder="positive outcome" size="18">.
+        </div>
+        <div class="starter-zh">行動之後的可能改變</div>
+        <div class="starter">
+          However, real change requires <input type="text" data-key="w4_caveat" placeholder="what it really takes" size="22">.
+        </div>
+        <div class="starter-zh">但真正的改變需要什麼</div>
+      </div>
+    </section>
+
+    <!-- ============ STEP 6: OUTPUT ============ -->
+    <section class="step" data-step="6">
+      <div class="eyebrow">Step 6 · Your draft</div>
+      <h1>Here&rsquo;s your four-paragraph frame.</h1>
+      <div class="h1-zh">這是你剛剛寫的四段草稿，可以一鍵複製或下載。</div>
+
+      <div class="output-meta" id="outputMeta">Topic — your draft</div>
+      <div class="output-box" id="outputBox"></div>
+
+      <div class="output-actions">
+        <button class="btn btn-primary" id="copyBtn">Copy　複製</button>
+        <button class="btn btn-accent" id="downloadBtn">Download .txt</button>
+        <button class="btn btn-ghost" id="editBtn">Edit again　回去修改</button>
+      </div>
+
+      <div class="note" style="margin-top:24px;">
+        <strong>What to do next　接下來</strong><br>
+        Paste this into your notebook or a document. Read it out loud. Then ask: <em>does each paragraph really do its job?</em> If yes, you have a real frame to expand into a full essay &mdash; with or without AI.
+        <br><br>
+        <span class="zh">把這段貼到筆記本或 Google Doc，唸一遍，然後問自己：每一段真的有做到它該做的事嗎？如果有，就有一個真正能撐起一篇文章的骨架了 —— 不論你接下來要不要請 AI 幫忙都一樣。</span>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="nav">
+    <button class="btn btn-ghost" id="prevBtn" style="display:none;">← Back</button>
+    <button class="btn btn-primary" id="nextBtn">Next →</button>
+  </nav>
+
 </div>
 
+<div class="toast" id="toast">Copied to clipboard　已複製</div>
+
 <script>
-const STEPS = [
+// ============ STATE ============
+let currentStep = 1;
+const totalSteps = 6;
 
-  {
-    type: 'intro',
-    tag: 'B4 L8 · Warm-up',
-    qEn: 'Which problem feels most real to you?',
-    qZh: '哪個問題你最有感？選一個。',
-    subEn: 'Pick one — there\'s no wrong answer.',
-    subZh: '選一個就好，沒有對錯。',
-    choices: [
-      { en: 'Too many students choose science — arts teachers are disappearing.', zh: '理科太熱，文科老師快不夠用了' },
-      { en: 'Low birth rate: many schools may close soon.', zh: '少子化：很多學校快倒了' },
-      { en: 'Phone addiction: avg. high schooler scrolls 6 hrs a day.', zh: '手機成癮：高中生平均每天滑 6 小時' },
-      { en: 'Labor shortage: factories can\'t find enough workers.', zh: '缺工：工廠找不到人' },
-    ],
-    correct: null
-  },
-
-  {
-    type: 'mcq',
-    tag: 'Step 1 of 6 · Structure',
-    qEn: 'How many parts does a problem-solution essay usually have?',
-    qZh: '一篇 problem-solution 文章通常有幾個部分？',
-    subEn: 'Think first, then choose.',
-    subZh: '先想一想，再選。',
-    choices: [
-      { en: '2 parts', zh: '2 個' },
-      { en: '3 parts', zh: '3 個' },
-      { en: '4 parts', zh: '4 個' },
-      { en: '5 parts', zh: '5 個' },
-    ],
-    correct: 2,
-    fb: {
-      ok: { en: 'Correct! The four parts are: Introduction → Negative Impact → Solutions → Conclusion.', zh: '正確！四個部分：介紹問題 → 負面影響 → 解法 → 結論。' },
-      no: { en: 'Not quite. Think about it: you need to introduce the problem, explain its impact, offer solutions, and wrap up.', zh: '再想想。你需要介紹問題、說明影響、提出解法、最後收尾，共四個部分。' }
-    }
-  },
-
-  {
-    type: 'sort',
-    tag: 'Step 2 of 6 · Structure',
-    qEn: 'Put these four parts in the correct order.',
-    qZh: '把四個部分拖成正確的順序。',
-    subEn: 'Drag to reorder. 拖動排列。',
-    items: [
-      { id: 'a', en: '③ Propose solutions', zh: '提出解決方案' },
-      { id: 'b', en: '① Introduce the problem', zh: '介紹問題是什麼' },
-      { id: 'd', en: '④ Conclusion: can it be solved?', zh: '結論：能解決嗎？' },
-      { id: 'c', en: '② Explain the negative impact', zh: '說明問題的負面影響' },
-    ],
-    correctOrder: ['b','c','a','d'],
-    fb: {
-      ok: { en: 'Perfect order! This is the skeleton of every problem-solution essay.', zh: '完全正確！這就是每篇 problem-solution 文章的骨架。' },
-      no: { en: 'Not quite. The correct order: Introduce → Negative Impact → Solutions → Conclusion.', zh: '順序不對。正確是：介紹問題 → 負面影響 → 解法 → 結論。' }
-    }
-  },
-
-  {
-    type: 'mcq',
-    tag: 'Step 3 of 6 · Reading',
-    qEn: 'Read this paragraph. Which part is it?',
-    qZh: '讀這段文字，它屬於哪個部分？',
-    scenario: `Taiwan is <strong>suffering from</strong> a phenomenon called the "science fever." <span class="hint">（suffering from = 飽受……之苦）</span> This occurs when students <strong>overwhelmingly choose</strong> science over arts subjects. In 2015, the trend started to accelerate. By 2023, the proportion of students choosing STEM <strong>had grown to twice as large as</strong> that in 2013. <span class="hint">（twice as large as = 是……的兩倍）</span> As expected, tech companies benefited, but arts programs and their teachers bore the cost.`,
-    choices: [
-      { en: '① Introduction', zh: '介紹問題' },
-      { en: '② Negative Impact', zh: '負面影響' },
-      { en: '③ Solutions', zh: '解法' },
-      { en: '④ Conclusion', zh: '結論' },
-    ],
-    correct: 0,
-    fb: {
-      ok: { en: 'Correct! This paragraph names the problem, explains when it started, and gives data. That\'s exactly what an Introduction does.', zh: '正確！這段說了問題叫什麼、什麼時候開始、有多嚴重。這就是 Introduction 的功能。' },
-      no: { en: 'Look again — this paragraph names the problem and gives data about its growth. That\'s an Introduction, not impact or solutions.', zh: '再看看——這段在介紹問題本身和數據，不是在說誰受傷或怎麼解決。' }
-    }
-  },
-
-  {
-    type: 'mcq',
-    tag: 'Step 4 of 6 · Reading',
-    qEn: 'What about this paragraph?',
-    qZh: '這段呢？屬於哪個部分？',
-    scenario: `<strong>Complaints</strong> about the problem are common. <span class="hint">（complaints = 抱怨、投訴）</span> "These days, I can't fill my English class," said Mr. Chen, a cram school owner. "I used to have 30 students. Now I have three." Residents are also <strong>fed up with</strong> the situation. <span class="hint">（be fed up with = 對……感到厭煩）</span> Some arts teachers have even <strong>been forced to</strong> change careers. Ms. Lin, a history teacher with 12 years of experience, was unable to find a full-time position for two years in a row.`,
-    choices: [
-      { en: '① Introduction', zh: '介紹問題' },
-      { en: '② Negative Impact', zh: '負面影響' },
-      { en: '③ Solutions', zh: '解法' },
-      { en: '④ Conclusion', zh: '結論' },
-    ],
-    correct: 1,
-    fb: {
-      ok: { en: 'Yes! This paragraph shows who is hurt and how — with real names and examples. That\'s Negative Impact.', zh: '對！這段用真實案例說明誰受到傷害。Negative Impact 一定要有受害者和具體例子。' },
-      no: { en: 'Notice the structure: real victims (Mr. Chen, Ms. Lin) + specific examples. This is Negative Impact, not Introduction or Solutions.', zh: '注意：這段有受害者（陳先生、林老師）+ 具體案例。這是 Negative Impact，不是 Introduction 或 Solutions。' }
-    }
-  },
-
-  {
-    type: 'fill',
-    tag: 'Step 5 of 6 · Your Turn',
-    qEn: 'Now write your own. Use the sentence starters below.',
-    qZh: '換你了！用下面的句子開頭，用英文填寫你自己的例子。',
-    subEn: 'Choose any Taiwan social problem you know. Write in English — use the starters to help you.',
-    subZh: '選一個你有感的台灣社會問題，用英文填。句子開頭已幫你寫好了。',
-  },
-
-  {
-    type: 'done'
-  }
-
+// ============ SORT ACTIVITY DATA ============
+const sortCards = [
+  { id: 'intro', order: 1, en: 'Introduce the problem', zh: '介紹問題是什麼' },
+  { id: 'impact', order: 2, en: 'Explain the negative impact', zh: '說明問題的負面影響' },
+  { id: 'solve', order: 3, en: 'Propose solutions', zh: '提出解決方案' },
+  { id: 'concl', order: 4, en: 'Conclusion: can it be solved?', zh: '結論：能解決嗎？' }
 ];
 
-let current = 0;
-let answered = false;
-let dragSrc = null;
-let fillData = {};
-
-function updateProgress() {
-  const total = STEPS.length - 1;
-  const pct = Math.round((current / total) * 100);
-  document.getElementById('prog').style.width = pct + '%';
-  document.getElementById('prog-label').textContent = current + ' / ' + total;
+// shuffle helper
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  // ensure not already in order
+  if (a.every((c, i) => c.order === i + 1)) return shuffle(arr);
+  return a;
 }
 
-function render() {
-  updateProgress();
-  const s = STEPS[current];
-  const card = document.getElementById('card');
-  answered = false;
+let sortPool = shuffle(sortCards);
+let sortSlots = [null, null, null, null];
 
-  if (s.type === 'done') {
-    card.innerHTML = `<div class="completion">
-      <div class="big">✓</div>
-      <h2>Well done!</h2>
-      <p>You've learned the four-part structure<br>and practised it with real English sentences.<br><br>
-      <span style="font-size:12px;color:#B0A090;">把 Step 5 的框架帶去下一堂課，<br>會繼續把它寫成完整的文章。</span></p>
-    </div>`;
-    return;
-  }
+function renderSort() {
+  const poolEl = document.getElementById('sortPool');
+  const slotsEl = document.getElementById('sortSlots');
 
-  let html = `<div class="step-tag">${s.tag}</div>
-    <div class="question">${s.qEn}</div>
-    <div class="question-zh">${s.qZh}</div>`;
-
-  if (s.subEn) {
-    html += `<div class="sub">${s.subEn} <span class="sub-zh">${s.subZh || ''}</span></div>`;
-  }
-
-  if (s.scenario) {
-    html += `<div class="scenario">${s.scenario}</div>`;
-  }
-
-  if (s.type === 'intro' || s.type === 'mcq') {
-    html += `<div class="choices" id="choices">`;
-    s.choices.forEach((c, i) => {
-      html += `<button class="choice-btn" onclick="pick(${i})">
-        <span class="ch-en">${c.en}</span>
-        <span class="ch-zh">${c.zh}</span>
-      </button>`;
+  poolEl.innerHTML = '';
+  sortPool.forEach(card => {
+    const div = document.createElement('div');
+    div.className = 'sort-card';
+    div.innerHTML = `<div class="en">${card.en}</div><div class="zh-sub">${card.zh}</div>`;
+    div.addEventListener('click', () => {
+      const empty = sortSlots.findIndex(s => s === null);
+      if (empty === -1) return;
+      sortSlots[empty] = card;
+      sortPool = sortPool.filter(c => c.id !== card.id);
+      renderSort();
+      hideFeedback('sortFeedback');
     });
-    html += `</div>`;
-    html += `<div class="feedback" id="fb"></div>`;
-    html += `<div class="btn-row"><button class="nav-btn" id="next-btn" onclick="next()" disabled>Continue →</button></div>`;
-  }
-
-  else if (s.type === 'sort') {
-    html += `<div class="sort-list" id="sort-list">`;
-    const shuffled = [...s.items];
-    shuffled.forEach(item => {
-      html += `<div class="sort-item" draggable="true" data-id="${item.id}">
-        <span class="handle">⠿</span>
-        <span><span class="si-en">${item.en}</span><span class="si-zh">${item.zh}</span></span>
-      </div>`;
-    });
-    html += `</div>`;
-    html += `<div class="feedback" id="fb"></div>`;
-    html += `<div class="btn-row">
-      <button class="nav-btn secondary" onclick="checkSort()">Check order 確認順序</button>
-      <button class="nav-btn hidden" id="next-btn" onclick="next()">Continue →</button>
-    </div>`;
-  }
-
-  else if (s.type === 'fill') {
-    html += `<div class="fill-frame">`;
-
-    html += `<div class="fill-block">
-      <div class="fill-block-header">① Introduction <span class="fh-zh">介紹問題</span></div>
-      <div class="fill-block-body">
-        <div class="starter">
-          <strong>___</strong> is suffering from a phenomenon called <strong>"___"</strong>.
-          <span class="hint-zh">（主詞：台灣 / 年輕人 / 高中生… ｜ 現象名稱）</span>
-        </div>
-        <textarea class="fill-area" id="f_intro" placeholder='e.g. Taiwan is suffering from a phenomenon called "low birth rate."'>${fillData['f_intro']||''}</textarea>
-        <div class="starter" style="margin-top:8px;">
-          This occurs when <strong>___</strong>.
-          <span class="hint-zh">（什麼情況下這個問題會發生？）</span>
-        </div>
-        <textarea class="fill-area" id="f_occurs" placeholder="e.g. This occurs when young couples choose not to have children.">${fillData['f_occurs']||''}</textarea>
-      </div>
-    </div>`;
-
-    html += `<div class="fill-block">
-      <div class="fill-block-header">② Negative Impact <span class="fh-zh">負面影響</span></div>
-      <div class="fill-block-body">
-        <div class="starter">
-          Many <strong>___</strong> are fed up with <strong>___</strong>.
-          <span class="hint-zh">（誰受害？對什麼感到厭煩？）</span>
-        </div>
-        <textarea class="fill-area" id="f_impact1" placeholder="e.g. Many young teachers are fed up with the lack of job opportunities.">${fillData['f_impact1']||''}</textarea>
-        <div class="starter" style="margin-top:8px;">
-          Some <strong>___</strong> have even been forced to <strong>___</strong>.
-          <span class="hint-zh">（更嚴重的後果）</span>
-        </div>
-        <textarea class="fill-area" id="f_impact2" placeholder="e.g. Some arts teachers have even been forced to change careers.">${fillData['f_impact2']||''}</textarea>
-      </div>
-    </div>`;
-
-    html += `<div class="fill-block">
-      <div class="fill-block-header">③ Solutions <span class="fh-zh">解法</span></div>
-      <div class="fill-block-body">
-        <div class="starter">
-          The good news is that <strong>___</strong> are aware of the problem.
-          <span class="hint-zh">（誰意識到這個問題？政府？學校？）</span>
-        </div>
-        <textarea class="fill-area" id="f_sol" placeholder="e.g. The good news is that the government is aware of the problem. They believe that only by offering more subsidies can the situation improve.">${fillData['f_sol']||''}</textarea>
-      </div>
-    </div>`;
-
-    html += `</div>`;
-    html += `<div class="btn-row"><button class="nav-btn" onclick="saveFill()">Done — next step ✓</button></div>`;
-  }
-
-  card.innerHTML = html;
-  if (s.type === 'sort') initDrag();
-}
-
-function pick(i) {
-  if (answered) return;
-  const s = STEPS[current];
-  answered = true;
-  const btns = document.querySelectorAll('.choice-btn');
-  btns.forEach(b => b.disabled = true);
-  const fb = document.getElementById('fb');
-  const nextBtn = document.getElementById('next-btn');
-
-  if (s.type === 'intro') {
-    btns[i].style.borderColor = '#C4A882';
-    btns[i].style.background = '#FAF7F2';
-    nextBtn.disabled = false;
-    return;
-  }
-
-  const isOk = i === s.correct;
-  if (isOk) {
-    btns[i].classList.add('correct');
-    fb.innerHTML = `<span class="fb-en">✓ ${s.fb.ok.en}</span><span class="fb-zh">${s.fb.ok.zh}</span>`;
-    fb.className = 'feedback show ok';
-  } else {
-    btns[i].classList.add('wrong');
-    btns[s.correct].classList.add('revealed');
-    fb.innerHTML = `<span class="fb-en">✗ ${s.fb.no.en}</span><span class="fb-zh">${s.fb.no.zh}</span>`;
-    fb.className = 'feedback show no';
-  }
-  nextBtn.disabled = false;
-}
-
-function checkSort() {
-  const list = document.getElementById('sort-list');
-  const order = [...list.querySelectorAll('.sort-item')].map(el => el.dataset.id);
-  const s = STEPS[current];
-  const ok = JSON.stringify(order) === JSON.stringify(s.correctOrder);
-  const fb = document.getElementById('fb');
-  const nextBtn = document.getElementById('next-btn');
-  if (ok) {
-    fb.innerHTML = `<span class="fb-en">✓ ${s.fb.ok.en}</span><span class="fb-zh">${s.fb.ok.zh}</span>`;
-    fb.className = 'feedback show ok';
-    nextBtn.classList.remove('hidden');
-    document.querySelector('.nav-btn.secondary').disabled = true;
-  } else {
-    fb.innerHTML = `<span class="fb-en">✗ ${s.fb.no.en}</span><span class="fb-zh">${s.fb.no.zh}</span>`;
-    fb.className = 'feedback show no';
-  }
-}
-
-function saveFill() {
-  ['f_intro','f_occurs','f_impact1','f_impact2','f_sol'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) fillData[id] = el.value;
+    poolEl.appendChild(div);
   });
-  next();
+
+  slotsEl.innerHTML = '';
+  sortSlots.forEach((card, i) => {
+    const row = document.createElement('div');
+    row.className = 'sort-slot';
+    row.innerHTML = `<div class="slot-num">${i + 1}</div>`;
+    const drop = document.createElement('div');
+    drop.className = 'slot-drop' + (card ? ' filled' : '');
+    if (card) {
+      drop.innerHTML = `<div class="slot-content"><div class="en">${card.en}</div><div class="zh-sub">${card.zh}</div></div>`;
+      drop.addEventListener('click', () => {
+        sortPool.push(card);
+        sortSlots[i] = null;
+        renderSort();
+        hideFeedback('sortFeedback');
+      });
+    } else {
+      drop.textContent = 'tap a card above　點上方卡片';
+    }
+    row.appendChild(drop);
+    slotsEl.appendChild(row);
+  });
 }
 
-function next() {
-  if (current < STEPS.length - 1) {
-    current++;
-    render();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+document.getElementById('checkSortBtn').addEventListener('click', () => {
+  if (sortSlots.includes(null)) {
+    showFeedback('sortFeedback', 'no', '<strong>Not yet.</strong> Fill all four slots first.<br><span class="zh">還沒填完，先把四個位置都放上卡片。</span>');
+    return;
   }
-}
+  const correct = sortSlots.every((c, i) => c.order === i + 1);
+  const slotsEl = document.getElementById('sortSlots');
+  Array.from(slotsEl.querySelectorAll('.slot-drop')).forEach((el, i) => {
+    el.classList.remove('correct', 'wrong');
+    el.classList.add(sortSlots[i].order === i + 1 ? 'correct' : 'wrong');
+  });
+  if (correct) {
+    showFeedback('sortFeedback', 'ok', '<strong>Yes.</strong> Introduce → Impact → Solutions → Conclusion. This is the spine of every problem-solution piece.<br><span class="zh">就是這個順序：介紹問題 → 影響 → 解法 → 結論。這就是 problem-solution 的骨架。</span>');
+  } else {
+    showFeedback('sortFeedback', 'no', '<strong>Not quite.</strong> The correct order: Introduce → Impact → Solutions → Conclusion.<br><span class="zh">順序不對。正確是：介紹 → 影響 → 解法 → 結論。再試一次。</span>');
+  }
+});
 
-function initDrag() {
-  const list = document.getElementById('sort-list');
-  list.querySelectorAll('.sort-item').forEach(item => {
-    item.addEventListener('dragstart', e => { dragSrc = item; item.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; });
-    item.addEventListener('dragend', () => { item.classList.remove('dragging'); list.querySelectorAll('.sort-item').forEach(i => i.classList.remove('over')); });
-    item.addEventListener('dragover', e => { e.preventDefault(); list.querySelectorAll('.sort-item').forEach(i => i.classList.remove('over')); if (item !== dragSrc) item.classList.add('over'); });
-    item.addEventListener('drop', e => {
-      e.preventDefault();
-      if (dragSrc && item !== dragSrc) {
-        const all = [...list.querySelectorAll('.sort-item')];
-        const si = all.indexOf(dragSrc), ti = all.indexOf(item);
-        list.insertBefore(dragSrc, si < ti ? item.nextSibling : item);
-      }
-      list.querySelectorAll('.sort-item').forEach(i => i.classList.remove('over'));
+document.getElementById('resetSortBtn').addEventListener('click', () => {
+  sortPool = shuffle(sortCards);
+  sortSlots = [null, null, null, null];
+  renderSort();
+  hideFeedback('sortFeedback');
+});
+
+// ============ MATCH ACTIVITY (Step 4) ============
+const matchSentences = [
+  {
+    en: 'Taiwan is suffering from a serious teacher shortage, especially in rural areas.',
+    zh: '台灣正面臨嚴重的教師荒，尤其是在偏鄉地區。',
+    answer: 1
+  },
+  {
+    en: 'Many students are stuck in oversized classes, and some schools have even been forced to merge.',
+    zh: '許多學生被塞進過大的班級，有些學校甚至被迫合併。',
+    answer: 2
+  },
+  {
+    en: 'To address this, the government could raise starting salaries and reform teacher training programs.',
+    zh: '為了處理這個問題，政府可以提高起薪並改革師培制度。',
+    answer: 3
+  },
+  {
+    en: 'If real reform happens, classrooms may finally have enough hands &mdash; but it will take more than money.',
+    zh: '如果真的改革，教室裡或許終於有夠多人手，但這需要的不只是錢。',
+    answer: 4
+  }
+];
+const matchLabels = {
+  1: 'Introduce　介紹',
+  2: 'Impact　影響',
+  3: 'Solutions　解法',
+  4: 'Conclusion　結論'
+};
+let matchPicks = [null, null, null, null];
+
+function renderMatch() {
+  const list = document.getElementById('matchList');
+  list.innerHTML = '';
+  matchSentences.forEach((s, idx) => {
+    const item = document.createElement('div');
+    item.className = 'match-item';
+    item.innerHTML = `
+      <div class="match-sentence">${s.en}</div>
+      <div class="match-sentence-zh">${s.zh}</div>
+      <div class="match-options" data-idx="${idx}">
+        ${[1,2,3,4].map(n => `<button class="match-opt" data-pick="${n}">${matchLabels[n]}</button>`).join('')}
+      </div>
+    `;
+    list.appendChild(item);
+  });
+  list.querySelectorAll('.match-opt').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const idx = parseInt(btn.parentElement.dataset.idx);
+      const pick = parseInt(btn.dataset.pick);
+      matchPicks[idx] = pick;
+      btn.parentElement.querySelectorAll('.match-opt').forEach(b => b.classList.remove('picked', 'correct', 'wrong'));
+      btn.classList.add('picked');
+      hideFeedback('matchFeedback');
     });
   });
 }
 
-render();
+document.getElementById('checkMatchBtn').addEventListener('click', () => {
+  if (matchPicks.includes(null)) {
+    showFeedback('matchFeedback', 'no', '<strong>Not yet.</strong> Tag every sentence first.<br><span class="zh">每一句都要選一個功能。</span>');
+    return;
+  }
+  let correctCount = 0;
+  document.querySelectorAll('.match-options').forEach((opts, idx) => {
+    const answer = matchSentences[idx].answer;
+    const picked = matchPicks[idx];
+    opts.querySelectorAll('.match-opt').forEach(b => {
+      b.classList.remove('picked', 'correct', 'wrong');
+      const n = parseInt(b.dataset.pick);
+      if (n === answer) b.classList.add('correct');
+      else if (n === picked) b.classList.add('wrong');
+    });
+    if (picked === answer) correctCount++;
+  });
+  if (correctCount === 4) {
+    showFeedback('matchFeedback', 'ok', `<strong>All four correct.</strong> You can feel the four functions now &mdash; that&rsquo;s the muscle you need before writing.<br><span class="zh">四題全對。你已經摸到四個段落的「功能」，這就是寫作前該長出來的肌肉。</span>`);
+  } else {
+    showFeedback('matchFeedback', 'no', `<strong>${correctCount} / 4 correct.</strong> Green = right, red = your pick was off. Look at the green ones again.<br><span class="zh">對了 ${correctCount} 題。綠色是正解，紅色是你選錯的。對照看看就懂了。</span>`);
+  }
+});
+
+// ============ TOPIC PICKER (Step 5) ============
+let currentTopic = 'low birth rate';
+document.querySelectorAll('.topic-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const t = btn.dataset.topic;
+    const customInput = document.getElementById('customTopic');
+    if (t === '') {
+      customInput.style.display = 'block';
+      customInput.focus();
+      currentTopic = customInput.value || 'my topic';
+    } else {
+      customInput.style.display = 'none';
+      currentTopic = t;
+    }
+  });
+});
+document.getElementById('customTopic').addEventListener('input', (e) => {
+  currentTopic = e.target.value || 'my topic';
+});
+
+// ============ OUTPUT (Step 6) ============
+function getVal(key) {
+  const el = document.querySelector(`input[data-key="${key}"]`);
+  return (el && el.value.trim()) || `___`;
+}
+
+function buildDraft() {
+  const subject = getVal('w1_subject');
+  const name = getVal('w1_name');
+  const when = getVal('w1_when');
+  const who = getVal('w2_who');
+  const what = getVal('w2_what');
+  const who2 = getVal('w2_who2');
+  const action = getVal('w2_action');
+  const actor = getVal('w3_actor');
+  const act = getVal('w3_action');
+  const actor2 = getVal('w3_actor2');
+  const act2 = getVal('w3_action2');
+  const benefit = getVal('w4_who');
+  const outcome = getVal('w4_outcome');
+  const caveat = getVal('w4_caveat');
+
+  const p1 = `${subject} is suffering from a phenomenon called "${name}." This occurs when ${when}.`;
+  const p2 = `Many ${who} are fed up with ${what}. Some ${who2} have even been forced to ${action}.`;
+  const p3 = `To address this issue, ${actor} could ${act}. In addition, ${actor2} should consider ${act2}.`;
+  const p4 = `If we take action now, ${benefit} may finally ${outcome}. However, real change requires ${caveat}.`;
+
+  return `${p1}\n\n${p2}\n\n${p3}\n\n${p4}`;
+}
+
+function renderOutput() {
+  const draft = buildDraft();
+  document.getElementById('outputBox').textContent = draft;
+  document.getElementById('outputMeta').textContent = `Topic — ${currentTopic}`;
+}
+
+document.getElementById('copyBtn').addEventListener('click', async () => {
+  const text = `Topic: ${currentTopic}\n\n${buildDraft()}`;
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast();
+  } catch (e) {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); showToast(); } catch {}
+    document.body.removeChild(ta);
+  }
+});
+
+document.getElementById('downloadBtn').addEventListener('click', () => {
+  const text = `Topic: ${currentTopic}\n\n${buildDraft()}`;
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `problem-solution-draft.txt`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('editBtn').addEventListener('click', () => {
+  goToStep(5);
+});
+
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// ============ FEEDBACK ============
+function showFeedback(id, type, html) {
+  const el = document.getElementById(id);
+  el.className = 'feedback show ' + (type === 'ok' ? 'ok' : 'no');
+  el.innerHTML = html;
+}
+function hideFeedback(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+// ============ NAVIGATION ============
+function goToStep(n) {
+  if (n < 1 || n > totalSteps) return;
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.querySelector(`.step[data-step="${n}"]`).classList.add('active');
+  currentStep = n;
+
+  document.getElementById('progressFill').style.width = (n / totalSteps * 100) + '%';
+  document.getElementById('progressText').textContent = `${n} / ${totalSteps}`;
+
+  document.getElementById('prevBtn').style.display = n === 1 ? 'none' : 'inline-block';
+  const next = document.getElementById('nextBtn');
+  if (n === totalSteps) {
+    next.style.display = 'none';
+  } else {
+    next.style.display = 'inline-block';
+    next.textContent = n === totalSteps - 1 ? 'See your draft →' : 'Next →';
+  }
+
+  if (n === 6) renderOutput();
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('nextBtn').addEventListener('click', () => goToStep(currentStep + 1));
+document.getElementById('prevBtn').addEventListener('click', () => goToStep(currentStep - 1));
+
+// ============ INIT ============
+renderSort();
+renderMatch();
+goToStep(1);
 </script>
 </body>
 </html>
