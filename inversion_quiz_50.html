@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>倒裝句練習 50題 — True or False?</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --parchment: #ede5d4;
+    --brown-deep: #3b2a1a;
+    --brown-mid: #7a5c3c;
+    --brown-light: #b08866;
+    --terracotta: #c4714a;
+    --green-soft: #5a7a5a;
+    --red-soft: #b84040;
+    --border: #d4c4a8;
+    --shadow: rgba(59,42,26,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--cream);
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(192,160,110,0.13) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 90%, rgba(196,113,74,0.09) 0%, transparent 50%);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--brown-deep);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+  /* Password screen */
+  .pw-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+  .pw-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2.8rem 2.4rem 2.4rem;
+    box-shadow: 0 2px 24px var(--shadow);
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .pw-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+  }
+  .pw-title {
+    font-family: 'Lora', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--brown-deep);
+    margin-bottom: 0.4rem;
+  }
+  .pw-hint {
+    font-size: 0.83rem;
+    color: var(--brown-light);
+    margin-bottom: 1.8rem;
+    line-height: 1.6;
+  }
+  .pw-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    color: var(--brown-deep);
+    background: var(--cream);
+    text-align: center;
+    letter-spacing: 0.1em;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 0.75rem;
+  }
+  .pw-input:focus { border-color: var(--brown-mid); }
+  .pw-input.shake {
+    animation: shake 0.4s ease;
+    border-color: var(--red-soft);
+  }
+  @keyframes shake {
+    0%,100%{transform:translateX(0)}
+    20%{transform:translateX(-8px)}
+    40%{transform:translateX(8px)}
+    60%{transform:translateX(-5px)}
+    80%{transform:translateX(5px)}
+  }
+  .pw-submit {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--brown-deep);
+    border: none;
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--cream);
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    transition: background 0.2s;
+  }
+  .pw-submit:hover { background: var(--brown-mid); }
+  .pw-error {
+    font-size: 0.8rem;
+    color: var(--red-soft);
+    margin-top: 0.6rem;
+    min-height: 1.2em;
+  }
+
+  header { text-align: center; margin-bottom: 2.5rem; }
+  .label-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brown-light);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.9rem;
+    border-radius: 2px;
+    margin-bottom: 0.9rem;
+  }
+  h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 600;
+    color: var(--brown-deep);
+    line-height: 1.25;
+    margin-bottom: 0.5rem;
+  }
+  .subtitle { font-size: 0.88rem; color: var(--brown-mid); font-weight: 300; }
+
+  /* Export button */
+  .export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.4rem;
+    border: 1.5px solid var(--terracotta);
+    background: transparent;
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--terracotta);
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+  .export-btn:hover { background: var(--terracotta); color: #fff; }
+
+  /* Grade banner */
+  .grade-banner {
+    padding: 1.2rem 1.5rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    font-family: 'Lora', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .grade-a { background: #eaf4ea; color: var(--green-soft); border: 1px solid #b6d8b6; }
+  .grade-b { background: #fdf6ec; color: #a07030; border: 1px solid #e0c88a; }
+  .grade-c { background: #fceaea; color: var(--red-soft); border: 1px solid #e8b8b8; }
+
+  /* Filter tabs */
+  .filter-wrap {
+    max-width: 680px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .filter-btn {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    border-radius: 20px;
+    color: var(--brown-mid);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--brown-deep);
+    border-color: var(--brown-deep);
+    color: var(--cream);
+  }
+
+  /* Progress */
+  .progress-wrap { max-width: 680px; margin: 0 auto 2rem; }
+  .progress-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--brown-light);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.05em;
+  }
+  .progress-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--brown-light), var(--terracotta));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+
+  /* Card */
+  .card-wrap { max-width: 680px; margin: 0 auto; }
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem 2rem 1.6rem;
+    box-shadow: 0 2px 16px var(--shadow);
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.4s ease forwards;
+  }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .q-type {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brown-light);
+    margin-bottom: 0.8rem;
+  }
+  .q-text {
+    font-family: 'Lora', serif;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--brown-deep);
+    margin-bottom: 1.5rem;
+  }
+
+  /* TF Buttons */
+  .tf-row { display: flex; gap: 0.75rem; }
+  .tf-btn {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--brown-mid);
+    letter-spacing: 0.06em;
+    transition: all 0.2s ease;
+  }
+  .tf-btn:hover:not(:disabled) { border-color: var(--brown-mid); color: var(--brown-deep); background: var(--parchment); }
+  .tf-btn.correct { background: #eaf4ea; border-color: var(--green-soft); color: var(--green-soft); }
+  .tf-btn.wrong { background: #fceaea; border-color: var(--red-soft); color: var(--red-soft); }
+  .tf-btn.reveal-correct { background: #eaf4ea; border-color: var(--green-soft); color: var(--green-soft); }
+  .tf-btn:disabled { cursor: default; }
+
+  /* Feedback */
+  .feedback {
+    margin-top: 1rem;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--brown-mid);
+    padding: 0.8rem 1rem;
+    background: var(--parchment);
+    border-left: 3px solid var(--brown-light);
+    border-radius: 0 3px 3px 0;
+    display: none;
+  }
+  .feedback.show { display: block; animation: fadeUp 0.3s ease; }
+  .feedback strong { color: var(--brown-deep); }
+  .feedback .correction {
+    margin-top: 0.5rem;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: var(--terracotta);
+    font-size: 0.9rem;
+  }
+
+  /* Nav */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 680px;
+    margin: 0 auto;
+    gap: 0.75rem;
+  }
+  .nav-btn {
+    padding: 0.65rem 1.4rem;
+    border: 1.5px solid var(--brown-light);
+    background: transparent;
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--brown-mid);
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .nav-btn:hover { background: var(--parchment); color: var(--brown-deep); }
+  .nav-btn.primary { background: var(--brown-deep); border-color: var(--brown-deep); color: var(--cream); }
+  .nav-btn.primary:hover { background: var(--brown-mid); border-color: var(--brown-mid); }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+  .q-counter { font-size: 0.8rem; color: var(--brown-light); }
+
+  /* Score screen */
+  .score-screen { display: none; max-width: 680px; margin: 0 auto; text-align: center; }
+  .score-screen.show { display: block; animation: fadeUp 0.5s ease; }
+  .score-circle {
+    width: 120px; height: 120px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    background: #fff;
+  }
+  .score-num { font-family: 'Lora', serif; font-size: 2rem; font-weight: 600; color: var(--brown-deep); line-height: 1; }
+  .score-total { font-size: 0.75rem; color: var(--brown-light); margin-top: 0.2rem; }
+  .score-msg { font-family: 'Lora', serif; font-size: 1.1rem; color: var(--brown-mid); font-style: italic; margin-bottom: 1.5rem; }
+
+  .stats-row {
+    display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;
+  }
+  .stat-pill {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: #fff;
+    color: var(--brown-mid);
+  }
+
+  .review-list { text-align: left; margin-bottom: 2rem; }
+  .review-item {
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    margin-bottom: 0.5rem;
+    background: #fff;
+    font-size: 0.83rem;
+    line-height: 1.65;
+  }
+  .review-item .ri-q { color: var(--brown-light); margin-bottom: 0.2rem; font-size: 0.72rem; letter-spacing:0.05em; text-transform:uppercase; }
+  .review-item .ri-sentence { color: var(--brown-deep); margin-bottom: 0.3rem; font-style: italic; }
+  .review-item .ri-status { font-weight: 500; }
+  .ri-correct .ri-status { color: var(--green-soft); }
+  .ri-wrong .ri-status { color: var(--red-soft); }
+  .ri-wrong .ri-explanation { color: var(--brown-mid); font-size: 0.8rem; margin-top:0.2rem; }
+
+  @media (max-width: 480px) {
+    .card { padding: 1.4rem 1.2rem; }
+    .q-text { font-size: 0.97rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 密碼頁 -->
+<div class="pw-screen" id="pwScreen">
+  <div class="pw-card">
+    <div class="pw-icon">🔐</div>
+    <div class="pw-title">倒裝句練習</div>
+    <p class="pw-hint">請輸入老師公布的密碼<br>才能開始測驗</p>
+    <input class="pw-input" id="pwInput" type="text" placeholder="輸入密碼" autocomplete="off"
+      onkeydown="if(event.key==='Enter') checkPW()" />
+    <button class="pw-submit" onclick="checkPW()">開始測驗 →</button>
+    <div class="pw-error" id="pwError"></div>
+  </div>
+</div>
+
+<!-- 主體（隱藏直到解鎖） -->
+<div id="mainContent" style="display:none">
+
+<header>
+  <div class="label-tag">Grammar Practice — Inversion</div>
+  <h1>倒裝句 True or False</h1>
+  <p class="subtitle">50 題｜每題 2 分，滿分 100 分</p>
+</header>
+
+<div class="filter-wrap" id="filterWrap">
+  <button class="filter-btn active" onclick="setFilter('all', this)">全部 (50)</button>
+  <button class="filter-btn" onclick="setFilter('only', this)">Only 倒裝</button>
+  <button class="filter-btn" onclick="setFilter('neither', this)">So / Neither</button>
+  <button class="filter-btn" onclick="setFilter('as', this)">As 讓步</button>
+  <button class="filter-btn" onclick="setFilter('so-that', this)">So…that</button>
+  <button class="filter-btn" onclick="setFilter('subjunctive', this)">假設語氣</button>
+  <button class="filter-btn" onclick="setFilter('negative', this)">否定詞首</button>
+  <button class="filter-btn" onclick="setFilter('not-until', this)">Not until</button>
+  <button class="filter-btn" onclick="setFilter('not-only', this)">Not only</button>
+  <button class="filter-btn" onclick="setFilter('no-sooner', this)">No sooner</button>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-top">
+    <span id="progLabel">第 1 題</span>
+    <span id="scoreLabel">得分：0</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<div class="card-wrap" id="quizWrap">
+  <div class="card" id="questionCard">
+    <div class="q-type" id="qType"></div>
+    <div class="q-text" id="qText"></div>
+    <div class="tf-row">
+      <button class="tf-btn" id="btnTrue" onclick="answer(true)">✓ 正確 (True)</button>
+      <button class="tf-btn" id="btnFalse" onclick="answer(false)">✗ 錯誤 (False)</button>
+    </div>
+    <div class="feedback" id="feedback"></div>
+  </div>
+</div>
+
+<div class="nav-row">
+  <span class="q-counter" id="qCounter"></span>
+  <button class="nav-btn primary" id="nextBtn" onclick="nextQ()" disabled>下一題 →</button>
+</div>
+
+<div class="score-screen" id="scoreScreen">
+  <div class="score-circle">
+    <div class="score-num" id="finalScore">0</div>
+    <div class="score-total" id="finalTotal">/ 100</div>
+  </div>
+  <div class="grade-banner grade-a" id="gradeBanner"></div>
+  <div class="stats-row" id="statsRow"></div>
+  <button class="export-btn" onclick="exportResult()">↓ 匯出成績單</button>
+  <div class="review-list" id="reviewList"></div>
+  <button class="nav-btn primary" onclick="restart()" style="margin-bottom:0.75rem">重新挑戰（全部）</button><br>
+  <button class="nav-btn" onclick="restartWrong()">只練錯題</button>
+</div>
+
+</div><!-- end mainContent -->
+
+<script>
+const ALL_QUESTIONS = [
+
+  // ── Only 倒裝 (8題) ──
+  { tag:'only', type:'Only 倒裝',
+    sentence:'Only when the bell rings do the students leave the classroom.',
+    isTrue:true,
+    explanation:'✓ 正確。Only when + 子句，主要子句倒裝：do the students leave。' },
+
+  { tag:'only', type:'Only 倒裝',
+    sentence:'Only by working hard you can pass the exam.',
+    isTrue:false,
+    explanation:'✗ 錯誤。Only + 介系詞片語開頭，主要子句必須倒裝。',
+    correction:'Only by working hard can you pass the exam.' },
+
+  { tag:'only', type:'Only 倒裝',
+    sentence:'Only after he apologized did she forgive him.',
+    isTrue:true,
+    explanation:'✓ 正確。Only after + 子句，主要子句助動詞前移：did she forgive him。' },
+
+  { tag:'only', type:'Only 倒裝',
+    sentence:'Only in this way we can solve the problem.',
+    isTrue:false,
+    explanation:'✗ 錯誤。Only + 介系詞片語開句，主要子句須倒裝。',
+    correction:'Only in this way can we solve the problem.' },
+
+  { tag:'only', type:'Only 倒裝',
+    sentence:'Only then did he realize his mistake.',
+    isTrue:true,
+    explanation:'✓ 正確。Only then 句首，後接倒裝：did he realize。' },
+
+  { tag:'only', type:'Only 倒裝',
+    sentence:'Only when you lose something do you know its value.',
+    isTrue:true,
+    explanation:'✓ 正確。Only when 子句，主要子句倒裝：do you know。' },
+
+  { tag:'only', type:'Only 倒裝',
+    sentence:'Only if she calls me I will go there.',
+    isTrue:false,
+    explanation:'✗ 錯誤。Only if 子句開頭，主要子句須倒裝。',
+    correction:'Only if she calls me will I go there.' },
+
+  { tag:'only', type:'Only 倒裝',
+    sentence:'Only once did he visit his hometown after moving abroad.',
+    isTrue:true,
+    explanation:'✓ 正確。Only once 句首，後接倒裝：did he visit。' },
+
+  // ── So / Neither 倒裝 (6題) ──
+  { tag:'neither', type:'So / Neither 倒裝',
+    sentence:'Tom likes jazz, and so does his sister.',
+    isTrue:true,
+    explanation:'✓ 正確。肯定句「也」用 so + 倒裝：so does his sister。' },
+
+  { tag:'neither', type:'So / Neither 倒裝',
+    sentence:'Mary didn\'t finish her homework, and neither did John.',
+    isTrue:true,
+    explanation:'✓ 正確。否定句「也」用 neither + 倒裝：neither did John。' },
+
+  { tag:'neither', type:'So / Neither 倒裝',
+    sentence:'She can swim well, and so her brother can.',
+    isTrue:false,
+    explanation:'✗ 錯誤。so 置句首須倒裝，助動詞要前移。',
+    correction:'She can swim well, and so can her brother.' },
+
+  { tag:'neither', type:'So / Neither 倒裝',
+    sentence:'He doesn\'t smoke, nor does he drink.',
+    isTrue:true,
+    explanation:'✓ 正確。nor 置句首表「也不」，後接倒裝：nor does he drink。' },
+
+  { tag:'neither', type:'So / Neither 倒裝',
+    sentence:'I have never been to Paris, and neither has she.',
+    isTrue:true,
+    explanation:'✓ 正確。neither has she，助動詞 has 前移，正確。' },
+
+  { tag:'neither', type:'So / Neither 倒裝',
+    sentence:'He is not tall, and neither his brother is.',
+    isTrue:false,
+    explanation:'✗ 錯誤。neither 置句首，be 動詞必須前移。',
+    correction:'He is not tall, and neither is his brother.' },
+
+  // ── As 讓步倒裝 (6題) ──
+  { tag:'as', type:'As 讓步倒裝',
+    sentence:'Tired as he was, he kept on working.',
+    isTrue:true,
+    explanation:'✓ 正確。形容詞 + as + S + V，為讓步倒裝，語序正確。' },
+
+  { tag:'as', type:'As 讓步倒裝',
+    sentence:'A child as she is, she knows a lot.',
+    isTrue:false,
+    explanation:'✗ 錯誤。名詞做補語時，as 讓步倒裝須去掉冠詞。',
+    correction:'Child as she is, she knows a lot.' },
+
+  { tag:'as', type:'As 讓步倒裝',
+    sentence:'Hard as he tried, he couldn\'t open the door.',
+    isTrue:true,
+    explanation:'✓ 正確。副詞 Hard + as + S + V，讓步倒裝用法正確。' },
+
+  { tag:'as', type:'As 讓步倒裝',
+    sentence:'A genius as he is, he still makes mistakes.',
+    isTrue:false,
+    explanation:'✗ 錯誤。名詞補語須去冠詞。',
+    correction:'Genius as he is, he still makes mistakes.' },
+
+  { tag:'as', type:'As 讓步倒裝',
+    sentence:'Much as I like chocolate, I can\'t eat too much of it.',
+    isTrue:true,
+    explanation:'✓ 正確。Much as 表「雖然非常…」，為讓步倒裝，正確。' },
+
+  { tag:'as', type:'As 讓步倒裝',
+    sentence:'Beautiful as the painting was, no one bought it.',
+    isTrue:true,
+    explanation:'✓ 正確。形容詞 Beautiful + as + S + V，讓步倒裝正確。' },
+
+  // ── So…that 倒裝 (5題) ──
+  { tag:'so-that', type:'So…that 倒裝',
+    sentence:'So delicious was the cake that everyone wanted more.',
+    isTrue:true,
+    explanation:'✓ 正確。So + adj + be 動詞倒裝，接 that 子句，語序正確。' },
+
+  { tag:'so-that', type:'So…that 倒裝',
+    sentence:'So fast the car ran that we couldn\'t catch up.',
+    isTrue:false,
+    explanation:'✗ 錯誤。So + adv 倒裝，助動詞須前移。',
+    correction:'So fast did the car run that we couldn\'t catch up.' },
+
+  { tag:'so-that', type:'So…that 倒裝',
+    sentence:'So loudly did he shout that the neighbors complained.',
+    isTrue:true,
+    explanation:'✓ 正確。So + adv + 助動詞倒裝，did he shout，語序正確。' },
+
+  { tag:'so-that', type:'So…that 倒裝',
+    sentence:'So angry was she that she couldn\'t speak.',
+    isTrue:true,
+    explanation:'✓ 正確。So + adj + was + 主詞 that，be 動詞前移，正確。' },
+
+  { tag:'so-that', type:'So…that 倒裝',
+    sentence:'So quickly worker bees pollinate plants that science can\'t compare.',
+    isTrue:false,
+    explanation:'✗ 錯誤。So + adv 開頭，助動詞須倒裝。',
+    correction:'So quickly do worker bees pollinate plants that science can\'t compare.' },
+
+  // ── 假設語氣倒裝 (8題) ──
+  { tag:'subjunctive', type:'假設語氣倒裝',
+    sentence:'Were I you, I would take the opportunity.',
+    isTrue:true,
+    explanation:'✓ 正確。Were I you = If I were you，現在假設，were 倒裝正確。' },
+
+  { tag:'subjunctive', type:'假設語氣倒裝',
+    sentence:'Had she studied harder, she would have passed the test.',
+    isTrue:true,
+    explanation:'✓ 正確。Had she studied = If she had studied，過去假設倒裝正確。' },
+
+  { tag:'subjunctive', type:'假設語氣倒裝',
+    sentence:'Were it not for water, no life would exist.',
+    isTrue:true,
+    explanation:'✓ 正確。Were it not for N = If it were not for N，現在假設，句型正確。' },
+
+  { tag:'subjunctive', type:'假設語氣倒裝',
+    sentence:'Had it not been for your help, I would have failed.',
+    isTrue:true,
+    explanation:'✓ 正確。Had it not been for N = If it had not been for N，過去假設，正確。' },
+
+  { tag:'subjunctive', type:'假設語氣倒裝',
+    sentence:'If had she known the truth, she would have acted differently.',
+    isTrue:false,
+    explanation:'✗ 錯誤。If 保留時，語序不倒裝；要倒裝就必須去掉 If。',
+    correction:'Had she known the truth, she would have acted differently.' },
+
+  { tag:'subjunctive', type:'假設語氣倒裝',
+    sentence:'Were not it for the rain, we could have a picnic.',
+    isTrue:false,
+    explanation:'✗ 錯誤。Were it not for 是固定句型，否定 not 的位置須在 it 之後。',
+    correction:'Were it not for the rain, we could have a picnic.' },
+
+  { tag:'subjunctive', type:'假設語氣倒裝',
+    sentence:'But for your advice, I would have made a terrible mistake.',
+    isTrue:true,
+    explanation:'✓ 正確。But for N = Were it not for N（現在）/ Had it not been for N（過去），此處語意為過去假設，句型本身正確。' },
+
+  { tag:'subjunctive', type:'假設語氣倒裝',
+    sentence:'Had you told me earlier, I will have helped you.',
+    isTrue:false,
+    explanation:'✗ 錯誤。與過去事實相反的假設，結果子句須用 would have + pp，不能用 will。',
+    correction:'Had you told me earlier, I would have helped you.' },
+
+  // ── 否定詞首倒裝 (7題) ──
+  { tag:'negative', type:'否定詞首倒裝',
+    sentence:'Never have I seen such a beautiful sunset.',
+    isTrue:true,
+    explanation:'✓ 正確。Never 置句首，後接倒裝：have I seen。' },
+
+  { tag:'negative', type:'否定詞首倒裝',
+    sentence:'Seldom he goes to the gym.',
+    isTrue:false,
+    explanation:'✗ 錯誤。Seldom 置句首，助動詞須前移倒裝。',
+    correction:'Seldom does he go to the gym.' },
+
+  { tag:'negative', type:'否定詞首倒裝',
+    sentence:'Rarely does she lose her temper.',
+    isTrue:true,
+    explanation:'✓ 正確。Rarely 置句首，does she lose，倒裝正確。' },
+
+  { tag:'negative', type:'否定詞首倒裝',
+    sentence:'Little did we know that danger was approaching.',
+    isTrue:true,
+    explanation:'✓ 正確。Little 置句首否定倒裝，did we know，語序正確。' },
+
+  { tag:'negative', type:'否定詞首倒裝',
+    sentence:'Hardly had he sat down when the phone rang.',
+    isTrue:true,
+    explanation:'✓ 正確。Hardly…when，had 前移倒裝，表示「一…就…」，正確。' },
+
+  { tag:'negative', type:'否定詞首倒裝',
+    sentence:'In no way I will accept such a condition.',
+    isTrue:false,
+    explanation:'✗ 錯誤。否定片語 In no way 置句首，助動詞須倒裝。',
+    correction:'In no way will I accept such a condition.' },
+
+  { tag:'negative', type:'否定詞首倒裝',
+    sentence:'Under no circumstances should you reveal this secret.',
+    isTrue:true,
+    explanation:'✓ 正確。否定片語 Under no circumstances 句首，should 前移，正確。' },
+
+  // ── Not until 倒裝 (5題) ──
+  { tag:'not-until', type:'Not until 倒裝',
+    sentence:'Not until midnight did the party end.',
+    isTrue:true,
+    explanation:'✓ 正確。Not until + 時間，主要子句倒裝：did the party end。' },
+
+  { tag:'not-until', type:'Not until 倒裝',
+    sentence:'Not until he lost his job he realized money\'s importance.',
+    isTrue:false,
+    explanation:'✗ 錯誤。Not until 置句首，主要子句必須倒裝。',
+    correction:'Not until he lost his job did he realize money\'s importance.' },
+
+  { tag:'not-until', type:'Not until 倒裝',
+    sentence:'Not until she saw the damage did she start to cry.',
+    isTrue:true,
+    explanation:'✓ 正確。Not until + 子句，主要子句倒裝：did she start，正確。' },
+
+  { tag:'not-until', type:'Not until 倒裝',
+    sentence:'It was not until he arrived that we could begin.',
+    isTrue:true,
+    explanation:'✓ 正確。It is not until…that 為強調句型，that 子句語序正常，正確。' },
+
+  { tag:'not-until', type:'Not until 倒裝',
+    sentence:'Not until the results were announced did the tension ease.',
+    isTrue:true,
+    explanation:'✓ 正確。Not until + 子句，倒裝：did the tension ease，語序正確。' },
+
+  // ── Not only 倒裝 (5題) ──
+  { tag:'not-only', type:'Not only 倒裝',
+    sentence:'Not only does he play the piano but he also sings beautifully.',
+    isTrue:true,
+    explanation:'✓ 正確。Not only 帶兩個子句，第一子句倒裝：does he play，正確。' },
+
+  { tag:'not-only', type:'Not only 倒裝',
+    sentence:'Not only he speaks French but he also speaks Japanese.',
+    isTrue:false,
+    explanation:'✗ 錯誤。Not only 帶兩個子句時，第一子句須倒裝。',
+    correction:'Not only does he speak French but he also speaks Japanese.' },
+
+  { tag:'not-only', type:'Not only 倒裝',
+    sentence:'Not only was she late, but she also forgot the documents.',
+    isTrue:true,
+    explanation:'✓ 正確。Not only + was she late，be 動詞前移倒裝，正確。' },
+
+  { tag:'not-only', type:'Not only 倒裝',
+    sentence:'Not only the teacher but also the students were surprised.',
+    isTrue:true,
+    explanation:'✓ 正確。此句 not only 連接名詞（不帶動詞子句），不需要倒裝，語序正常，正確。' },
+
+  { tag:'not-only', type:'Not only 倒裝',
+    sentence:'Not only did the storm destroy houses, but it also flooded the streets.',
+    isTrue:true,
+    explanation:'✓ 正確。Not only + did the storm destroy，倒裝正確，句型完整。' },
+
+  // ── No sooner / Hardly 倒裝 (5題) ──
+  { tag:'no-sooner', type:'No sooner / Hardly 倒裝',
+    sentence:'No sooner had she arrived than it started to rain.',
+    isTrue:true,
+    explanation:'✓ 正確。No sooner had + S + Vpp + than + S + V-ed，語序正確。' },
+
+  { tag:'no-sooner', type:'No sooner / Hardly 倒裝',
+    sentence:'No sooner she had left than he called.',
+    isTrue:false,
+    explanation:'✗ 錯誤。No sooner 置句首，had 須前移倒裝。',
+    correction:'No sooner had she left than he called.' },
+
+  { tag:'no-sooner', type:'No sooner / Hardly 倒裝',
+    sentence:'Hardly had the game begun when it started to rain.',
+    isTrue:true,
+    explanation:'✓ 正確。Hardly had + S + Vpp + when + S + V-ed，語序正確。' },
+
+  { tag:'no-sooner', type:'No sooner / Hardly 倒裝',
+    sentence:'No sooner had he opened the door than he saw a stranger.',
+    isTrue:true,
+    explanation:'✓ 正確。No sooner had he opened the door than he saw，完整正確。' },
+
+  { tag:'no-sooner', type:'No sooner / Hardly 倒裝',
+    sentence:'Scarcely had they sat down before the alarm went off.',
+    isTrue:true,
+    explanation:'✓ 正確。Scarcely had + S + Vpp + before + S + V-ed，等同 Hardly…when，正確。' },
+];
+
+let activeFilter = 'all';
+let pool = [];
+let current = 0;
+let score = 0;
+let userAnswers = [];
+let wrongOnlyMode = false;
+let wrongIndices = [];
+
+function setFilter(tag, btn) {
+  activeFilter = tag;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  restart(false);
+}
+
+function buildPool() {
+  if (wrongOnlyMode) {
+    pool = wrongIndices.map(i => ALL_QUESTIONS[i]);
+  } else {
+    pool = activeFilter === 'all' ? [...ALL_QUESTIONS] : ALL_QUESTIONS.filter(q => q.tag === activeFilter);
+  }
+}
+
+function renderQ() {
+  const q = pool[current];
+  document.getElementById('qType').textContent = `類型：${q.type}`;
+  document.getElementById('qText').innerHTML =
+    `<em style="color:var(--brown-light);font-size:0.82rem;">這個句子文法正確嗎？</em><br><br>${q.sentence}`;
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('feedback').innerHTML = '';
+  document.getElementById('btnTrue').className = 'tf-btn';
+  document.getElementById('btnFalse').className = 'tf-btn';
+  document.getElementById('btnTrue').disabled = false;
+  document.getElementById('btnFalse').disabled = false;
+  document.getElementById('nextBtn').disabled = true;
+
+  const pct = (current / pool.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progLabel').textContent = `第 ${current+1} 題，共 ${pool.length} 題`;
+  document.getElementById('scoreLabel').textContent = `得分：${score * 2} 分`;
+  document.getElementById('qCounter').textContent = `${current+1} / ${pool.length}`;
+
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = 'fadeUp 0.4s ease forwards';
+}
+
+function answer(userSaid) {
+  const q = pool[current];
+  const correct = (userSaid === q.isTrue);
+  if (correct) score++;
+  userAnswers.push({ q, correct });
+  if (!correct && !wrongOnlyMode) {
+    const origIdx = ALL_QUESTIONS.indexOf(q);
+    if (origIdx >= 0 && !wrongIndices.includes(origIdx)) wrongIndices.push(origIdx);
+  }
+
+  const fb = document.getElementById('feedback');
+  let html = `<strong>${correct ? '答對了！' : '答錯了。'}</strong> ${q.explanation}`;
+  if (!correct && q.correction) html += `<div class="correction">✎ ${q.correction}</div>`;
+  fb.innerHTML = html;
+  fb.className = 'feedback show';
+
+  document.getElementById('btnTrue').disabled = true;
+  document.getElementById('btnFalse').disabled = true;
+
+  const trueBtn = document.getElementById('btnTrue');
+  const falseBtn = document.getElementById('btnFalse');
+  if (userSaid === true) trueBtn.className = correct ? 'tf-btn correct' : 'tf-btn wrong';
+  else falseBtn.className = correct ? 'tf-btn correct' : 'tf-btn wrong';
+  if (!correct) {
+    if (q.isTrue) trueBtn.className = 'tf-btn reveal-correct';
+    else falseBtn.className = 'tf-btn reveal-correct';
+  }
+
+  document.getElementById('scoreLabel').textContent = `得分：${score * 2} 分`;
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function nextQ() {
+  current++;
+  if (current >= pool.length) { showScore(); return; }
+  renderQ();
+}
+
+function showScore() {
+  document.getElementById('quizWrap').style.display = 'none';
+  document.getElementById('progressFill').style.width = '100%';
+  document.querySelector('.nav-row').style.display = 'none';
+
+  const ss = document.getElementById('scoreScreen');
+  ss.className = 'score-screen show';
+
+  const totalScore = score * 2; // 每題2分，滿分100
+  const answered = pool.length;
+  const fullScore = answered * 2;
+
+  document.getElementById('finalScore').textContent = totalScore;
+  document.getElementById('finalTotal').textContent = `/ ${fullScore}`;
+
+  // 評語（以全部50題的100分為基準）
+  let gradeClass = '';
+  let msg = '';
+  if (totalScore >= 90) {
+    gradeClass = 'grade-a';
+    msg = '你好倒裝！';
+  } else if (totalScore >= 70) {
+    gradeClass = 'grade-b';
+    msg = '再唸一次吧。';
+  } else {
+    gradeClass = 'grade-c';
+    msg = '請重新再測驗一次。';
+  }
+  document.getElementById('gradeBanner').className = `grade-banner ${gradeClass}`;
+  document.getElementById('gradeBanner').textContent = `${totalScore} 分 ── ${msg}`;
+
+  // Stats by type
+  const typeMap = {};
+  userAnswers.forEach(a => {
+    const t = a.q.type;
+    if (!typeMap[t]) typeMap[t] = { c: 0, total: 0 };
+    typeMap[t].total++;
+    if (a.correct) typeMap[t].c++;
+  });
+  const sr = document.getElementById('statsRow');
+  sr.innerHTML = '';
+  Object.entries(typeMap).forEach(([t, v]) => {
+    sr.innerHTML += `<span class="stat-pill">${t}：${v.c}/${v.total}</span>`;
+  });
+
+  // Review
+  const rl = document.getElementById('reviewList');
+  rl.innerHTML = `<div style="font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--brown-light);margin-bottom:0.8rem;">作答回顧</div>`;
+  userAnswers.forEach((a, i) => {
+    const cls = a.correct ? 'ri-correct' : 'ri-wrong';
+    rl.innerHTML += `<div class="review-item ${cls}">
+      <div class="ri-q">Q${i+1} · ${a.q.type}</div>
+      <div class="ri-sentence">${a.q.sentence}</div>
+      <div class="ri-status">${a.correct ? '✓ 答對' : '✗ 答錯'}</div>
+      ${!a.correct && a.q.correction ? `<div class="ri-explanation">正確：${a.q.correction}</div>` : ''}
+    </div>`;
+  });
+
+  document.querySelector('[onclick="restartWrong()"]').style.display =
+    wrongIndices.length > 0 ? 'inline-block' : 'none';
+}
+
+function exportResult() {
+  const totalScore = score * 2;
+  const fullScore = pool.length * 2;
+  let grade = '';
+  if (totalScore >= 90) grade = '你好倒裝！';
+  else if (totalScore >= 70) grade = '再唸一次吧。';
+  else grade = '請重新再測驗一次。';
+
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+  // Type breakdown
+  const typeMap = {};
+  userAnswers.forEach(a => {
+    const t = a.q.type;
+    if (!typeMap[t]) typeMap[t] = { c: 0, total: 0 };
+    typeMap[t].total++;
+    if (a.correct) typeMap[t].c++;
+  });
+  let typeLines = Object.entries(typeMap).map(([t, v]) => `  ${t}：${v.c}/${v.total} 題正確（${v.c*2}/${v.total*2} 分）`).join('\n');
+
+  // Wrong list
+  const wrongItems = userAnswers.filter(a => !a.correct);
+  let wrongLines = wrongItems.length === 0 ? '  全部答對！' :
+    wrongItems.map((a, i) => `  ${i+1}. ${a.q.sentence}\n     → ${a.q.correction || '（原句正確，誤判為錯）'}`).join('\n');
+
+  const text = `倒裝句 True or False 測驗成績單
+═══════════════════════════════════
+測驗時間：${dateStr}
+題數：${pool.length} 題（每題 2 分，滿分 ${fullScore} 分）
+得分：${totalScore} 分
+評語：${grade}
+
+【各類型得分】
+${typeLines}
+
+【答錯題目】
+${wrongLines}
+═══════════════════════════════════`;
+
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `倒裝句成績單_${totalScore}分.txt`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function restart(resetWrong = true) {
+  if (resetWrong) { wrongOnlyMode = false; wrongIndices = []; }
+  current = 0; score = 0; userAnswers = [];
+  buildPool();
+  document.getElementById('quizWrap').style.display = 'block';
+  document.querySelector('.nav-row').style.display = 'flex';
+  document.getElementById('scoreScreen').className = 'score-screen';
+  renderQ();
+}
+
+function restartWrong() {
+  wrongOnlyMode = true;
+  current = 0; score = 0; userAnswers = [];
+  buildPool();
+  document.getElementById('quizWrap').style.display = 'block';
+  document.querySelector('.nav-row').style.display = 'flex';
+  document.getElementById('scoreScreen').className = 'score-screen';
+  renderQ();
+}
+
+// ── 密碼設定（可自行修改）──
+const CORRECT_PASSWORD = 'inversion';
+
+function checkPW() {
+  const input = document.getElementById('pwInput').value.trim().toLowerCase();
+  const errEl = document.getElementById('pwError');
+  if (input === CORRECT_PASSWORD) {
+    document.getElementById('pwScreen').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    restart(true);
+  } else {
+    errEl.textContent = '密碼錯誤，請再試一次 🙅';
+    const inp = document.getElementById('pwInput');
+    inp.classList.remove('shake');
+    inp.offsetHeight;
+    inp.classList.add('shake');
+    inp.value = '';
+    setTimeout(() => { errEl.textContent = ''; inp.classList.remove('shake'); }, 2000);
+  }
+}
+
+// 頁面載入時聚焦密碼輸入框
+window.addEventListener('load', () => {
+  document.getElementById('pwInput').focus();
+});
+</script>
+</body>
+</html>
