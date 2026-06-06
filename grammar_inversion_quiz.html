@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Grammar Review — Inversion & Conditionals</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --cream: #f5f0e8;
+    --warm-white: #faf8f3;
+    --deep-brown: #2c1f0e;
+    --mid-brown: #5a3e28;
+    --light-brown: #8b6545;
+    --terracotta: #b5622a;
+    --gold: #c9962a;
+    --soft-gray: #e8e3d8;
+    --muted: #9b8e7e;
+    --green-ok: #4a7c59;
+    --red-err: #8b3a2a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--deep-brown);
+    font-family: 'Source Serif 4', Georgia, serif;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--deep-brown);
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(44,31,14,0.3);
+  }
+  nav button {
+    background: none;
+    border: none;
+    color: #c9b99a;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.85rem;
+    padding: 14px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+  }
+  nav button:hover { color: var(--cream); background: rgba(255,255,255,0.05); }
+  nav button.active {
+    color: #f5e4c3;
+    border-bottom: 3px solid var(--gold);
+    background: rgba(201,150,42,0.12);
+  }
+
+  /* PAGES */
+  .page { display: none; max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+  .page.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* HEADERS */
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--deep-brown);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .subtitle {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+
+  /* GRAMMAR SECTIONS */
+  .section {
+    background: var(--warm-white);
+    border: 1px solid var(--soft-gray);
+    border-left: 4px solid var(--terracotta);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--terracotta);
+    margin-bottom: 12px;
+  }
+  .section h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--mid-brown);
+    margin: 16px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-family: 'Source Serif 4', serif;
+  }
+  .section p { font-size: 0.95rem; line-height: 1.8; color: var(--deep-brown); margin-bottom: 8px; }
+
+  /* FORMULA BOX */
+  .formula {
+    background: #f0ece2;
+    border: 1px solid #d9ceba;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    color: var(--mid-brown);
+    line-height: 1.9;
+  }
+  .formula .label {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* EXAMPLES */
+  .example {
+    background: #fdf9f0;
+    border-left: 3px solid var(--gold);
+    padding: 10px 16px;
+    margin: 8px 0;
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+  .example .zh { color: var(--muted); font-size: 0.85rem; }
+  .example .en { color: var(--deep-brown); }
+  .highlight { color: var(--terracotta); font-weight: 600; }
+
+  /* KEY POINT */
+  .keypoint {
+    background: #fff8ed;
+    border: 1px dashed var(--gold);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    color: var(--mid-brown);
+  }
+  .keypoint::before { content: "💡 "; }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.9rem;
+  }
+  th {
+    background: var(--mid-brown);
+    color: var(--cream);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-family: 'Source Serif 4', serif;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--soft-gray);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  tr:nth-child(even) td { background: #f8f5ee; }
+  tr:hover td { background: #f0ece2; }
+
+  /* QUIZ */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .quiz-meta {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .q-block {
+    background: var(--warm-white);
+    border: 1px solid var(--soft-gray);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+  }
+  .q-block:hover { border-color: #c9b99a; }
+  .q-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--terracotta);
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .q-text {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 14px;
+    color: var(--deep-brown);
+  }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1.5px solid transparent;
+    transition: all 0.15s;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+  .option:hover { background: #f0ece2; border-color: #c9b99a; }
+  .option input[type=radio] { margin-top: 2px; flex-shrink: 0; accent-color: var(--terracotta); }
+  .option.correct { background: #edf5ef; border-color: var(--green-ok); color: var(--green-ok); }
+  .option.wrong { background: #f8ecea; border-color: var(--red-err); color: var(--red-err); }
+  .option.reveal-correct { background: #edf5ef; border-color: var(--green-ok); }
+
+  .feedback {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    border-radius: 5px;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct-fb { background: #edf5ef; color: var(--green-ok); }
+  .feedback.wrong-fb { background: #f8ecea; color: var(--red-err); }
+
+  /* SUBMIT / RESULT */
+  .submit-btn {
+    display: block;
+    width: 100%;
+    margin-top: 32px;
+    padding: 16px;
+    background: var(--deep-brown);
+    color: var(--cream);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.04em;
+  }
+  .submit-btn:hover { background: var(--mid-brown); }
+  .submit-btn:disabled { background: var(--muted); cursor: default; }
+
+  .result-box {
+    display: none;
+    background: var(--warm-white);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 32px;
+    margin-top: 32px;
+    text-align: center;
+  }
+  .result-box.show { display: block; animation: fadeIn 0.4s ease; }
+  .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: var(--terracotta);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .score-label { font-size: 1rem; color: var(--muted); margin-bottom: 16px; }
+  .result-msg {
+    font-size: 1.05rem;
+    color: var(--deep-brown);
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0 auto 20px;
+  }
+  .result-msg.gold { color: var(--gold); font-style: italic; font-size: 1.1rem; }
+  .retry-btn {
+    display: inline-block;
+    padding: 10px 28px;
+    background: none;
+    border: 2px solid var(--mid-brown);
+    color: var(--mid-brown);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+  .retry-btn:hover { background: var(--mid-brown); color: var(--cream); }
+
+  /* PROGRESS BAR */
+  .progress-wrap { background: var(--soft-gray); border-radius: 10px; height: 6px; margin-bottom: 8px; }
+  .progress-bar { height: 6px; background: var(--gold); border-radius: 10px; transition: width 0.4s; }
+
+  /* WRONG LIST */
+  .wrong-list { text-align: left; margin-top: 20px; }
+  .wrong-list h4 { font-family: 'Playfair Display', serif; color: var(--mid-brown); margin-bottom: 10px; }
+  .wrong-item { font-size: 0.88rem; color: var(--muted); padding: 4px 0; border-bottom: 1px dotted var(--soft-gray); }
+
+  @media(max-width:600px) {
+    nav button { font-size: 0.78rem; padding: 12px 12px; }
+    h1 { font-size: 1.5rem; }
+    .section { padding: 18px 16px; }
+    .q-block { padding: 16px 14px; }
+    .score-big { font-size: 2.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <button class="active" onclick="showPage('page1')">假設語氣</button>
+  <button onclick="showPage('page2')">倒裝句</button>
+  <button onclick="showPage('page3')">關係子句</button>
+  <button onclick="showPage('page4')">綜合測驗</button>
+</nav>
+
+<!-- PAGE 1: 假設語氣（若非） -->
+<div class="page active" id="page1">
+  <h1>假設語氣：若非</h1>
+  <p class="subtitle">If it were not for / If it had not been for / Without / But for</p>
+
+  <div class="section">
+    <h2>核心觀念</h2>
+    <p>這四個結構都表示「若非……（否則結果會不同）」，是<strong>假設語氣</strong>（Subjunctive Mood）的一部分。重點：與現在事實相反 vs. 與過去事實相反。</p>
+    <div class="keypoint">倒裝句裡沒有助動詞 do/does/did，<strong>但有 be 動詞或情態助動詞</strong>提到前面。</div>
+
+    <h3>與現在事實相反</h3>
+    <div class="formula">
+      <span class="label">結構</span>
+      If it were not for + N，主句 would / could / might + V
+    </div>
+    <div class="formula">
+      <span class="label">等義替換</span>
+      Without + N，...
+      But for + N，...
+      Were it not for + N，...（倒裝，省略 if）
+    </div>
+    <div class="example">
+      <div class="en"><span class="highlight">If it were not for</span> your help, I couldn't finish the project.</div>
+      <div class="en">= <span class="highlight">Without</span> your help, I couldn't finish.</div>
+      <div class="en">= <span class="highlight">But for</span> your help, I couldn't finish.</div>
+      <div class="en">= <span class="highlight">Were it not for</span> your help, I couldn't finish.</div>
+      <div class="zh">若非你的幫助，我無法完成這個計畫。</div>
+    </div>
+
+    <h3>與過去事實相反</h3>
+    <div class="formula">
+      <span class="label">結構</span>
+      If it had not been for + N，主句 would / could / might + have + V-pp
+    </div>
+    <div class="formula">
+      <span class="label">等義替換</span>
+      Without + N，... would have + V-pp
+      But for + N，... would have + V-pp
+      Had it not been for + N，...（倒裝）
+    </div>
+    <div class="example">
+      <div class="en"><span class="highlight">If it had not been for</span> the GPS, I might have gotten lost.</div>
+      <div class="en">= <span class="highlight">Without</span> the GPS, I might have gotten lost.</div>
+      <div class="en">= <span class="highlight">But for</span> the GPS, I might have gotten lost.</div>
+      <div class="en">= <span class="highlight">Had it not been for</span> the GPS, I might have gotten lost.</div>
+      <div class="zh">若非有 GPS，我可能迷路了。</div>
+    </div>
+
+    <h3>四者比較總表</h3>
+    <table>
+      <tr><th>結構</th><th>時態用法</th><th>備註</th></tr>
+      <tr><td>If it were not for</td><td>與現在相反</td><td>標準假設語氣</td></tr>
+      <tr><td>If it had not been for</td><td>與過去相反</td><td>標準假設語氣</td></tr>
+      <tr><td>Without / But for</td><td>現在／過去皆可</td><td>看主句助動詞判斷</td></tr>
+      <tr><td>Were it not for（倒裝）</td><td>與現在相反</td><td>省略 if，be 動詞提前</td></tr>
+      <tr><td>Had it not been for（倒裝）</td><td>與過去相反</td><td>省略 if，had 提前</td></tr>
+    </table>
+
+    <div class="keypoint">考試考點：without / but for 後面接名詞，主句動詞要用情態助動詞（would/could/might），且根據時態判斷是否加 have + pp。</div>
+  </div>
+
+  <div class="section">
+    <h2>段考例題解析</h2>
+    <div class="example">
+      <div class="en">(A) <span class="highlight">But for the GPS</span>, I might get lost from time to time.</div>
+      <div class="zh">✅ 與現在相反，might + V（原形）— 正確</div>
+    </div>
+    <div class="example">
+      <div class="en">(B) <span class="highlight">If it were not for</span> your friendship, I might feel terribly lonely in the new class.</div>
+      <div class="zh">✅ 與現在相反，might + V — 正確</div>
+    </div>
+    <div class="example">
+      <div class="en">(D) <span class="highlight">If it had not been for</span> his carelessness, he might have gotten a perfect score.</div>
+      <div class="zh">✅ 與過去相反，might have + pp — 正確</div>
+    </div>
+    <div class="example">
+      <div class="en">(C) <span class="highlight">Without you had faith in me</span>... ❌</div>
+      <div class="zh">❌ Without 後面只能接名詞或名詞片語，不能接子句（had faith in me 是動詞片語）。應改為 Without your faith in me，或 If it were not for your faith in me...</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: 倒裝句 -->
+<div class="page" id="page2">
+  <h1>倒裝句</h1>
+  <p class="subtitle">Only / Not until / Not only / Adj. as S V / Barely / 倒裝核心概念</p>
+
+  <div class="section">
+    <h2>倒裝核心概念</h2>
+    <p>倒裝句 = 把<strong>助動詞（或 be 動詞）提到主詞前面</strong>。記憶口訣：</p>
+    <div class="keypoint">「倒裝句就是文具——助動詞提出來。」一般句：S + V；倒裝句：助動詞 + S + V</div>
+    <div class="formula">
+      <span class="label">助動詞種類</span>
+      be 動詞：am / is / are / was / were
+      助動詞：do / does / did（用於一般動詞）
+      情態助動詞：can / will / should / may / could / would
+      完成式：have / has / had
+    </div>
+    <p>❗ 最常考：否定副詞放句首 → 後面要倒裝（否定倒裝）</p>
+  </div>
+
+  <div class="section">
+    <h2>Only + 副詞/子句 放句首</h2>
+    <div class="formula">Only + 時間副詞 / 介系詞片語 / when / after / by，助動詞 + S + V</div>
+    <div class="example">
+      <div class="en"><span class="highlight">Only when</span> children under twelve are accompanied by an adult <span class="highlight">are they</span> allowed to see the movie.</div>
+      <div class="zh">只有當十二歲以下兒童有成人陪同時，才能觀看這部電影。</div>
+    </div>
+    <div class="example">
+      <div class="en"><span class="highlight">Only by</span> working hard <span class="highlight">can you</span> achieve your goal.</div>
+      <div class="zh">只有努力工作，你才能達成目標。</div>
+    </div>
+    <div class="keypoint">注意！Only 修飾的 when/if 子句本身不倒裝，主要子句才倒裝。</div>
+    <div class="example">
+      <div class="en">❌ Only when <span class="highlight">are children</span> accompanied... → 錯誤</div>
+      <div class="en">✅ Only when children are accompanied..., <span class="highlight">are they</span> allowed... → 正確</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Not until 放句首</h2>
+    <div class="formula">Not until + 時間點/子句，助動詞 + S + V</div>
+    <div class="example">
+      <div class="en"><span class="highlight">Not until he was severely ill</span> <span class="highlight">did John</span> realize the importance of health.</div>
+      <div class="zh">直到他病得很嚴重，John 才意識到健康的重要性。</div>
+    </div>
+    <div class="example">
+      <div class="en"><span class="highlight">Not until midnight</span> <span class="highlight">did she</span> finish her report.</div>
+      <div class="zh">直到午夜，她才完成報告。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Not only 放句首</h2>
+    <div class="formula">Not only + 助動詞 + S + V，but (S) also + V</div>
+    <div class="example">
+      <div class="en"><span class="highlight">Not only did we</span> see the superstar, but we also took a picture with him.</div>
+      <div class="zh">我們不只看到了這位明星，還和他合照。</div>
+    </div>
+    <div class="example">
+      <div class="en"><span class="highlight">Not only is</span> she talented, but she is also hard-working.</div>
+      <div class="zh">她不只有才華，還很努力。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Adj. as S V（讓步倒裝）</h2>
+    <div class="formula">Adj. / Adv. / N + as + S + V，主句</div>
+    <p>意思相當於 Although/Though + S + be + Adj.，但語氣更正式。</p>
+    <div class="example">
+      <div class="en"><span class="highlight">Tough as</span> the competition may be, all participants will receive a certificate.</div>
+      <div class="zh">雖然比賽可能很艱難，所有參賽者仍會獲得證書。</div>
+    </div>
+    <div class="example">
+      <div class="en"><span class="highlight">Young as</span> he is, he has achieved a lot.</div>
+      <div class="zh">雖然他很年輕，卻有很多成就。</div>
+    </div>
+    <div class="example">
+      <div class="en"><span class="highlight">Doctor as</span> she is, she cannot cure everything.</div>
+      <div class="zh">雖然她是醫生，也無法治癒所有疾病。</div>
+    </div>
+    <div class="keypoint">名詞放句首時不加冠詞：Doctor（不是 A doctor）as she is...</div>
+  </div>
+
+  <div class="section">
+    <h2>Barely / Hardly / Scarcely（否定副詞倒裝）</h2>
+    <div class="formula">Barely / Hardly / Scarcely + 助動詞 + S + V，when / before + S + V</div>
+    <div class="example">
+      <div class="en"><span class="highlight">Barely do I</span> know what happened.</div>
+      <div class="zh">我幾乎不知道發生了什麼事。</div>
+    </div>
+    <div class="example">
+      <div class="en"><span class="highlight">Hardly had she</span> arrived home when the phone rang.</div>
+      <div class="zh">她幾乎剛到家，電話就響了。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Rarely / Seldom（否定副詞倒裝）</h2>
+    <div class="formula">Rarely / Seldom + 助動詞 + S + V</div>
+    <div class="example">
+      <div class="en"><span class="highlight">Rarely does</span> the boy take the initiative to interact with others since he often feels socially awkward.</div>
+      <div class="zh">這個男孩很少主動與他人互動，因為他常常感到社交上的不自在。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>總整理</h2>
+    <table>
+      <tr><th>句首成分</th><th>倒裝模式</th><th>例句</th></tr>
+      <tr><td>Only + 副詞片語</td><td>助動詞 + S + V</td><td>Only by trying can you learn.</td></tr>
+      <tr><td>Not until</td><td>did/does + S + V</td><td>Not until dawn did he sleep.</td></tr>
+      <tr><td>Not only</td><td>did/does + S + V ... but also</td><td>Not only did she win, but she also...</td></tr>
+      <tr><td>Adj./N as S V</td><td>形/名 + as + S + V</td><td>Tired as she was, she kept going.</td></tr>
+      <tr><td>Barely/Hardly</td><td>had + S + pp ... when</td><td>Hardly had he left when...</td></tr>
+      <tr><td>Rarely/Seldom</td><td>does/do + S + V</td><td>Rarely does he complain.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- PAGE 3: 關係子句 -->
+<div class="page" id="page3">
+  <h1>關係子句釐清</h1>
+  <p class="subtitle">where / when / in which / which — 用法比較與混淆點整理</p>
+
+  <div class="section">
+    <h2>關係代名詞 vs. 關係副詞</h2>
+    <p>先確認先行詞的角色：它在子句裡是<strong>主詞/受詞（用 which/that）</strong>還是<strong>地點/時間（用 where/when）</strong>？</p>
+    <table>
+      <tr><th>類型</th><th>先行詞</th><th>關係詞</th><th>子句中角色</th></tr>
+      <tr><td>關係代名詞</td><td>事/物</td><td>which / that</td><td>主詞或受詞</td></tr>
+      <tr><td>關係副詞</td><td>地方</td><td>where = in which</td><td>地方副詞</td></tr>
+      <tr><td>關係副詞</td><td>時間</td><td>when = in which / on which</td><td>時間副詞</td></tr>
+      <tr><td>關係副詞</td><td>原因</td><td>why = for which</td><td>原因副詞</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>where vs. in which</h2>
+    <p>兩者<strong>完全可以互換</strong>，但 in which 更正式。</p>
+    <div class="formula">
+      先行詞（地方）+ where + S + V（子句裡沒有介系詞）
+      先行詞（地方）+ in which + S + V（in 移到前面了）
+    </div>
+    <div class="example">
+      <div class="en">This is the city <span class="highlight">where</span> I grew up.</div>
+      <div class="en">= This is the city <span class="highlight">in which</span> I grew up.</div>
+      <div class="zh">這是我成長的城市。</div>
+    </div>
+    <div class="keypoint">判斷方式：把子句展開看看：I grew up in the city → in 已被吸收進 where 或提到前面變 in which。兩者不能同時存在：❌ the city where I grew up in</div>
+  </div>
+
+  <div class="section">
+    <h2>when vs. in which / on which</h2>
+    <p>先行詞是時間名詞時，when 可用 on which / in which 取代。</p>
+    <div class="example">
+      <div class="en">I still remember the day <span class="highlight">when</span> we first met.</div>
+      <div class="en">= I still remember the day <span class="highlight">on which</span> we first met.</div>
+      <div class="zh">我仍然記得我們第一次見面的那天。</div>
+    </div>
+    <div class="example">
+      <div class="en">The year <span class="highlight">when</span> she was born = The year <span class="highlight">in which</span> she was born.</div>
+      <div class="zh">她出生的那一年。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>which 的三種用法釐清</h2>
+    <h3>1. 關係代名詞（修飾事/物，子句裡作主詞或受詞）</h3>
+    <div class="example">
+      <div class="en">The book <span class="highlight">which</span> I borrowed is fascinating.</div>
+      <div class="zh">我借的那本書很迷人。（which 作受詞）</div>
+    </div>
+    <div class="example">
+      <div class="en">The report <span class="highlight">which</span> was submitted yesterday contained errors.</div>
+      <div class="zh">昨天提交的報告有錯誤。（which 作主詞）</div>
+    </div>
+    <h3>2. 介系詞 + which（= where / when / why）</h3>
+    <div class="example">
+      <div class="en">the reason <span class="highlight">for which</span> = the reason why</div>
+      <div class="en">the place <span class="highlight">in which</span> = the place where</div>
+      <div class="en">the day <span class="highlight">on which</span> = the day when</div>
+    </div>
+    <h3>3. 補充說明用的非限定子句</h3>
+    <div class="example">
+      <div class="en">She passed the exam, <span class="highlight">which</span> surprised everyone.</div>
+      <div class="zh">她通過了考試，這讓大家都很驚訝。（which 指前整句話）</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>常見混淆點整理</h2>
+    <table>
+      <tr><th>情況</th><th>正確</th><th>錯誤</th></tr>
+      <tr><td>地方先行詞 + 子句有 in</td><td>where I live ✅<br>in which I live ✅</td><td>where I live in ❌</td></tr>
+      <tr><td>which vs. who</td><td>the man who ✅<br>the cat which ✅</td><td>the man which ❌</td></tr>
+      <tr><td>which vs. that</td><td>先行詞有最高級/序數 → that<br>先行詞有 the only → that</td><td>the best book which ❌（通常用 that）</td></tr>
+      <tr><td>補述用法</td><td>, which ✅</td><td>, that ❌（補述不用 that）</td></tr>
+    </table>
+    <div class="keypoint">非限定（補充說明）子句：先行詞後有逗號 → 只能用 which，不能用 that。</div>
+  </div>
+</div>
+
+<!-- PAGE 4: QUIZ -->
+<div class="page" id="page4">
+  <div class="quiz-header">
+    <h1>綜合測驗</h1>
+    <span class="quiz-meta">35 題是非題 × 3 分，滿分 105 分（以 100 計）</span>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+  <p id="progressText" style="font-size:0.82rem;color:var(--muted);margin-bottom:20px;">作答進度：0 / 35</p>
+
+  <div id="quizContainer"></div>
+
+  <button class="submit-btn" id="submitBtn" onclick="submitQuiz()">繳交測驗</button>
+
+  <div class="result-box" id="resultBox">
+    <div class="score-big" id="scoreDisplay">--</div>
+    <div class="score-label" id="scoreLabel">分</div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="wrong-list" id="wrongList"></div>
+    <button class="retry-btn" onclick="resetQuiz()">重新作答</button>
+  </div>
+</div>
+
+<script>
+// T = true (correct sentence), F = false (wrong sentence)
+const questions = [
+  // === 假設語氣 12 題 ===
+  { cat:"假設語氣", q:"Had it not been for your financial support, I couldn't have started my own business.", ans:true,
+    exp:"正確。Had it not been for = If it had not been for，與過去相反，主句用 couldn't have + pp。" },
+  { cat:"假設語氣", q:"If it were not for her encouragement, he might have given up long ago.", ans:false,
+    exp:"錯誤。might have given up 是與過去相反的結果，條件句應用 If it had not been for，不是 were not for。" },
+  { cat:"假設語氣", q:"But for the timely warning, the hikers would have been trapped in the storm.", ans:true,
+    exp:"正確。But for 表「若非」，與過去相反，主句用 would have been + pp。" },
+  { cat:"假設語氣", q:"Without you had faith in me, I couldn't be what I am today.", ans:false,
+    exp:"錯誤。Without 後面只能接名詞/名詞片語，不能接子句。應改為 Without your faith in me 或 If it were not for your faith in me。" },
+  { cat:"假設語氣", q:"Had it not been for the doctor's quick response, the patient might not have survived.", ans:true,
+    exp:"正確。Had it not been for 是 If it had not been for 的倒裝形式，與過去相反，主句 might not have survived 正確。" },
+  { cat:"假設語氣", q:"Without clean water, life on Earth will not exist.", ans:false,
+    exp:"錯誤。Without 表達與現在相反的假設，主句應用情態助動詞 would not，不能用 will not。" },
+  { cat:"假設語氣", q:"But for the rain, we could have enjoyed a picnic in the park.", ans:true,
+    exp:"正確。But for 表「若非」，could have enjoyed 表示與過去相反，正確搭配。" },
+  { cat:"假設語氣", q:"If it were not for their teamwork, they wouldn't have won the championship.", ans:false,
+    exp:"錯誤。wouldn't have won 是與過去相反的結果，條件句應用 If it had not been for，不是 were not for。" },
+  { cat:"假設語氣", q:"Were it not for the support of her family, she might drop out of school.", ans:true,
+    exp:"正確。Were it not for = If it were not for，與現在相反，主句用 might + V（原形）。" },
+  { cat:"假設語氣", q:"Had it not been for the heavy snow, the game would have been held as scheduled.", ans:true,
+    exp:"正確。Had it not been for 是 If it had not been for 的倒裝，與過去相反，would have been held 正確。" },
+  { cat:"假設語氣", q:"If it had not been for his carelessness, he might have gotten a perfect score.", ans:true,
+    exp:"正確。與過去相反，If it had not been for + N，主句用 might have + pp，完全正確。" },
+  { cat:"假設語氣", q:"But for the GPS, I might have gotten lost from time to time.", ans:false,
+    exp:"錯誤。from time to time（經常性）暗示現在的習慣狀態，應用 might get lost（與現在相反），不是 might have gotten。" },
+  // === 倒裝句 13 題 ===
+  { cat:"倒裝句", q:"Not until the last minute did he realize he had made a mistake.", ans:true,
+    exp:"正確。Not until 放句首，主句要倒裝：did he realize（過去式用 did）。" },
+  { cat:"倒裝句", q:"Only when you face challenges you can truly grow as a person.", ans:false,
+    exp:"錯誤。Only when 放句首，主句必須倒裝：應為 can you truly grow，不是 you can truly grow。" },
+  { cat:"倒裝句", q:"Rarely does the boy take the initiative to interact with others.", ans:true,
+    exp:"正確。否定副詞 Rarely 放句首，助動詞 does 提前，倒裝正確。" },
+  { cat:"倒裝句", q:"Only when children under twelve are accompanied by an adult they are allowed to see the movie.", ans:false,
+    exp:"錯誤。Only when 子句放句首，主要子句必須倒裝：應為 are they allowed，不是 they are allowed。" },
+  { cat:"倒裝句", q:"Not only did we see the superstar, but we also took a picture with him.", ans:true,
+    exp:"正確。Not only 放句首，主句倒裝：did we see。後半句 but we also... 不需要倒裝。" },
+  { cat:"倒裝句", q:"Tired although she was, she insisted on finishing the project.", ans:false,
+    exp:"錯誤。讓步倒裝的固定結構是「Adj. as S V」，必須用 as，不能用 although。應為 Tired as she was...。" },
+  { cat:"倒裝句", q:"Hardly had she finished the exam when the bell rang.", ans:true,
+    exp:"正確。Hardly had S + pp ... when 是固定搭配，用過去完成式（had）。" },
+  { cat:"倒裝句", q:"Seldom can you see such a magnificent view from this spot.", ans:true,
+    exp:"正確。Seldom 放句首，助動詞 can 提前，倒裝正確。" },
+  { cat:"倒裝句", q:"Young as he is, he has already published three novels.", ans:true,
+    exp:"正確。讓步倒裝：Adj. as S V，Young as he is = Although he is young，正確。" },
+  { cat:"倒裝句", q:"Only by practice you can improve your English writing skills.", ans:false,
+    exp:"錯誤。Only by + V-ing 放句首，主句要倒裝：應為 can you improve，不是 you can improve。" },
+  { cat:"倒裝句", q:"Barely had the announcement ended when everyone began to cheer.", ans:true,
+    exp:"正確。Barely had S + pp ... when 固定搭配，過去完成式（had）正確。" },
+  { cat:"倒裝句", q:"Not only is she talented in music, but she is also a gifted painter.", ans:true,
+    exp:"正確。Not only is she...，主句倒裝，後半 but she is also... 正確（also 可緊接主詞後）。" },
+  // === 關係子句 10 題 ===
+  { cat:"關係子句", q:"This is the café where I first met my best friend.", ans:true,
+    exp:"正確。先行詞 café 是地方，子句裡不缺主受詞，用關係副詞 where。" },
+  { cat:"關係子句", q:"She passed the exam, that surprised everyone in the class.", ans:false,
+    exp:"錯誤。非限定子句（補充說明整件事），前有逗號，只能用 which，不能用 that。" },
+  { cat:"關係子句", q:"Do you remember the day when we went hiking in the mountains?", ans:true,
+    exp:"正確。先行詞 day 是時間詞，用關係副詞 when（= on which）。" },
+  { cat:"關係子句", q:"The house which roof was damaged in the storm has been repaired.", ans:false,
+    exp:"錯誤。子句裡用 roof（所屬名詞），表示所有關係應用 whose，不是 which。應為 The house whose roof was damaged...。" },
+  { cat:"關係子句", q:"The museum, in which many priceless artifacts are displayed, attracts millions of visitors.", ans:true,
+    exp:"正確。先行詞 museum 是地方，子句含介系詞 in，用 in which（= where）正確。" },
+  { cat:"關係子句", q:"The city where I grew up in has changed a lot.", ans:false,
+    exp:"錯誤。where 已含介系詞 in 的意義，不能再加 in。應為 The city where I grew up 或 The city in which I grew up。" },
+  { cat:"關係子句", q:"The reason for which he resigned was never fully explained.", ans:true,
+    exp:"正確。先行詞 reason，用 for which（= why），正確。" },
+  { cat:"關係子句", q:"Iceland, which is known for its stunning landscapes, has become a popular tourist destination.", ans:true,
+    exp:"正確。非限定子句，前有逗號，先行詞 Iceland 作子句主詞，用 which。" },
+  { cat:"關係子句", q:"The novel which she recommended turned out to be a bestseller.", ans:true,
+    exp:"正確。限定子句，先行詞 novel 是事物，which 作受詞，正確（that 也可）。" },
+  { cat:"關係子句", q:"This is the hospital which my grandmother was treated for three months.", ans:false,
+    exp:"錯誤。先行詞 hospital 是地方，子句裡「was treated in the hospital」中 in 被吸收，應用 where 或 in which，不能只用 which（缺少介系詞 in）。" }
+];
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  questions.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'q-block';
+    div.id = `q${i}`;
+    div.innerHTML = `
+      <span class="q-num">Q${i+1} <span style="font-size:0.75rem;color:var(--muted);font-family:'Source Serif 4',serif;font-weight:400;">[${q.cat}]</span></span>
+      <div class="q-text" style="font-style:italic;">"${q.q}"</div>
+      <div class="options" style="flex-direction:row;gap:12px;">
+        <label class="option" id="opt_${i}_T" style="flex:1;justify-content:center;font-size:1rem;font-weight:600;">
+          <input type="radio" name="q${i}" value="T" onchange="updateProgress()"> ✓ 正確
+        </label>
+        <label class="option" id="opt_${i}_F" style="flex:1;justify-content:center;font-size:1rem;font-weight:600;">
+          <input type="radio" name="q${i}" value="F" onchange="updateProgress()"> ✗ 錯誤
+        </label>
+      </div>
+      <div class="feedback" id="fb${i}"></div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function updateProgress() {
+  const answered = questions.filter((_,i) => document.querySelector(`input[name="q${i}"]:checked`)).length;
+  const pct = (answered / questions.length * 100).toFixed(0);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `作答進度：${answered} / ${questions.length}`;
+}
+
+function submitQuiz() {
+  let score = 0;
+  const wrong = [];
+
+  questions.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    const fb = document.getElementById(`fb${i}`);
+    const correctVal = q.ans ? 'T' : 'F';
+    const correctLabel = q.ans ? '✓ 正確' : '✗ 錯誤';
+
+    ['T','F'].forEach(v => {
+      const lbl = document.getElementById(`opt_${i}_${v}`);
+      lbl.style.pointerEvents = 'none';
+      if (v === correctVal) lbl.classList.add('reveal-correct');
+    });
+
+    if (selected) {
+      const val = selected.value;
+      const lbl = document.getElementById(`opt_${i}_${val}`);
+      if (val === correctVal) {
+        lbl.classList.add('correct');
+        fb.className = 'feedback show correct-fb';
+        fb.textContent = '✓ 答對了！' + q.exp;
+        score += 3;
+      } else {
+        lbl.classList.add('wrong');
+        fb.className = 'feedback show wrong-fb';
+        fb.textContent = `✗ 答案是「${correctLabel}」。${q.exp}`;
+        wrong.push({num: i+1, cat: q.cat});
+      }
+    } else {
+      fb.className = 'feedback show wrong-fb';
+      fb.textContent = `未作答。答案是「${correctLabel}」。${q.exp}`;
+      wrong.push({num: i+1, cat: q.cat});
+    }
+  });
+
+  const finalScore = Math.min(score, 100);
+  document.getElementById('scoreDisplay').textContent = finalScore;
+
+  let msg = '', msgClass = 'result-msg';
+  if (finalScore >= 90) {
+    msg = '✨ Excellent work! Your grammar instincts are sharp and precise. Keep up this outstanding level of thinking — you\'ve clearly mastered these structures.';
+    msgClass = 'result-msg gold';
+  } else if (finalScore >= 70) {
+    msg = '📖 Good effort! You have a solid foundation, but there are a few areas worth revisiting. Review the explanation for each wrong answer and try again — you\'re close!';
+  } else {
+    msg = '📚 Don\'t worry — grammar takes time to click. Go back and read through the rule pages carefully, focusing on the inversion concept (助動詞提前). Then come back and try again!';
+  }
+
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultMsg').className = msgClass;
+
+  let wrongHTML = '';
+  if (wrong.length > 0) {
+    wrongHTML = `<h4>需要複習的題目（共 ${wrong.length} 題）</h4>`;
+    wrong.forEach(w => {
+      wrongHTML += `<div class="wrong-item">Q${w.num} ［${w.cat}］</div>`;
+    });
+  } else {
+    wrongHTML = '<div style="color:var(--green-ok);font-weight:600;margin-top:12px;">全對！Perfect score 🎉</div>';
+  }
+  document.getElementById('wrongList').innerHTML = wrongHTML;
+
+  document.getElementById('resultBox').classList.add('show');
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('resultBox').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function resetQuiz() {
+  document.getElementById('submitBtn').disabled = false;
+  document.getElementById('resultBox').classList.remove('show');
+  buildQuiz();
+  updateProgress();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx = ['page1','page2','page3','page4'].indexOf(id);
+  document.querySelectorAll('nav button')[idx].classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+buildQuiz();
+</script>
+</body>
+</html>
