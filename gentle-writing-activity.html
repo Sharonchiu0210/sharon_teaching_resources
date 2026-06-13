@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gentle Encouragement Writing</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&display=swap');
+
+  :root {
+    --cream: #F7F2EA;
+    --warm-white: #FDFAF5;
+    --dark-brown: #3B2F1E;
+    --mid-brown: #6B5240;
+    --sage: #7A8C6E;
+    --sage-light: #B8C9A8;
+    --sage-bg: #EFF4EB;
+    --terracotta: #A0613A;
+    --border: #D5C9B5;
+    --muted: #9A8A75;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--dark-brown);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 10px;
+  }
+
+  .header h1 {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .header-sub {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: var(--mid-brown);
+    font-size: 14px;
+  }
+
+  /* Tab nav */
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .tab-btn.active {
+    color: var(--dark-brown);
+    border-bottom-color: var(--terracotta);
+  }
+
+  .tab-btn:hover { color: var(--mid-brown); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Cards */
+  .card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--sage);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--sage-light);
+    border-radius: 50%;
+  }
+
+  .card p { color: var(--mid-brown); margin-bottom: 10px; }
+  .card p:last-child { margin-bottom: 0; }
+
+  .pattern-item {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: var(--dark-brown);
+    padding: 8px 14px;
+    border-left: 3px solid var(--sage-light);
+    margin-bottom: 8px;
+    background: var(--sage-bg);
+    border-radius: 0 4px 4px 0;
+    font-size: 14px;
+  }
+
+  .recipe-list {
+    list-style: none;
+    counter-reset: recipe;
+  }
+
+  .recipe-list li {
+    counter-increment: recipe;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 0;
+    color: var(--mid-brown);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .recipe-list li:last-child { border-bottom: none; }
+
+  .recipe-list li::before {
+    content: counter(recipe);
+    min-width: 22px;
+    height: 22px;
+    background: var(--sage);
+    color: white;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Topic selector */
+  .topic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .topic-btn {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--mid-brown);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+  }
+
+  .topic-btn:hover {
+    border-color: var(--sage);
+    background: var(--sage-bg);
+  }
+
+  .topic-btn.selected {
+    border-color: var(--sage);
+    background: var(--sage-bg);
+    color: var(--dark-brown);
+    font-weight: 500;
+  }
+
+  /* Steps */
+  .step-block {
+    margin-bottom: 20px;
+  }
+
+  .step-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .step-num {
+    background: var(--sage);
+    color: white;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mid-brown);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .step-hint {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--muted);
+    margin-left: 36px;
+    margin-bottom: 8px;
+  }
+
+  textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    color: var(--dark-brown);
+    background: var(--warm-white);
+    resize: vertical;
+    line-height: 1.6;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  textarea:focus { border-color: var(--sage); }
+  textarea::placeholder { color: var(--muted); font-style: italic; }
+
+  /* Word count */
+  .wc-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6px;
+    margin-bottom: 4px;
+  }
+
+  .wc-text {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .wc-text.ok { color: var(--sage); font-weight: 500; }
+  .wc-text.over { color: var(--terracotta); }
+
+  .progress-track {
+    flex: 1;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 12px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--sage-light);
+    border-radius: 2px;
+    transition: width 0.3s, background 0.3s;
+  }
+
+  /* Buttons */
+  .btn-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 11px 22px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--sage);
+    color: white;
+  }
+
+  .btn-primary:hover { background: var(--mid-brown); }
+
+  .btn-outline {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--mid-brown);
+  }
+
+  .btn-outline:hover { border-color: var(--mid-brown); }
+
+  /* Preview */
+  #preview-area {
+    display: none;
+    margin-top: 28px;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+  }
+
+  #preview-area h3 {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    color: var(--sage);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  #preview-text {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    color: var(--dark-brown);
+    line-height: 1.8;
+    white-space: pre-wrap;
+  }
+
+  .copy-confirm {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--sage);
+    margin-left: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .copy-confirm.show { opacity: 1; }
+
+  /* Checklist */
+  .checklist {
+    list-style: none;
+    margin-top: 8px;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 7px 0;
+    font-size: 14px;
+    color: var(--mid-brown);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon {
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    transition: all 0.2s;
+    background: white;
+  }
+
+  .check-icon.checked {
+    background: var(--sage);
+    border-color: var(--sage);
+  }
+
+  .check-icon.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  /* Starter sentences */
+  .starters {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .starter-chip {
+    background: var(--sage-bg);
+    border: 1px solid var(--sage-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--dark-brown);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .starter-chip:hover { border-color: var(--sage); background: #E4EEE0; }
+
+  .starter-chip .use-btn {
+    font-size: 11px;
+    color: var(--sage);
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+
+  /* Example box */
+  .example-quote {
+    border-left: 3px solid var(--terracotta);
+    padding: 14px 18px;
+    background: #FBF7F2;
+    border-radius: 0 6px 6px 0;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: var(--mid-brown);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    margin-top: 28px;
+  }
+
+  @media (max-width: 500px) {
+    .topic-grid { grid-template-columns: 1fr; }
+    .tabs { overflow-x: auto; }
+    .tab-btn { padding: 10px 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-eyebrow">Writing Activity</div>
+    <h1>Gentle Encouragement Writing</h1>
+    <div class="header-sub">How to sound supportive — and a little poetic.</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('learn')">① Learn the Style</button>
+    <button class="tab-btn" onclick="switchTab('write')">② Write Yours</button>
+    <button class="tab-btn" onclick="switchTab('check')">③ Self-Check</button>
+  </div>
+
+  <!-- TAB 1: LEARN -->
+  <div class="tab-panel active" id="tab-learn">
+
+    <div class="card">
+      <div class="card-title">What is this style?</div>
+      <p>Some writing does not try to sound powerful at the beginning.</p>
+      <p>Instead, it first makes the reader feel <em>understood.</em></p>
+      <p>Then it gently changes the way we see the situation — without blaming anyone. At the end, it offers just one small step.</p>
+    </div>
+
+    <div class="section-label">Common Sentence Patterns</div>
+
+    <div class="pattern-item">You are not ______. You are just ______.</div>
+    <div class="pattern-item">You may think ______, but actually ______.</div>
+    <div class="pattern-item">Because ______, we can ______.</div>
+    <div class="pattern-item">So today, just ______.</div>
+
+    <div class="section-label">Writing Recipe</div>
+
+    <div class="card">
+      <ul class="recipe-list">
+        <li>Notice a feeling.</li>
+        <li>Do not blame the person.</li>
+        <li>Change the way they see it.</li>
+        <li>Give one small step.</li>
+        <li>End with warmth.</li>
+      </ul>
+    </div>
+
+    <div class="section-label">Example</div>
+
+    <div class="example-quote">
+      You are not bad at English.<br>
+      You are just meeting some words for the first few times.<br><br>
+      You may think reading a word once is not enough.<br>
+      But actually, every time you look at it again,<br>
+      it becomes a little more familiar.<br><br>
+      So today, do not try to remember everything.<br>
+      Just walk one small step forward.
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="switchTab('write')">Start Writing →</button>
+    </div>
+
+  </div>
+
+  <!-- TAB 2: WRITE -->
+  <div class="tab-panel" id="tab-write">
+
+    <p style="color: var(--mid-brown); margin-bottom: 20px;">Choose a topic, then fill in each step. Your paragraph will come together at the bottom.</p>
+
+    <div class="section-label">Step 0 — Choose a Topic</div>
+    <div class="topic-grid" id="topic-grid">
+      <button class="topic-btn" onclick="selectTopic(this, 'studying vocabulary')">📖 studying vocabulary</button>
+      <button class="topic-btn" onclick="selectTopic(this, 'preparing for a test')">📝 preparing for a test</button>
+      <button class="topic-btn" onclick="selectTopic(this, 'feeling tired')">😮‍💨 feeling tired</button>
+      <button class="topic-btn" onclick="selectTopic(this, 'making mistakes')">💭 making mistakes</button>
+      <button class="topic-btn" onclick="selectTopic(this, 'starting something difficult')">🌱 starting something difficult</button>
+      <button class="topic-btn" onclick="selectTopic(this, 'trying again after failing')">🔄 trying again after failing</button>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="step-block">
+      <div class="step-label">
+        <div class="step-num">1</div>
+        <div class="step-name">Notice a feeling</div>
+      </div>
+      <div class="step-hint">Starter: "You may feel ________. That is okay."</div>
+      <textarea id="s1" rows="2" placeholder="You may feel…" oninput="updatePreview()"></textarea>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-block">
+      <div class="step-label">
+        <div class="step-num">2</div>
+        <div class="step-name">Don't blame the person</div>
+      </div>
+      <div class="step-hint">Starter: "You are not ________. You are just ________."</div>
+      <textarea id="s2" rows="2" placeholder="You are not… You are just…" oninput="updatePreview()"></textarea>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-block">
+      <div class="step-label">
+        <div class="step-num">3</div>
+        <div class="step-name">Change the perspective</div>
+      </div>
+      <div class="step-hint">Starter: "You may think ________, but actually ________."</div>
+      <textarea id="s3" rows="2" placeholder="You may think… but actually…" oninput="updatePreview()"></textarea>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step-block">
+      <div class="step-label">
+        <div class="step-num">4</div>
+        <div class="step-name">Give one small action</div>
+      </div>
+      <div class="step-hint">Starter: "So today, just ________."</div>
+      <textarea id="s4" rows="2" placeholder="So today, just…" oninput="updatePreview()"></textarea>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step-block">
+      <div class="step-label">
+        <div class="step-num">5</div>
+        <div class="step-name">Warm ending</div>
+      </div>
+      <div class="step-hint">One last sentence. Make the reader feel okay about where they are.</div>
+      <textarea id="s5" rows="2" placeholder="Maybe progress does not always look…" oninput="updatePreview()"></textarea>
+    </div>
+
+    <div class="section-label">Helpful Sentence Starters</div>
+    <div class="starters" id="starters-box">
+      <button class="starter-chip" onclick="insertStarter('You are not lazy. You are just waiting for a smaller first step.')">
+        You are not lazy. You are just waiting for a smaller first step.
+        <span class="use-btn">use ↗</span>
+      </button>
+      <button class="starter-chip" onclick="insertStarter('You are not slow. You are just learning in your own rhythm.')">
+        You are not slow. You are just learning in your own rhythm.
+        <span class="use-btn">use ↗</span>
+      </button>
+      <button class="starter-chip" onclick="insertStarter('You may think one word is too little. But actually, one word is still a beginning.')">
+        You may think one word is too little. But actually, one word is still a beginning.
+        <span class="use-btn">use ↗</span>
+      </button>
+      <button class="starter-chip" onclick="insertStarter('Because the road is long, we do not have to run today.')">
+        Because the road is long, we do not have to run today.
+        <span class="use-btn">use ↗</span>
+      </button>
+      <button class="starter-chip" onclick="insertStarter('So today, just open your notebook.')">
+        So today, just open your notebook.
+        <span class="use-btn">use ↗</span>
+      </button>
+    </div>
+
+    <!-- Live preview -->
+    <div id="preview-area">
+      <h3>Your Paragraph</h3>
+      <div id="preview-text"></div>
+      <div class="wc-bar" style="margin-top: 16px;">
+        <span class="wc-text" id="wc-label">0 words</span>
+        <div class="progress-track"><div class="progress-fill" id="wc-fill" style="width:0%"></div></div>
+        <span style="font-size:12px; color: var(--muted);">80–120</span>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="copyPreview()">Copy Text</button>
+        <span class="copy-confirm" id="copy-confirm">✓ Copied</span>
+        <button class="btn btn-outline" onclick="switchTab('check')">Self-Check →</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TAB 3: CHECK -->
+  <div class="tab-panel" id="tab-check">
+
+    <div class="card">
+      <div class="card-title">Final Task Reminder</div>
+      <p>Write a short paragraph of <strong>80–120 words</strong>.</p>
+      <p>Encourage someone who is preparing for a vocabulary quiz.</p>
+    </div>
+
+    <div class="section-label">Checklist</div>
+
+    <div class="card">
+      <ul class="checklist" id="checklist">
+        <li onclick="toggleCheck(this)">
+          <div class="check-icon"></div>
+          <span>One sentence that notices a feeling</span>
+        </li>
+        <li onclick="toggleCheck(this)">
+          <div class="check-icon"></div>
+          <span>One "You are not…" sentence</span>
+        </li>
+        <li onclick="toggleCheck(this)">
+          <div class="check-icon"></div>
+          <span>One "You may think…, but actually…" sentence</span>
+        </li>
+        <li onclick="toggleCheck(this)">
+          <div class="check-icon"></div>
+          <span>One small action the reader can do today</span>
+        </li>
+        <li onclick="toggleCheck(this)">
+          <div class="check-icon"></div>
+          <span>A warm ending</span>
+        </li>
+        <li onclick="toggleCheck(this)">
+          <div class="check-icon"></div>
+          <span>80–120 words total</span>
+        </li>
+      </ul>
+    </div>
+
+    <div id="check-score" style="margin-top: 20px; text-align: center; padding: 20px; background: var(--warm-white); border: 1px solid var(--border); border-radius: 8px; display: none;">
+      <div style="font-family: 'Lora', serif; font-size: 22px; color: var(--sage); margin-bottom: 6px;" id="score-text"></div>
+      <div style="font-size: 13px; color: var(--mid-brown);" id="score-sub"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="switchTab('write')">← Back to Writing</button>
+      <button class="btn btn-primary" onclick="scoreCheck()">See My Score</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  // Tab switching
+  function switchTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    const idx = ['learn','write','check'].indexOf(id);
+    document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+  }
+
+  // Topic select
+  let selectedTopic = '';
+  function selectTopic(btn, topic) {
+    document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedTopic = topic;
+  }
+
+  // Live preview & word count
+  function updatePreview() {
+    const parts = ['s1','s2','s3','s4','s5'].map(id => document.getElementById(id).value.trim()).filter(Boolean);
+    if (parts.length === 0) {
+      document.getElementById('preview-area').style.display = 'none';
+      return;
+    }
+    document.getElementById('preview-area').style.display = 'block';
+    const text = parts.join('\n\n');
+    document.getElementById('preview-text').textContent = text;
+
+    const words = text.trim().split(/\s+/).filter(Boolean).length;
+    const label = document.getElementById('wc-label');
+    const fill = document.getElementById('wc-fill');
+
+    label.textContent = words + ' words';
+    label.className = 'wc-text' + (words >= 80 && words <= 120 ? ' ok' : words > 120 ? ' over' : '');
+
+    const pct = Math.min(100, Math.round((words / 120) * 100));
+    fill.style.width = pct + '%';
+    fill.style.background = words >= 80 && words <= 120 ? '#7A8C6E' : words > 120 ? '#A0613A' : '#B8C9A8';
+  }
+
+  // Copy
+  function copyPreview() {
+    const text = document.getElementById('preview-text').textContent;
+    navigator.clipboard.writeText(text).catch(() => {});
+    const conf = document.getElementById('copy-confirm');
+    conf.classList.add('show');
+    setTimeout(() => conf.classList.remove('show'), 2000);
+  }
+
+  // Insert starter into focused or next empty textarea
+  function insertStarter(text) {
+    const ids = ['s1','s2','s3','s4','s5'];
+    // find first empty
+    for (const id of ids) {
+      const ta = document.getElementById(id);
+      if (!ta.value.trim()) {
+        ta.value = text;
+        ta.focus();
+        updatePreview();
+        return;
+      }
+    }
+    // all full — append to s5
+    const ta = document.getElementById('s5');
+    ta.value = (ta.value.trim() ? ta.value.trim() + ' ' : '') + text;
+    ta.focus();
+    updatePreview();
+  }
+
+  // Checklist toggle
+  function toggleCheck(li) {
+    li.querySelector('.check-icon').classList.toggle('checked');
+    document.getElementById('check-score').style.display = 'none';
+  }
+
+  // Score
+  function scoreCheck() {
+    const checks = document.querySelectorAll('.check-icon.checked').length;
+    const total = 6;
+    const box = document.getElementById('check-score');
+    const scoreText = document.getElementById('score-text');
+    const scoreSub = document.getElementById('score-sub');
+    box.style.display = 'block';
+
+    const messages = [
+      [6, 'All 6 ✓  Well done.', 'Your paragraph sounds gentle, clear, and complete.'],
+      [5, '5 / 6  Almost there.', 'Check the one item you missed — you are very close.'],
+      [4, '4 / 6  Good start.', 'Read through your paragraph again. Two small things to add.'],
+      [0, checks + ' / ' + total + '  Keep going.', 'Go back and try filling in a few more steps.'],
+    ];
+
+    for (const [threshold, title, sub] of messages) {
+      if (checks >= threshold) {
+        scoreText.textContent = title;
+        scoreSub.textContent = sub;
+        break;
+      }
+    }
+  }
+</script>
+</body>
+</html>
