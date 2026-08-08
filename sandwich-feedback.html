@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>Sandwich Feedback 三明治回饋法｜練習頁</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light only;
+  --paper:#F7F3EC;
+  --card:#FFFDF9;
+  --ink:#3A2C23;
+  --ink-soft:#6E5B4C;
+  --ink-faint:#9A8877;
+  --crust:#B0703F;
+  --crust-deep:#9A5F32;
+  --bread:#EBD3B4;
+  --bread-lit:#F3E2CB;
+  --crust-pale:#E8D5C2;
+  --filling:#C2A08F;
+  --filling-pale:#F0E1D9;
+  --leaf:#A9B79C;
+  --line:#E3DACD;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background-color:#F7F3EC !important}
+html{min-height:100%;scroll-behavior:smooth}
+body{
+  background-color:#F7F3EC !important;
+  color:#3A2C23 !important;
+  font-family:"Noto Sans TC",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-weight:300;line-height:1.9;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px 96px}
+.eyebrow{
+  font-family:"EB Garamond",serif;font-size:12px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink-faint);
+}
+
+/* ---------- hero ---------- */
+header{padding:56px 0 44px;border-bottom:1px solid var(--line)}
+h1{
+  font-family:"Noto Serif TC",serif;font-weight:600;
+  font-size:clamp(25px,5vw,34px);line-height:1.5;
+  margin:16px 0 4px;letter-spacing:.01em;
+}
+.h1-en{
+  font-family:"EB Garamond",serif;font-style:italic;
+  font-size:clamp(17px,3.2vw,21px);color:var(--crust);
+  margin:0 0 30px;letter-spacing:.02em;
+}
+.creed{
+  border-top:1px solid var(--line);margin-top:34px;padding-top:20px;
+}
+.creed .en{
+  font-family:"EB Garamond",serif;font-size:17.5px;font-style:italic;
+  line-height:1.65;color:var(--crust);margin:0 0 8px;
+}
+.creed .zh{font-family:"Noto Serif TC",serif;font-size:15.5px;line-height:1.9;color:var(--ink-soft);margin:0}
+
+/* ---------- sandwich (shared) ---------- */
+.sw{display:grid;gap:5px;margin:0 auto;max-width:520px}
+.sw-slice{
+  position:relative;border-radius:5px;padding:12px 18px;
+  display:flex;align-items:center;gap:14px;min-height:46px;
+  font-family:"EB Garamond",serif;font-size:16.5px;line-height:1.55;
+  transition:background-color .35s ease,color .35s ease,transform .35s ease,min-height .35s ease,box-shadow .35s ease;
+}
+.sw-slice .tag{
+  font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  flex:none;width:88px;opacity:.75;
+}
+.sw-slice.bread{
+  background:linear-gradient(180deg,var(--bread-lit),var(--bread));
+  color:var(--ink);box-shadow:inset 0 0 0 1px rgba(154,95,50,.16);
+}
+.sw-slice.top{border-radius:26px 26px 5px 5px;box-shadow:inset 0 4px 0 rgba(154,95,50,.13),inset 0 0 0 1px rgba(154,95,50,.16)}
+.sw-slice.bot{border-radius:5px 5px 26px 26px;box-shadow:inset 0 -4px 0 rgba(154,95,50,.13),inset 0 0 0 1px rgba(154,95,50,.16)}
+.sw-slice.fill{
+  background:var(--filling-pale);color:var(--ink);
+  width:calc(100% + 20px);margin-left:-10px;
+  box-shadow:inset 0 0 0 1px rgba(194,160,143,.5);
+}
+.sw-slice.fill::after{
+  content:"";position:absolute;left:6px;right:6px;bottom:-4px;height:8px;
+  background:radial-gradient(circle at 6px 0, var(--leaf) 5.5px, transparent 6px) 0 0/13px 8px repeat-x;
+  opacity:.85;
+}
+.hero-sw .sw-slice{font-size:16px}
+.hero-sw .sw-slice .body{color:var(--ink-soft);font-size:15px}
+.arrowline{
+  text-align:center;font-family:"EB Garamond",serif;font-size:13px;
+  letter-spacing:.14em;color:var(--ink-faint);margin:14px 0 0;
+}
+
+/* ---------- sections ---------- */
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+h2{font-family:"Noto Serif TC",serif;font-weight:600;font-size:22px;margin:10px 0 8px}
+.sec-note{font-size:14.5px;color:var(--ink-soft);margin:0 0 28px;max-width:40em}
+
+/* ---------- practice card ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:24px 22px 20px;margin-bottom:22px}
+.card-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:14px}
+.scene{font-size:13px;color:var(--ink-faint);letter-spacing:.04em}
+.before{
+  font-family:"EB Garamond",serif;font-size:19px;color:var(--ink);
+  background:var(--filling-pale);border-radius:4px;padding:12px 16px;margin:0 0 20px;
+}
+.before .x{font-family:"EB Garamond",serif;color:var(--crust);margin-right:10px;font-size:16px}
+.field{margin-bottom:16px}
+.field-label{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.dot.p,.dot.e{background:var(--crust)}
+.dot.s{background:var(--filling)}
+.field-label span{font-family:"EB Garamond",serif;font-size:13.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+textarea{
+  width:100%;border:none;border-bottom:1px solid var(--line);background:transparent;
+  resize:none;overflow:hidden;font-family:"EB Garamond",serif;font-size:17.5px;
+  line-height:1.75;color:var(--ink);padding:4px 2px 8px;min-height:34px;
+}
+textarea::placeholder{color:#C4B6A6;font-style:italic}
+textarea:focus{outline:none;border-bottom-color:var(--crust)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{
+  font-family:"EB Garamond",serif;font-size:14px;background:transparent;
+  border:1px solid var(--crust-pale);color:var(--ink-soft);border-radius:20px;
+  padding:3px 12px;cursor:pointer;transition:background-color .18s ease,color .18s ease;
+}
+.chip:hover,.chip:focus-visible{background:var(--crust-pale);color:var(--ink)}
+
+/* ---------- live stack ---------- */
+.stack-wrap{margin-top:24px;padding-top:20px;border-top:1px dashed var(--line)}
+.stack-cap{
+  font-family:"EB Garamond",serif;font-size:12px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px;display:block;
+}
+.sw-slice.empty{
+  background:transparent;color:#C7B9A9;box-shadow:none;
+  border:1px dashed var(--crust-pale);min-height:36px;
+  transform:translateY(-3px);
+}
+.sw-slice.empty::after{display:none}
+.sw-slice.empty .body{font-style:italic;font-size:14px}
+.sw.complete{filter:drop-shadow(0 6px 14px rgba(154,95,50,.13))}
+.sw.complete .sw-slice{transform:translateY(0)}
+.done{
+  font-family:"EB Garamond",serif;font-size:14.5px;color:var(--crust);
+  margin:14px 0 0;opacity:0;transition:opacity .4s ease;
+}
+.done.show{opacity:1}
+
+.card-foot{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+button.act{
+  font-family:"Noto Sans TC",sans-serif;font-size:13.5px;background:transparent;
+  border:1px solid var(--line);color:var(--ink-soft);border-radius:4px;
+  padding:7px 15px;cursor:pointer;transition:border-color .18s ease,color .18s ease;
+}
+button.act:hover,button.act:focus-visible{border-color:var(--crust);color:var(--crust)}
+button.act.solid{background:var(--crust);border-color:var(--crust);color:#FFFDF9}
+button.act.solid:hover{background:var(--crust-deep);border-color:var(--crust-deep);color:#FFFDF9}
+.model{margin-top:16px;padding:14px 16px;background:#F4EFE7;border-radius:4px;font-family:"EB Garamond",serif;font-size:16px;line-height:1.75;color:var(--ink-soft)}
+.model p{margin:0 0 4px}
+.model p:last-child{margin:0}
+.model .mk{color:var(--crust);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-right:8px}
+.hidden{display:none}
+
+.adder{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.adder input{
+  flex:1;min-width:240px;border:none;border-bottom:1px solid var(--line);
+  background:transparent;font-family:"EB Garamond",serif;font-size:16.5px;color:var(--ink);padding:7px 2px;
+}
+.adder input:focus{outline:none;border-bottom-color:var(--crust)}
+
+/* ---------- reference ---------- */
+.layers{display:grid;gap:10px}
+.layer-def{display:grid;grid-template-columns:74px 1fr;gap:18px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:18px 20px}
+.layer-tag{font-family:"EB Garamond",serif;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);padding-top:4px}
+.bar{height:3px;border-radius:2px;margin-top:6px}
+.bar.top,.bar.bot{background:var(--crust)}
+.bar.mid{background:var(--filling)}
+.layer-def h3{font-family:"EB Garamond",serif;font-weight:500;font-size:18px;margin:0 0 2px;color:var(--crust)}
+.layer-def .zh{font-size:14px;color:var(--ink-soft);margin:0 0 10px}
+.layer-def ul{margin:0;padding-left:0;list-style:none}
+.layer-def li{font-family:"EB Garamond",serif;font-size:16px;padding:3px 0 3px 16px;position:relative;line-height:1.6}
+.layer-def li::before{content:"";position:absolute;left:0;top:14px;width:7px;height:1px;background:var(--filling)}
+.ref{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+.ref-col h4{font-family:"EB Garamond",serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--crust);margin:0 0 8px;font-weight:500}
+.ref-col p{font-family:"EB Garamond",serif;font-size:16px;color:var(--ink-soft);margin:0 0 4px;line-height:1.6}
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px 26px}
+.vocab div{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.vocab .en{font-family:"EB Garamond",serif;font-size:16.5px}
+.vocab .zh{color:var(--ink-soft)}
+
+.reflect{padding:52px 0 0}
+.reflect .en{font-family:"EB Garamond",serif;font-size:19px;font-style:italic;line-height:1.7;color:var(--crust);margin:0 0 14px}
+.reflect .zh{font-family:"Noto Serif TC",serif;font-size:16px;line-height:2;margin:0}
+footer{padding:40px 0 0;font-size:13px;color:var(--ink-faint)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.status{font-size:12.5px;color:var(--ink-faint);margin-top:12px;min-height:18px}
+
+@media (prefers-color-scheme:dark){
+  html,body{background-color:#F7F3EC !important;color:#3A2C23 !important}
+  .card,.layer-def{background-color:#FFFDF9 !important;color:#3A2C23 !important}
+  textarea,.adder input{background-color:transparent !important;color:#3A2C23 !important;-webkit-text-fill-color:#3A2C23}
+  .chip,button.act{background-color:transparent !important;color:#6E5B4C !important}
+  button.act.solid{background-color:#B0703F !important;color:#FFFDF9 !important}
+  .before,.sw-slice.fill{background-color:#F0E1D9 !important}
+  .model{background-color:#F4EFE7 !important}
+  h1,h2,.reflect .zh{color:#3A2C23 !important}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+
+@media print{
+  @page{margin:14mm}
+  body{background:#fff}
+  .wrap{max-width:100%;padding:0}
+  header{padding:0 0 16px}
+  section{padding:20px 0;break-inside:avoid}
+  .card{break-inside:avoid;border-color:#CFC4B4}
+  button,.chips,.toolbar,.adder,.status,.stack-wrap,.model{display:none!important}
+  textarea{border-bottom:1px solid #BBB;min-height:56px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">英語創意發想社 · Communication Tools</div>
+  <h1>把一句太直接的回饋，<br>改寫成對方比較聽得進去的版本。</h1>
+  <p class="h1-en">Sandwich Feedback — a practice page</p>
+
+  <div class="sw hero-sw">
+    <div class="sw-slice bread top"><span class="tag">Bread</span><span class="body"><strong>Positive</strong> — 他真的做到的事</span></div>
+    <div class="sw-slice fill"><span class="tag">Filling</span><span class="body"><strong>Suggestion</strong> — 一個做得到的建議</span></div>
+    <div class="sw-slice bread bot"><span class="tag">Bread</span><span class="body"><strong>Encouragement</strong> — 繼續下去的理由</span></div>
+  </div>
+  <p class="arrowline">Positive → Suggestion → Encouragement</p>
+
+  <div class="creed">
+    <p class="en">Feedback is not only about what is true.<br>It is also about how we choose to say it.</p>
+    <p class="zh">回饋不只是「我說得對不對」，也包括「我選擇怎麼說」。</p>
+  </div>
+</header>
+
+<section>
+  <div class="eyebrow">Rewrite the Feedback</div>
+  <h2>開始練習</h2>
+  <p class="sec-note">下面每一句都是課堂上真的會出現的話。點句型可以直接帶入欄位；三層都寫完，下面的三明治就會疊起來。</p>
+  <div id="cards"></div>
+
+  <div class="eyebrow" style="margin-top:34px">Your own</div>
+  <div class="adder">
+    <input id="ownInput" type="text" placeholder="輸入你自己真的說過的一句話，例如：You never listen in class.">
+    <button class="act" id="addOwn">加入練習</button>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">The Three Layers</div>
+  <h2>三層各自在做什麼</h2>
+  <p class="sec-note">建議放中間。上下兩片不是為了讓話好聽，是為了讓中間那句真的被聽見。</p>
+  <div class="layers">
+    <div class="layer-def">
+      <div class="layer-tag">Bread<div class="bar top"></div></div>
+      <div>
+        <h3>Positive</h3>
+        <p class="zh">先看見對方真的做到的地方。要具體——空泛的稱讚會讓整個結構露餡。</p>
+        <ul><li>I like your ideas.</li><li>You did a good job organizing your presentation.</li></ul>
+      </div>
+    </div>
+    <div class="layer-def">
+      <div class="layer-tag">Filling<div class="bar mid"></div></div>
+      <div>
+        <h3>Suggestion</h3>
+        <p class="zh">一次只給一個，而且下一次就做得到。</p>
+        <ul><li>Maybe you could speak a little louder.</li><li>You might add one more example here.</li></ul>
+      </div>
+    </div>
+    <div class="layer-def">
+      <div class="layer-tag">Bread<div class="bar bot"></div></div>
+      <div>
+        <h3>Encouragement</h3>
+        <p class="zh">給一個往前走的理由，不是給一句安慰。</p>
+        <ul><li>I believe your next draft will be even better.</li><li>Keep practicing. You're making progress.</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Useful Expressions</div>
+  <h2>可以直接用的句型</h2>
+  <div class="ref">
+    <div class="ref-col"><h4>Positive</h4><p>I like…</p><p>I really enjoyed…</p><p>One thing you did well was…</p><p>I can tell you…</p></div>
+    <div class="ref-col"><h4>Suggestion</h4><p>Maybe you could…</p><p>You might try…</p><p>One thing to improve is…</p><p>Next time, try…</p></div>
+    <div class="ref-col"><h4>Encouragement</h4><p>Keep going!</p><p>I believe you can do even better.</p><p>You're improving every time.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Vocabulary</div>
+  <h2>單字</h2>
+  <div class="vocab">
+    <div><span class="en">feedback</span><span class="zh">回饋</span></div>
+    <div><span class="en">encouragement</span><span class="zh">鼓勵</span></div>
+    <div><span class="en">suggestion</span><span class="zh">建議</span></div>
+    <div><span class="en">constructive feedback</span><span class="zh">建設性的回饋</span></div>
+    <div><span class="en">communication</span><span class="zh">溝通</span></div>
+    <div><span class="en">growth mindset</span><span class="zh">成長型思維</span></div>
+  </div>
+</section>
+
+<div class="reflect">
+  <div class="eyebrow">Reflection</div>
+  <p class="en">Good feedback is not about making criticism softer.<br>It's about making growth possible.</p>
+  <p class="zh">好的回饋，不是把真話包裝起來，而是讓對方願意聽見，也願意繼續前進。<br><br>這個工具只回答一個問題：How can I say it so people can hear it？<br>它不回答另一個——怎麼把問題說得具體，而不是評價這個人。那是另一堂課。</p>
+</div>
+
+<div class="toolbar">
+  <button class="act solid" id="copyAll">複製全部練習結果</button>
+  <button class="act" id="printBtn">列印成學習單</button>
+  <button class="act" id="clearBtn">清空重寫</button>
+</div>
+<div class="status" id="status"></div>
+<footer>可直接印成 A4 學習單；列印時會隱去按鈕、示範與預覽，留下空白書寫欄。</footer>
+
+</div>
+
+<script>
+const PROMPTS = [
+  {id:"p1", scene:"口說練習之後", before:"Your pronunciation is terrible.",
+   model:["I can tell you practiced this speech.","Maybe you could slow down a little on the ending sounds.","Your pronunciation is clearer than last time. Keep going."]},
+  {id:"p2", scene:"上課時", before:"You didn't prepare for class.",
+   model:["You were willing to answer even when you weren't ready.","Next time, try reading the text once before class.","You learn fast when you have the words in front of you."]},
+  {id:"p3", scene:"作文發還時", before:"Your writing is confusing.",
+   model:["There are a lot of real ideas in this draft.","You might put your main point in the first sentence of each paragraph.","I believe your next draft will be much easier to follow."]}
+];
+const CHIPS = {
+  0:["I like ","I really enjoyed ","One thing you did well was ","I can tell you "],
+  1:["Maybe you could ","You might try ","One thing to improve is ","Next time, try "],
+  2:["Keep going! ","I believe you can do even better. ","You're improving every time. "]
+};
+const LABELS = ["Positive","Suggestion","Encouragement"];
+const SLOTS = ["Bread","Filling","Bread"];
+const DOTS = ["p","s","e"];
+const PLACEHOLDERS = ["先寫一句他真的做到的事…","只給一個做得到的建議…","給一個繼續下去的理由…"];
+const EMPTY_HINT = ["還缺上面這片麵包","還缺中間的餡","還缺下面這片麵包"];
+
+const state = {};
+const KEY = "sandwich-feedback:v2";
+const cardsEl = document.getElementById("cards");
+const statusEl = document.getElementById("status");
+
+function say(m){statusEl.textContent=m;clearTimeout(say.t);say.t=setTimeout(()=>statusEl.textContent="",2600)}
+function autosize(ta){ta.style.height="auto";ta.style.height=ta.scrollHeight+"px"}
+
+function buildCard(p){
+  if(!state[p.id]) state[p.id]={before:p.before,vals:["","",""]};
+  const card=document.createElement("div");
+  card.className="card";card.dataset.id=p.id;
+
+  const head=document.createElement("div");
+  head.className="card-head";
+  head.innerHTML='<span class="eyebrow">Rewrite</span><span class="scene">'+(p.scene||"你自己的情境")+'</span>';
+  card.appendChild(head);
+
+  const before=document.createElement("p");
+  before.className="before";
+  before.innerHTML='<span class="x">&#10005;</span>';
+  before.appendChild(document.createTextNode(p.before));
+  card.appendChild(before);
+
+  for(let i=0;i<3;i++){
+    const field=document.createElement("div");field.className="field";
+    const label=document.createElement("div");label.className="field-label";
+    label.innerHTML='<span class="dot '+DOTS[i]+'"></span><span>'+LABELS[i]+'</span>';
+    field.appendChild(label);
+    const ta=document.createElement("textarea");
+    ta.rows=1;ta.placeholder=PLACEHOLDERS[i];ta.value=state[p.id].vals[i];
+    ta.setAttribute("aria-label",LABELS[i]);
+    ta.addEventListener("input",()=>{state[p.id].vals[i]=ta.value;autosize(ta);paint();save()});
+    field.appendChild(ta);
+    const chips=document.createElement("div");chips.className="chips";
+    CHIPS[i].forEach(c=>{
+      const b=document.createElement("button");b.className="chip";b.type="button";b.textContent=c.trim();
+      b.addEventListener("click",()=>{
+        ta.value=(ta.value.trim()?ta.value.trim()+" ":"")+c;
+        state[p.id].vals[i]=ta.value;ta.focus();autosize(ta);paint();save();
+      });
+      chips.appendChild(b);
+    });
+    field.appendChild(chips);
+    card.appendChild(field);
+  }
+
+  const wrap=document.createElement("div");wrap.className="stack-wrap";
+  const cap=document.createElement("span");cap.className="stack-cap";cap.textContent="Your sandwich";
+  wrap.appendChild(cap);
+  const sw=document.createElement("div");sw.className="sw";
+  const slices=[];
+  ["top","mid","bot"].forEach((pos,i)=>{
+    const s=document.createElement("div");
+    s.className="sw-slice "+(i===1?"fill":"bread "+pos);
+    s.innerHTML='<span class="tag">'+SLOTS[i]+'</span><span class="body"></span>';
+    sw.appendChild(s);slices.push(s);
+  });
+  wrap.appendChild(sw);
+  const done=document.createElement("p");done.className="done";
+  done.textContent="Complete. 讀一次出來聽聽看——你自己聽得下去嗎？";
+  wrap.appendChild(done);
+  card.appendChild(wrap);
+
+  const foot=document.createElement("div");foot.className="card-foot";
+  const copyBtn=document.createElement("button");copyBtn.className="act";copyBtn.textContent="複製這一則";
+  copyBtn.addEventListener("click",()=>{
+    const t=state[p.id].vals.filter(Boolean).join(" ");
+    if(!t){say("這一則還沒有內容。");return}
+    navigator.clipboard.writeText(t).then(()=>say("已複製。"),()=>say("複製失敗，請手動選取。"));
+  });
+  foot.appendChild(copyBtn);
+
+  if(p.model){
+    const box=document.createElement("div");box.className="model hidden";
+    box.innerHTML=p.model.map((m,i)=>'<p><span class="mk">'+LABELS[i]+'</span>'+m+'</p>').join("");
+    const mBtn=document.createElement("button");mBtn.className="act";mBtn.textContent="看一個示範";
+    mBtn.addEventListener("click",()=>{
+      const closed=box.classList.toggle("hidden");
+      mBtn.textContent=closed?"看一個示範":"收起示範";
+    });
+    foot.appendChild(mBtn);card.appendChild(foot);card.appendChild(box);
+  }else{
+    const del=document.createElement("button");del.className="act";del.textContent="移除";
+    del.addEventListener("click",()=>{delete state[p.id];card.remove();save()});
+    foot.appendChild(del);card.appendChild(foot);
+  }
+
+  cardsEl.appendChild(card);
+  card._slices=slices;card._sw=sw;card._done=done;
+  card.querySelectorAll("textarea").forEach(autosize);
+  return card;
+}
+
+function paint(){
+  document.querySelectorAll(".card").forEach(card=>{
+    const st=state[card.dataset.id];if(!st)return;
+    let filled=0;
+    st.vals.forEach((v,i)=>{
+      const s=card._slices[i];const body=s.querySelector(".body");
+      if(v.trim()){s.classList.remove("empty");body.textContent=v.trim();filled++}
+      else{s.classList.add("empty");body.textContent=EMPTY_HINT[i]}
+    });
+    card._sw.classList.toggle("complete",filled===3);
+    card._done.classList.toggle("show",filled===3);
+  });
+}
+
+async function save(){try{if(window.storage)await window.storage.set(KEY,JSON.stringify(state))}catch(e){}}
+async function load(){try{if(!window.storage)return null;const r=await window.storage.get(KEY);return r?JSON.parse(r.value):null}catch(e){return null}}
+
+let customCount=0;
+document.getElementById("addOwn").addEventListener("click",()=>{
+  const input=document.getElementById("ownInput");const t=input.value.trim();
+  if(!t){input.focus();say("先輸入一句想改寫的話。");return}
+  customCount++;
+  const c=buildCard({id:"own"+customCount,scene:"你自己的情境",before:t});
+  input.value="";paint();save();
+  c.scrollIntoView({behavior:"smooth",block:"center"});
+});
+
+document.getElementById("copyAll").addEventListener("click",()=>{
+  const out=[];
+  document.querySelectorAll(".card").forEach(card=>{
+    const st=state[card.dataset.id];if(!st)return;
+    const body=st.vals.filter(Boolean).join(" ");
+    if(body)out.push("X  "+st.before+"\nO  "+body);
+  });
+  if(!out.length){say("目前還沒有寫完的句子。");return}
+  navigator.clipboard.writeText(out.join("\n\n")).then(()=>say("已複製 "+out.length+" 則。"),()=>say("複製失敗，請手動選取。"));
+});
+document.getElementById("printBtn").addEventListener("click",()=>window.print());
+document.getElementById("clearBtn").addEventListener("click",()=>{
+  Object.keys(state).forEach(k=>state[k].vals=["","",""]);
+  document.querySelectorAll("textarea").forEach(ta=>{ta.value="";autosize(ta)});
+  paint();save();say("已清空。");
+});
+
+(async function init(){
+  const saved=await load();
+  PROMPTS.forEach(p=>{if(saved&&saved[p.id])state[p.id]=saved[p.id];buildCard(p)});
+  if(saved){
+    Object.keys(saved).forEach(k=>{
+      if(k.indexOf("own")===0){customCount++;state[k]=saved[k];buildCard({id:k,scene:"你自己的情境",before:saved[k].before})}
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>
