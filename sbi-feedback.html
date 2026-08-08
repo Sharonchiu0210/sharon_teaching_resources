@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>SBI Feedback｜Can a camera see it?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light only;
+  --paper:#F7F3EC;
+  --card:#FFFDF9;
+  --ink:#3A2C23;
+  --ink-soft:#6E5B4C;
+  --ink-faint:#9A8877;
+  --terra:#B0703F;
+  --terra-deep:#9A5F32;
+  --line:#E3DACD;
+  --mist:#7E969E;        /* camera can see it  — behavior */
+  --mist-pale:#E6EDEE;
+  --rose:#B58279;        /* camera cannot see it — judgment */
+  --rose-pale:#F2E3DF;
+  --sand:#F3EEE4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background-color:#F7F3EC !important}
+html{min-height:100%;scroll-behavior:smooth}
+body{
+  background-color:#F7F3EC !important;
+  color:#3A2C23 !important;
+  font-family:"Noto Sans TC",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-weight:300;line-height:1.9;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:780px;margin:0 auto;padding:0 22px 90px}
+.eyebrow{font-family:"EB Garamond",serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint)}
+
+/* ---------- hero ---------- */
+header{padding:48px 0 34px}
+h1{font-family:"Noto Serif TC",serif;font-weight:600;font-size:clamp(24px,5vw,33px);line-height:1.5;margin:14px 0 4px}
+.h1-en{font-family:"EB Garamond",serif;font-style:italic;font-size:clamp(16px,3.2vw,20px);color:var(--terra);margin:0 0 26px;letter-spacing:.02em}
+
+/* signature: the viewfinder */
+.finder{position:relative;background:var(--card);border:1px solid var(--line);padding:34px 26px 30px;text-align:center}
+.finder::before,.finder::after,.finder .c1,.finder .c2{content:"";position:absolute;width:20px;height:20px;border:2px solid var(--mist)}
+.finder::before{top:9px;left:9px;border-right:0;border-bottom:0}
+.finder::after{top:9px;right:9px;border-left:0;border-bottom:0}
+.finder .c1{bottom:9px;left:9px;border-right:0;border-top:0}
+.finder .c2{bottom:9px;right:9px;border-left:0;border-top:0}
+.finder .rec{font-family:"EB Garamond",serif;font-size:11px;letter-spacing:.24em;color:var(--mist);text-transform:uppercase;display:block;margin-bottom:12px}
+.finder q{quotes:none}
+.finder .big{display:block;font-family:"EB Garamond",serif;font-size:clamp(28px,7vw,44px);line-height:1.25;color:var(--ink)}
+.finder .sub{display:block;font-family:"EB Garamond",serif;font-style:italic;font-size:clamp(14px,3vw,17px);color:var(--ink-soft);margin-top:14px;line-height:1.6}
+.finder .zh{display:block;font-size:13.5px;color:var(--ink-faint);margin-top:10px}
+
+.triad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 0}
+.triad div{background:var(--sand);border:1px solid var(--line);padding:12px 8px;text-align:center}
+.triad .k{font-family:"EB Garamond",serif;font-size:15px;letter-spacing:.04em;color:var(--terra);display:block}
+.triad .q{font-size:11.5px;color:var(--ink-soft);display:block;line-height:1.6;margin-top:2px}
+
+nav.stages{display:flex;gap:8px;margin:26px 0 0;flex-wrap:wrap}
+nav.stages a{flex:1;min-width:150px;text-decoration:none;border:1px solid var(--line);background:var(--card);padding:10px 12px;color:var(--ink-soft);font-size:13px;transition:.2s}
+nav.stages a:hover{border-color:var(--terra);color:var(--ink)}
+nav.stages b{display:block;font-family:"EB Garamond",serif;font-size:11px;letter-spacing:.2em;color:var(--ink-faint);font-weight:400}
+
+/* ---------- sections ---------- */
+section{padding:52px 0 0;border-top:1px solid var(--line);margin-top:46px}
+h2{font-family:"Noto Serif TC",serif;font-weight:600;font-size:clamp(19px,4vw,24px);margin:10px 0 6px;line-height:1.5}
+.lede{font-size:14.5px;color:var(--ink-soft);margin:0 0 26px;max-width:60ch}
+.lede em{font-family:"EB Garamond",serif;font-style:italic;color:var(--terra)}
+
+/* ---------- stage 1 ---------- */
+.tally{font-family:"EB Garamond",serif;font-size:13px;letter-spacing:.1em;color:var(--ink-faint);margin-bottom:14px}
+.item{background:var(--card);border:1px solid var(--line);padding:16px 18px;margin-bottom:10px}
+.item .stmt{font-family:"EB Garamond",serif;font-size:18px;line-height:1.5;color:var(--ink)}
+.picks{display:flex;gap:8px;margin-top:12px}
+.picks button{flex:1;font-family:"Noto Sans TC",sans-serif;font-size:13px;background:transparent;border:1px solid var(--line);color:var(--ink-soft);padding:8px 4px;cursor:pointer;transition:.18s;border-radius:0}
+.picks button:hover{border-color:var(--ink-faint);color:var(--ink)}
+.picks button:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+.picks button .en{font-family:"EB Garamond",serif;font-size:14px;letter-spacing:.04em}
+.item.done .picks{display:none}
+.verdict{display:none;margin-top:12px;padding:12px 14px;border-left:3px solid var(--line);font-size:13.5px;line-height:1.75}
+.item.done .verdict{display:block}
+.verdict.behavior{background:var(--mist-pale);border-left-color:var(--mist)}
+.verdict.judgment{background:var(--rose-pale);border-left-color:var(--rose)}
+.verdict .tag{font-family:"EB Garamond",serif;letter-spacing:.14em;font-size:11px;text-transform:uppercase;display:block;margin-bottom:4px}
+.verdict.behavior .tag{color:var(--mist)}
+.verdict.judgment .tag{color:var(--rose)}
+.verdict .miss{color:var(--terra-deep);font-size:12.5px;display:block;margin-top:6px}
+
+/* ---------- stage 2 & 3 ---------- */
+.label-card{background:var(--rose-pale);border:1px solid #E6D2CC;padding:16px 18px;margin-bottom:20px}
+.label-card .x{font-family:"EB Garamond",serif;font-size:20px;color:var(--ink)}
+.label-card .note{font-size:12.5px;color:var(--ink-soft);margin-top:6px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:13px;color:var(--ink);margin-bottom:2px}
+.field label .en{font-family:"EB Garamond",serif;letter-spacing:.08em;color:var(--terra);font-size:13px}
+.field .ask{font-size:12px;color:var(--ink-faint);display:block;margin-bottom:7px}
+textarea{width:100%;font-family:"EB Garamond",serif;font-size:16.5px;line-height:1.6;color:#3A2C23 !important;background:var(--card) !important;-webkit-text-fill-color:#3A2C23;border:1px solid var(--line);padding:11px 13px;resize:vertical;min-height:58px}
+textarea:focus{outline:none;border-color:var(--terra)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-family:"EB Garamond",serif;font-size:13px;background:transparent;border:1px dashed var(--line);color:var(--ink-soft);padding:5px 10px;cursor:pointer;transition:.18s}
+.chip:hover{border-style:solid;border-color:var(--terra);color:var(--ink)}
+.chip:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+
+.cameracheck{display:none;margin-top:8px;font-size:12.5px;color:var(--terra-deep);background:#F6EDE4;border-left:3px solid var(--terra);padding:8px 12px;line-height:1.7}
+.cameracheck.on{display:block}
+
+.compose{background:var(--card);border:1px solid var(--line);padding:20px 20px 18px;margin-top:22px;position:relative}
+.compose .rec{font-family:"EB Garamond",serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:10px}
+.compose p{font-family:"EB Garamond",serif;font-size:clamp(17px,3.6vw,20px);line-height:1.7;margin:0;color:var(--ink)}
+.compose .slot{color:var(--ink-faint);font-style:italic}
+.compose.full{border-color:var(--mist);background:linear-gradient(180deg,#FFFDF9,#F6FAFA)}
+.compose .done-note{display:none;font-size:12px;color:var(--mist);letter-spacing:.08em;margin-top:12px;font-family:"EB Garamond",serif}
+.compose.full .done-note{display:block}
+
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.act{font-family:"Noto Sans TC",sans-serif;font-size:12.5px;background:transparent;border:1px solid var(--line);color:var(--ink-soft);padding:8px 14px;cursor:pointer;transition:.18s}
+.act:hover{border-color:var(--terra);color:var(--ink)}
+.act.solid{background:var(--terra);border-color:var(--terra);color:var(--card)}
+.act.solid:hover{background:var(--terra-deep);color:var(--card)}
+.act:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+.model{display:none;background:var(--sand);border:1px solid var(--line);padding:14px 16px;margin-top:12px;font-size:13.5px;line-height:1.8}
+.model.on{display:block}
+.model .en{font-family:"EB Garamond",serif;font-size:16px;line-height:1.6;display:block;margin-bottom:6px}
+
+.scen{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.scen button{font-size:12.5px;font-family:"Noto Sans TC",sans-serif;background:transparent;border:1px solid var(--line);color:var(--ink-soft);padding:8px 14px;cursor:pointer;transition:.18s}
+.scen button:hover{border-color:var(--terra)}
+.scen button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--card)}
+.scen button:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+
+/* ---------- closing ---------- */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+.pair div{background:var(--card);border:1px solid var(--line);padding:18px}
+.pair .t{font-family:"EB Garamond",serif;font-size:15px;letter-spacing:.06em;color:var(--terra);display:block;margin-bottom:8px}
+.pair .q{font-family:"EB Garamond",serif;font-style:italic;font-size:15px;line-height:1.5;color:var(--ink)}
+.pair .zh{font-size:12.5px;color:var(--ink-soft);margin-top:8px;display:block}
+.closing{font-size:14px;color:var(--ink-soft);line-height:1.95;margin-top:26px;max-width:62ch}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-faint);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:520px){
+  .triad{grid-template-columns:1fr;gap:6px}
+  .triad div{display:flex;gap:8px;align-items:baseline;justify-content:flex-start;text-align:left;padding:9px 12px}
+  .pair{grid-template-columns:1fr}
+  .picks{flex-direction:column}
+}
+
+@media print{
+  nav.stages,.acts,.chips,.picks,.scen,.cameracheck{display:none !important}
+  body{background:#fff !important}
+  section{break-inside:avoid}
+  .finder{border:1px solid #ccc}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
+
+@media (prefers-color-scheme:dark){
+  html,body{background-color:#F7F3EC !important;color:#3A2C23 !important}
+  .item,.compose,.pair div,.finder,nav.stages a{background-color:#FFFDF9 !important}
+  textarea{background-color:#FFFDF9 !important;color:#3A2C23 !important;-webkit-text-fill-color:#3A2C23}
+  .chip,.act,.picks button,.scen button{background-color:transparent !important;color:#6E5B4C !important}
+  .act.solid{background-color:#B0703F !important;color:#FFFDF9 !important}
+  .scen button[aria-pressed="true"]{background-color:#3A2C23 !important;color:#FFFDF9 !important}
+  .label-card{background-color:#F2E3DF !important}
+  .model,.triad div{background-color:#F3EEE4 !important}
+  .verdict.behavior{background-color:#E6EDEE !important}
+  .verdict.judgment{background-color:#F2E3DF !important}
+  .cameracheck{background-color:#F6EDE4 !important}
+  h1,h2,.compose p,.finder .big,.item .stmt{color:#3A2C23 !important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">英語創意發想社 · Feedback Tools 02</span>
+  <h1>說清楚發生了什麼，<br>而不是評價這個人</h1>
+  <p class="h1-en">SBI Feedback — Situation · Behavior · Impact</p>
+
+  <div class="finder">
+    <span class="c1"></span><span class="c2"></span>
+    <span class="rec">The camera test</span>
+    <span class="big">Can a camera see it?</span>
+    <span class="sub">If not, you may be describing your judgment, not their behavior.</span>
+    <span class="zh">如果攝影機拍不到，你寫的可能是判斷，不是行為。</span>
+  </div>
+
+  <div class="triad">
+    <div><span class="k">📍 Situation</span><span class="q">When did it happen?</span></div>
+    <div><span class="k">👀 Behavior</span><span class="q">What did the person actually do?</span></div>
+    <div><span class="k">🌊 Impact</span><span class="q">What happened because of it?</span></div>
+  </div>
+
+  <nav class="stages">
+    <a href="#s1"><b>Stage 01</b>Behavior or Judgment?</a>
+    <a href="#s2"><b>Stage 02</b>Turn the label into SBI</a>
+    <a href="#s3"><b>Stage 03</b>Real-life situations</a>
+  </nav>
+</header>
+
+<!-- ============ STAGE 1 ============ -->
+<section id="s1">
+  <span class="eyebrow">Stage 01</span>
+  <h2>Behavior or Judgment?</h2>
+  <p class="lede">最常見的問題不是學生不會 SBI，而是他以為自己在寫 behavior，其實還在下判斷。先練分辨：讀一句，問自己 <em>can a camera see it?</em></p>
+  <p class="tally" id="tally">0 / 12 answered</p>
+  <div id="bank"></div>
+</section>
+
+<!-- ============ STAGE 2 ============ -->
+<section id="s2">
+  <span class="eyebrow">Stage 02</span>
+  <h2>Turn the label into SBI</h2>
+  <p class="lede">同一件事，換一種說法。下面這句是標籤，把它拆回事實 —— 三格填完，句子會自己組起來。</p>
+
+  <div class="label-card">
+    <span class="x">✕ You're irresponsible.</span>
+    <p class="note">這句話沒有給對方任何可以修正的東西。他只知道你不喜歡他，不知道要改什麼。</p>
+  </div>
+
+  <div class="field">
+    <label>📍 <span class="en">Situation</span></label>
+    <span class="ask">When and where did it happen? 什麼時候、在哪件事上？</span>
+    <textarea id="s2s" rows="2" placeholder="During yesterday's group project,"></textarea>
+    <div class="chips" data-for="s2s">
+      <button class="chip">During yesterday's group project,</button>
+      <button class="chip">In this morning's class,</button>
+      <button class="chip">When we were preparing the presentation,</button>
+      <button class="chip">In our group chat last night,</button>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>👀 <span class="en">Behavior</span></label>
+    <span class="ask">What did the person actually do? 攝影機會拍到什麼？</span>
+    <textarea id="s2b" rows="2" placeholder="you submitted your part two days after the deadline,"></textarea>
+    <div class="cameracheck" id="s2check"></div>
+    <div class="chips" data-for="s2b">
+      <button class="chip">you submitted your part two days after the deadline,</button>
+      <button class="chip">you changed the slides without telling us,</button>
+      <button class="chip">you left the meeting after five minutes,</button>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>🌊 <span class="en">Impact</span></label>
+    <span class="ask">What happened because of it? 因此發生了什麼？</span>
+    <textarea id="s2i" rows="2" placeholder="so the rest of the group had less time to finish the presentation."></textarea>
+    <div class="chips" data-for="s2i">
+      <button class="chip">so the rest of the group had less time to finish the presentation.</button>
+      <button class="chip">so we had to redo the slides the night before.</button>
+      <button class="chip">so I wasn't sure what I should prepare.</button>
+    </div>
+    <p class="ask" style="margin-top:10px">攝影機測的是 <span style="font-family:'EB Garamond',serif">Behavior</span> 那一格。Impact 可以包含感受與後果——<span style="font-family:'EB Garamond',serif">so I stopped talking</span> 也算，那是真的發生的事。</p>
+  </div>
+
+  <div class="compose" id="s2box">
+    <span class="rec">Your SBI</span>
+    <p id="s2out"><span class="slot">Situation…</span></p>
+    <span class="done-note">No label. Just what happened, and what it caused.</span>
+  </div>
+
+  <div class="acts">
+    <button class="act" id="s2model">看範例</button>
+    <button class="act" id="s2copy">複製這句</button>
+  </div>
+  <div class="model" id="s2modelbox">
+    <span class="en">During yesterday's group project, you submitted your part two days after the deadline, so the rest of the group had less time to finish the presentation.</span>
+    句子裡沒有一個字在說「他是什麼樣的人」。整句都可以被錄影、被查證，也因此比較難引起防衛。
+  </div>
+</section>
+
+<!-- ============ STAGE 3 ============ -->
+<section id="s3">
+  <span class="eyebrow">Stage 03</span>
+  <h2>Real-life situations</h2>
+  <p class="lede">不是只有老師會需要說這種話。選一個你真的會遇到的情境，把那句標籤改寫成 SBI。</p>
+
+  <div class="scen" id="scen"></div>
+
+  <div class="label-card">
+    <span class="x" id="scenLabel">✕ You're so controlling.</span>
+    <p class="note" id="scenNote">小組作業。你想說的其實不是「他很愛控制」，而是某一件他做過的事。</p>
+  </div>
+
+  <div class="field">
+    <label>📍 <span class="en">Situation</span></label>
+    <textarea id="s3s" rows="2" placeholder="When…"></textarea>
+  </div>
+  <div class="field">
+    <label>👀 <span class="en">Behavior</span></label>
+    <textarea id="s3b" rows="2" placeholder="you…"></textarea>
+    <div class="cameracheck" id="s3check"></div>
+  </div>
+  <div class="field">
+    <label>🌊 <span class="en">Impact</span></label>
+    <textarea id="s3i" rows="2" placeholder="so…"></textarea>
+  </div>
+
+  <div class="compose" id="s3box">
+    <span class="rec">Your SBI</span>
+    <p id="s3out"><span class="slot">Situation…</span></p>
+    <span class="done-note">Describe the moment, not the person.</span>
+  </div>
+
+  <div class="acts">
+    <button class="act" id="s3model">看範例</button>
+    <button class="act solid" id="s3copy">複製我的 SBI</button>
+    <button class="act" id="printBtn">列印 / 存 PDF</button>
+  </div>
+  <div class="model" id="s3modelbox"></div>
+
+  <div class="label-card" style="margin-top:34px;background:var(--sand);border-color:var(--line)">
+    <span class="x" style="color:var(--terra)">Your own situation</span>
+    <p class="note">What is something you want to say — without attacking the person?<br>有沒有一句話，你其實想說，但不想變成人身攻擊？寫在上面三格裡試一次。</p>
+  </div>
+</section>
+
+<!-- ============ CLOSING ============ -->
+<section id="end">
+  <span class="eyebrow">Two tools, two questions</span>
+  <h2>兩個工具，問的不是同一件事</h2>
+  <div class="pair">
+    <div>
+      <span class="t">Sandwich Feedback</span>
+      <span class="q">How can I say it so people can hear it?</span>
+      <span class="zh">處理的是「怎麼說，對方才聽得下去」。</span>
+    </div>
+    <div>
+      <span class="t">SBI Feedback</span>
+      <span class="q">How can I describe the problem without judging the person?</span>
+      <span class="zh">處理的是「怎麼把問題說具體，而不評價這個人」。</span>
+    </div>
+  </div>
+  <p class="closing">學生一開始會覺得 SBI 很囉唆——一句 “You're lazy.” 三個字就講完了，改成 SBI 要想很久。但那個「想很久」，就是這個工具在做的事：他必須回去找出對方到底做了什麼，也必須承認自己原本說的其實是感受。<br><br>有時候拆到一半會發現，事情沒有想像中嚴重；有時候拆完才發現，比想像中嚴重。兩種都算練成了。</p>
+  <footer>
+    <span>英語創意發想社 · SBI Feedback 練習頁</span>
+    <span>Can a camera see it?</span>
+  </footer>
+</section>
+
+</div>
+
+<script>
+/* ---------------- Stage 1 data ---------------- */
+const BANK=[
+ {t:"You interrupted me three times during the meeting.",a:"behavior",why:"次數、場合都拍得到。對方可以直接對照那段錄影。"},
+ {t:"You are rude.",a:"judgment",why:"攝影機拍不到 rude。這是你對某些行為的解讀，不是行為本身。",fix:"改寫方向：他說了什麼、做了什麼，讓你有這個感覺？"},
+ {t:"You submitted the work two days late.",a:"behavior",why:"有時間點、有可查證的事實。"},
+ {t:"She is lazy.",a:"judgment",why:"lazy 是一種評價。同一個行為，也可能是不會、不敢、或家裡有事。",fix:"改寫方向：她沒有做的那件事，具體是什麼？"},
+ {t:"You didn't reply to our group messages for a week.",a:"behavior",why:"時間長度可以數，訊息紀錄看得到。"},
+ {t:"He doesn't care about the group.",a:"judgment",why:"「在不在乎」在人的心裡，攝影機進不去。",fix:"改寫方向：他做了什麼，讓你推論他不在乎？"},
+ {t:"You looked at your phone while I was talking.",a:"behavior",why:"這是動作，拍得到。注意：拍得到的是動作，不是他為什麼這樣做。"},
+ {t:"You're so controlling.",a:"judgment",why:"標籤。而且是很難反駁的標籤——對方只能否認人格，沒辦法討論事情。",fix:"改寫方向：他決定了哪一件本來該一起決定的事？"},
+ {t:"You spoke for eight of our ten presentation minutes.",a:"behavior",why:"用數字取代形容詞，是 SBI 最快的入門法。"},
+ {t:"You never listen to me.",a:"judgment",why:"never／always 幾乎都不是事實。一旦對方想到一次反例，整句話就失效了。",fix:"改寫方向：最近哪一次，你講話時他做了什麼？"},
+ {t:"You changed the topic without telling anyone.",a:"behavior",why:"一個具體動作，加上一個可查證的結果。"},
+ {t:"You're toxic.",a:"judgment",why:"網路上最常見的一句。強度很高，資訊量是零——對方完全不知道你在說哪一件事。",fix:"改寫方向：他在哪一則留言裡，寫了什麼？"}
+];
+
+const bank=document.getElementById('bank'),tally=document.getElementById('tally');
+let answered=0,right=0;
+BANK.forEach((q,i)=>{
+  const d=document.createElement('div');d.className='item';
+  d.innerHTML='<p class="stmt">'+q.t+'</p>'+
+    '<div class="picks"><button data-p="behavior"><span class="en">Behavior</span> 行為</button>'+
+    '<button data-p="judgment"><span class="en">Judgment</span> 判斷</button></div>'+
+    '<div class="verdict '+q.a+'"><span class="tag"></span><span class="why"></span>'+
+    (q.fix?'<span class="miss">'+q.fix+'</span>':'')+'</div>';
+  d.querySelectorAll('.picks button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok=b.dataset.p===q.a;
+      d.classList.add('done');
+      d.querySelector('.tag').textContent=(q.a==='behavior'?'Behavior ✓ — a camera can see this':'Judgment ✕ — a camera cannot see this')+(ok?'':'　（你選了另一個）');
+      d.querySelector('.why').textContent=q.why;
+      answered++;if(ok)right++;
+      tally.textContent=answered+' / '+BANK.length+' answered　·　'+right+' correct';
+    });
+  });
+  bank.appendChild(d);
+});
+
+/* ---------------- camera check ---------------- */
+const FLAGS=[
+ ["rude","「rude」是判斷。他說了什麼、做了什麼？"],
+ ["lazy","「lazy」是判斷。他沒有完成的是哪一件事？"],
+ ["toxic","「toxic」是判斷。他寫了什麼、說了什麼？"],
+ ["irresponsible","「irresponsible」是判斷。他漏掉的具體是什麼？"],
+ ["controlling","「controlling」是判斷。他自己決定了哪件事？"],
+ ["selfish","「selfish」是判斷。他做了什麼讓你有這個感覺？"],
+ ["disrespectful","「disrespectful」是判斷。當下他的動作或話是什麼？"],
+ ["careless","「careless」是判斷。哪個地方出錯了？"],
+ ["mean","「mean」是判斷。他說了哪一句？"],
+ ["annoying","「annoying」是判斷。他重複做了什麼？"],
+ ["stupid","這是人身評價，不是行為。"],
+ ["never","「never」很難成立，一個反例就被推翻。改成某一次、某一天。"],
+ ["always","「always」很難成立。改成具體次數或某一次。"],
+ ["doesn't care","「不在乎」在心裡，攝影機拍不到。他做了什麼？"],
+ ["don't care","「不在乎」在心裡，攝影機拍不到。他做了什麼？"]
+];
+function cameraCheck(text,box){
+  const t=text.toLowerCase();
+  const hit=FLAGS.find(f=>new RegExp('(^|[^a-z])'+f[0].replace(/'/g,"'")+'([^a-z]|$)').test(t));
+  if(hit){box.textContent='Can a camera see it?　'+hit[1];box.classList.add('on');}
+  else box.classList.remove('on');
+}
+
+/* ---------------- composer ---------------- */
+function wire(sId,bId,iId,outId,boxId,checkId){
+  const s=document.getElementById(sId),b=document.getElementById(bId),i=document.getElementById(iId),
+        out=document.getElementById(outId),box=document.getElementById(boxId),
+        chk=checkId?document.getElementById(checkId):null;
+  function render(){
+    const S=s.value.trim(),B=b.value.trim(),I=i.value.trim();
+    out.innerHTML=(S?esc(S):'<span class="slot">Situation…</span>')+' '+
+                  (B?esc(B):'<span class="slot">behavior…</span>')+' '+
+                  (I?esc(I):'<span class="slot">impact…</span>');
+    box.classList.toggle('full',!!(S&&B&&I));
+    if(chk)cameraCheck(B,chk);
+  }
+  [s,b,i].forEach(el=>el.addEventListener('input',render));
+  render();
+  return()=>[s.value.trim(),b.value.trim(),i.value.trim()].filter(Boolean).join(' ');
+}
+function esc(t){return t.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]))}
+const get2=wire('s2s','s2b','s2i','s2out','s2box','s2check');
+const get3=wire('s3s','s3b','s3i','s3out','s3box','s3check');
+
+/* chips */
+document.querySelectorAll('.chips').forEach(g=>{
+  const target=document.getElementById(g.dataset.for);
+  g.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
+    target.value=c.textContent;target.dispatchEvent(new Event('input'));target.focus();
+  }));
+});
+
+/* ---------------- scenarios ---------------- */
+const SCEN=[
+ {k:"Group work",label:"✕ You're so controlling.",note:"小組作業。你想說的其實不是「他很愛控制」，而是某一件他做過的事。",
+  model:"During last week's group project, you rewrote the whole script the night before without asking us, so two of us didn't know which version to memorize.",
+  zh:"重點不在「他很霸道」，而在「他改了什麼、我們因此怎麼了」。"},
+ {k:"Friendship",label:"✕ You never listen to me.",note:"朋友之間。never 幾乎一定會被反駁，改成某一次會更難被閃過。",
+  model:"When I was telling you about the exam yesterday, you checked your phone and changed the topic, so I stopped talking about it.",
+  zh:"把 never 換成「昨天那一次」，對方就沒辦法用「我哪有」帶過去。"},
+ {k:"Online comments",label:"✕ You're toxic.",note:"網路留言。強度最高、資訊量最低的一種說法。",
+  model:"In the comments under my post, you called my English \"garbage\" three times, so I turned off the comment section.",
+  zh:"引用他真的寫過的字，比任何形容詞都有力。"},
+ {k:"Classroom",label:"✕ You're so disrespectful.",note:"課堂上。老師最常用、也最容易讓學生關起耳朵的一句。",
+  model:"During today's presentation, you talked with your partner while your classmate was speaking, so she lost her place twice.",
+  zh:"學生可以反駁「我哪有不尊重」，但很難反駁「她卡住了兩次」。"}
+];
+const scen=document.getElementById('scen'),scenLabel=document.getElementById('scenLabel'),
+      scenNote=document.getElementById('scenNote'),s3modelbox=document.getElementById('s3modelbox');
+let cur=0;
+SCEN.forEach((sc,idx)=>{
+  const b=document.createElement('button');b.textContent=sc.k;b.setAttribute('aria-pressed',idx===0);
+  b.addEventListener('click',()=>{
+    cur=idx;
+    scen.querySelectorAll('button').forEach((x,j)=>x.setAttribute('aria-pressed',j===idx));
+    scenLabel.textContent=sc.label;scenNote.textContent=sc.note;
+    s3modelbox.classList.remove('on');
+  });
+  scen.appendChild(b);
+});
+document.getElementById('s3model').addEventListener('click',()=>{
+  const sc=SCEN[cur];
+  s3modelbox.innerHTML='<span class="en">'+sc.model+'</span>'+sc.zh;
+  s3modelbox.classList.toggle('on');
+});
+document.getElementById('s2model').addEventListener('click',()=>{
+  document.getElementById('s2modelbox').classList.toggle('on');
+});
+
+/* ---------------- copy / print ---------------- */
+function copy(text,btn){
+  const done=()=>{const o=btn.textContent;btn.textContent='已複製';setTimeout(()=>btn.textContent=o,1400)};
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(done).catch(()=>fallback(text,done))}
+  else fallback(text,done);
+}
+function fallback(text,done){
+  const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity=0;
+  document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){}
+  document.body.removeChild(ta);
+}
+document.getElementById('s2copy').addEventListener('click',e=>{
+  const t=get2();copy(t||'（三格還沒填完）',e.currentTarget);
+});
+document.getElementById('s3copy').addEventListener('click',e=>{
+  const t=get3();copy(t||'（三格還沒填完）',e.currentTarget);
+});
+document.getElementById('printBtn').addEventListener('click',()=>window.print());
+</script>
+</body>
+</html>
