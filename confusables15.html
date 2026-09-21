@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>易混淆字 15 組｜線上填空</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3EDE4; --paper:#FBF8F3; --ink:#3B2C24; --soft:#7A6A5F; --line:#E2D8CB;
+  --a:#6E8B74; --a-bg:#E7EEE7;
+  --b:#6D7F99; --b-bg:#E6EAF0;
+  --c:#A87570; --c-bg:#F2E5E2;
+  --ok:#4E7A5A; --ok-bg:#E3EFE5; --no:#A5564B; --no-bg:#F6E3DF;
+  --accent:#9C6246;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#221B17; --paper:#2C241F; --ink:#EDE3D8; --soft:#B4A597; --line:#43372F;
+    --a:#9DB8A2; --a-bg:#2E3A31; --b:#A3B3CC; --b-bg:#2D333E; --c:#D2A29C; --c-bg:#3D2E2C;
+    --ok:#9CCBA7; --ok-bg:#2B3B2F; --no:#E3A095; --no-bg:#43302C; --accent:#D39A7B;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#221B17; --paper:#2C241F; --ink:#EDE3D8; --soft:#B4A597; --line:#43372F;
+  --a:#9DB8A2; --a-bg:#2E3A31; --b:#A3B3CC; --b-bg:#2D333E; --c:#D2A29C; --c-bg:#3D2E2C;
+  --ok:#9CCBA7; --ok-bg:#2B3B2F; --no:#E3A095; --no-bg:#43302C; --accent:#D39A7B;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:16px;line-height:1.7;-webkit-text-size-adjust:100%}
+.en{font-family:"Literata",Georgia,"Times New Roman",serif}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px 80px}
+
+header{padding:44px 0 20px}
+header h1{font-size:clamp(28px,6vw,40px);line-height:1.2;margin:0 0 10px;font-weight:700;letter-spacing:.02em}
+header h1 .en{font-weight:700}
+header p{margin:0;color:var(--soft);max-width:34em}
+
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);
+  padding:10px 0;margin:10px 0 8px;border-bottom:1px solid var(--line);display:flex;gap:8px;overflow-x:auto}
+nav a{flex:0 0 auto;text-decoration:none;color:var(--ink);font-size:14px;padding:6px 14px;border-radius:999px;background:var(--paper);border:1px solid var(--line)}
+nav a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+section.cat{margin-top:34px}
+.cat-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.cat-head .tag{font-weight:700;font-size:13px;color:var(--paper);background:var(--cc);border-radius:6px;padding:1px 9px}
+.cat-head h2{margin:0;font-size:21px}
+.cat-desc{color:var(--soft);margin:0 0 14px;font-size:15px}
+
+.group{background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--cc);
+  border-radius:4px 14px 14px 4px;padding:18px 18px 16px;margin-bottom:16px}
+.g-top{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.g-num{font-size:13px;color:var(--soft)}
+.g-title{font-size:22px;font-weight:700;margin:0;line-height:1.3}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px}
+.chip{font-size:14px;padding:2px 10px;border-radius:999px;background:var(--cbg);color:var(--ink)}
+
+details{margin:8px 0 6px}
+summary{cursor:pointer;font-size:14px;color:var(--cc);font-weight:500;list-style:none;display:inline-block}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"＋ ";}
+details[open] summary::before{content:"－ ";}
+.hint{background:var(--cbg);border-radius:10px;padding:10px 14px;margin-top:8px;font-size:15px}
+.hint div{margin:2px 0}
+.hint .clue{margin-top:8px;font-weight:500}
+
+ol.qs{margin:12px 0 0;padding-left:1.6em}
+ol.qs li{margin:10px 0;line-height:2.1}
+.q{font-size:17px}
+input.blank{font:inherit;font-family:"Literata",Georgia,serif;font-size:16px;color:var(--ink);
+  width:8.5em;max-width:60vw;border:0;border-bottom:2px solid var(--soft);background:transparent;
+  padding:0 4px;text-align:center;border-radius:0}
+input.blank.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+input.blank.no{border-color:var(--no);background:var(--no-bg);color:var(--no)}
+.fix{display:block;font-size:14px;color:var(--no);line-height:1.5}
+.fix b{font-family:"Literata",Georgia,serif}
+
+.g-actions{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+button{font:inherit;font-size:15px;cursor:pointer;border-radius:999px;padding:7px 18px;border:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+button.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.g-result{font-size:14px;color:var(--soft)}
+
+.summary{margin-top:40px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 20px}
+.summary h2{margin:0 0 6px;font-size:21px}
+.score{font-family:"Literata",Georgia,serif;font-size:44px;font-weight:700;line-height:1.1;margin:8px 0}
+.score small{font-size:18px;color:var(--soft);font-weight:500}
+.review{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.review li{font-size:14px;background:var(--no-bg);color:var(--no);border-radius:999px;padding:3px 12px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.note{font-size:13px;color:var(--soft);margin-top:14px}
+.head-link{margin-top:8px!important;font-size:14px}
+.head-link a{color:var(--accent)}
+.full{margin-top:18px;border:1.5px dashed var(--accent);border-radius:14px;padding:20px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.full h2{margin:0 0 4px;font-size:19px}
+.full p{margin:0;color:var(--soft);font-size:15px;max-width:30em}
+.full-btn{flex:0 0 auto;text-decoration:none;background:var(--accent);color:var(--paper);border-radius:999px;padding:9px 20px;font-size:15px;font-weight:500}
+.full-btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){ input.blank{transition:background .2s,border-color .2s} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>易混淆字 <span class="en">15</span> 組</h1>
+    <p>先自己寫，想不出來再打開「看提示」。每組寫完按「檢查這組」，全部寫完到最下面看總分。注意動詞要依句子變化：加 s、ed、ing 或換成過去分詞。</p>
+    <p class="head-link">內容選自 <a href="https://shop-teachmart.com/m/m_0MU9WCPKVF87DF8JZEYFYM819" target="_blank" rel="noopener">〈易混淆字 48 組〉講義</a></p>
+  </header>
+
+  <nav aria-label="分類">
+    <a href="#cat-A">A 長得像</a>
+    <a href="#cat-B">B 同一家族</a>
+    <a href="#cat-C">C 看用法</a>
+    <a href="#sum">總分</a>
+  </nav>
+
+  <main id="main"></main>
+
+  <section class="summary" id="sum">
+    <h2>總分</h2>
+    <div class="score" id="score">— <small>/ —</small></div>
+    <div id="sumText" style="color:var(--soft)">按「全部檢查」算出分數。</div>
+    <ul class="review" id="reviewList"></ul>
+    <div class="row">
+      <button id="checkAll">全部檢查</button>
+      <button class="ghost" id="resetAll">全部清空</button>
+    </div>
+    <p class="note">錯的組別，回紙本講義找同一個編號，再看一次字義與線索。</p>
+  </section>
+
+  <aside class="full">
+    <div class="full-text">
+      <h2>想把 48 組都練完？</h2>
+      <p>這裡是 15 組精選。完整講義一組一頁，有字義對照、記憶線索、例句和小練習，附答案，可以直接列印。</p>
+    </div>
+    <a class="full-btn" href="https://shop-teachmart.com/m/m_0MU9WCPKVF87DF8JZEYFYM819" target="_blank" rel="noopener">看完整 48 組講義</a>
+  </aside>
+</div>
+
+<script>
+const CATS = [
+  {id:"A", name:"長得像：差一兩個字母", desc:"字形幾乎一樣，差在一個字母或多一個字母。先看拼字，再看意思。", c:"--a", bg:"--a-bg"},
+  {id:"B", name:"同一家族：字首字根相同", desc:"開頭或字根一樣，意思跟著前後的部件走。拆開來看就不容易混。", c:"--b", bg:"--b-bg"},
+  {id:"C", name:"看用法：詞性、及物、搭配", desc:"意思很接近，差別在後面要不要接受詞、放在句子哪裡、跟誰搭配。", c:"--c", bg:"--c-bg"}
+];
+
+const GROUPS = [
+  {cat:"A", n:"05", title:"dessert / desert", words:["dessert","desert"],
+   map:["dessert (n.) 甜點（兩個 s）","desert (n.) 沙漠；(v.) 拋棄、遺棄"],
+   clue:"sweet stuff 兩個 s，就是甜點。",
+   qs:[["Nobody wants to be ___ by friends.",["deserted"]],
+       ["Would you like some ___ after the meal?",["dessert"]],
+       ["The Sahara is the largest ___ in the world.",["desert"]]]},
+  {cat:"A", n:"06", title:"later / latter / latest / lately", words:["later","latter","latest","lately"],
+   map:["later (adv.) 之後","latter (adj./n.) 兩者中的後者，配 the","latest (adj.) 最新的","lately (adv.) 最近（＝recently）"],
+   clue:"latter 有兩個 t ＝ two things，有兩個東西才有「後者」。",
+   qs:[["Of the two options, the ___ one is safer.",["latter"]],
+       ["He has been very quiet ___.",["lately"]],
+       ["We can discuss it ___ this afternoon.",["later"]]]},
+  {cat:"A", n:"14", title:"compliment / complement", words:["compliment","complement"],
+   map:["compliment (n./v.) 讚美","complement (n./v.) 補足物；使完整"],
+   clue:"compliment ＝ I like it，說好話；complement ＝ enhance，把東西補完整。",
+   qs:[["He paid her a ___ on her presentation.",["compliment"]],
+       ["The scarf ___ her coat nicely.",["complements"]]]},
+  {cat:"A", n:"15", title:"confirm / conform", words:["confirm","conform"],
+   map:["confirm (v.) 確認、證實（及物）","conform (v.) 順從、符合，配 to"],
+   clue:"confirm 有 i ＝ 確認 info；conform 有 o ＝ 跟大家同一個 form。",
+   qs:[["Please ___ your attendance by Friday.",["confirm"]],
+       ["The building does not ___ to safety standards.",["conform"]]]},
+  {cat:"A", n:"41", title:"loose / lose / loss / lost", words:["loose","lose","loss","lost"],
+   map:["loose (adj.) 鬆的","lose (v.) 遺失、輸（lose–lost–lost）","loss (n.) 損失","lost (adj./v.) 迷路的；lose 的過去式／過去分詞"],
+   clue:"loose 有兩個 o，像鬆掉的兩顆扣子。",
+   qs:[["He was afraid he would ___ his keys again.",["lose"]],
+       ["This shirt is too ___ for me.",["loose"]],
+       ["Her death was a great ___ to the whole school.",["loss"]]]},
+
+  {cat:"B", n:"16", title:"contact / contract / contrast", words:["contact","contract","contrast"],
+   map:["contact (n./v.) 聯絡、接觸","contract (n.) 合約；(v.) 感染、收縮","contrast (n./v.) 對比"],
+   clue:"",
+   qs:[["Metal ___ in cold weather.",["contracts"]],
+       ["Keep in ___ with your host family.",["contact"]],
+       ["In ___ to his brother, he is quite shy.",["contrast"]]]},
+  {cat:"B", n:"19", title:"excess / exceed / excel", words:["excess","exceed","excel"],
+   map:["excess (n./adj.) 過量（an excess of）","exceed (v.) 超過","excel (v.) 擅長，配 at / in"],
+   clue:"exceed 有 ed，是動詞；excess 有 ss，是名詞。",
+   qs:[["Your luggage ___ the weight limit.",["exceeds"]],
+       ["He ___ in both music and sports.",["excels"]]]},
+  {cat:"B", n:"26", title:"except / expect / accept / excerpt", words:["except","expect","accept","excerpt"],
+   map:["except (prep.) 除…之外","expect (v.) 期待、預期","accept (v.) 接受","excerpt (n.) 選錄、節錄"],
+   clue:"",
+   qs:[["I didn't ___ to see you here.",["expect"]],
+       ["The class meets every day ___ Sunday.",["except"]],
+       ["Please ___ my apology.",["accept"]]]},
+  {cat:"B", n:"29", title:"require / inquire / acquire", words:["require","inquire","acquire"],
+   map:["require (v.) 需要、規定","inquire（＝enquire）(v.) 詢問，配 about","acquire (v.) 取得、習得"],
+   clue:"",
+   qs:[["I'd like to ___ about the opening hours.",["inquire","enquire"]],
+       ["Children ___ language naturally.",["acquire"]]]},
+  {cat:"B", n:"36", title:"expect / respect / aspect / inspect / suspect", words:["expect","respect","aspect","inspect","suspect"],
+   map:["expect 向前看 → 期待","respect 回頭再看 → 尊敬","aspect 從某個角度看 → 方面","inspect 看進去 → 檢查","suspect 從下往上看 → 懷疑"],
+   clue:"字根 spect ＝ 看。",
+   qs:[["I ___ she knows more than she is telling us.",["suspect"]],
+       ["We should ___ other people's opinions.",["respect"]],
+       ["Engineers came to ___ the bridge.",["inspect"]]]},
+
+  {cat:"C", n:"22", title:"lone / alone / lonely", words:["lone","alone","lonely"],
+   map:["lone (adj.) 單獨的一個，只能放名詞前面","alone (adj./adv.) 獨自，放動詞或名詞後面","lonely (adj.) 寂寞的（心情）"],
+   clue:"",
+   qs:[["Living ___ does not always make you ___.",["alone"],["lonely"]],
+       ["A ___ runner appeared on the road.",["lone"]]]},
+  {cat:"C", n:"25", title:"assure / ensure / insure", words:["assure","ensure","insure"],
+   map:["assure 向某人保證：assure sb. (of sth.)","ensure 確保某事發生：ensure that S + V","insure 投保：insure sth. against…"],
+   clue:"assure 對 a person；ensure ＝ make sure；insure ＝ insurance。",
+   qs:[["Double-check the list to ___ that nothing is missing.",["ensure"]],
+       ["The manager ___ the customers that the problem would be fixed.",["assured"]]]},
+  {cat:"C", n:"42", title:"lie / lay", words:["lie","lay"],
+   map:["lie 躺：lie – lay – lain（不及物）","lie 說謊：lie – lied – lied（不及物）","lay 放置；下蛋：lay – laid – laid（及物）"],
+   clue:"lay 有受詞（lay something down）；lie 沒有受詞。最容易錯的是「躺」的過去式剛好長得像 lay。",
+   qs:[["The cat is ___ in the sun.",["lying"]],
+       ["He ___ the baby gently on the bed.",["laid"]],
+       ["Don't ___ to me.",["lie"]]]},
+  {cat:"C", n:"43", title:"rise / arise / arouse / raise", words:["rise","arise","arouse","raise"],
+   map:["rise 上升：rose – risen（不及物）","arise 發生、出現：arose – arisen（不及物）","arouse 激起：aroused – aroused（及物）","raise 舉起、提高、養育：raised – raised（及物）"],
+   clue:"有受詞就用 raise / arouse；沒受詞就用 rise / arise。",
+   qs:[["Prices have ___ sharply this year.",["risen"]],
+       ["Please ___ your hand if you have a question.",["raise"]]]},
+  {cat:"C", n:"48", title:"borrow / lend / rent", words:["borrow","lend","rent"],
+   map:["borrow 向別人借進來（borrow sth. from sb.）","lend 借出去給別人（lend sb. sth.）","rent 租（rent sth. from／to sb.）"],
+   clue:"東西進來用 borrow，東西出去用 lend。",
+   qs:[["I ___ this book from the library.",["borrowed"]],
+       ["He refused to ___ me his bike.",["lend"]]]}
+];
+
+const norm = s => s.toLowerCase().replace(/[’']/g,"'").replace(/[.\s]+$/,"").replace(/\s+/g," ").trim();
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const STORE = "confusables15-v1";
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(STORE) || "{}") || {}; } catch(e){ saved = {}; }
+function persist(){
+  const data = {};
+  document.querySelectorAll("input.blank").forEach(i => { if(i.value) data[i.id] = i.value; });
+  try { localStorage.setItem(STORE, JSON.stringify(data)); } catch(e){}
+}
+
+const main = document.getElementById("main");
+CATS.forEach(cat => {
+  const sec = document.createElement("section");
+  sec.className = "cat"; sec.id = "cat-" + cat.id;
+  sec.style.setProperty("--cc", `var(${cat.c})`);
+  sec.style.setProperty("--cbg", `var(${cat.bg})`);
+  let html = `<div class="cat-head"><span class="tag">${cat.id}</span><h2>${cat.name}</h2></div><p class="cat-desc">${cat.desc}</p>`;
+  GROUPS.filter(g => g.cat === cat.id).forEach(g => {
+    html += `<article class="group" data-n="${g.n}">
+      <div class="g-top"><span class="g-num">講義第 ${g.n} 組</span></div>
+      <h3 class="g-title en">${g.title}</h3>
+      <div class="chips">${g.words.map(w=>`<span class="chip en">${w}</span>`).join("")}</div>
+      <details><summary>看提示</summary><div class="hint">
+        ${g.map.map(m=>`<div>${esc(m)}</div>`).join("")}
+        ${g.clue ? `<div class="clue">線索：${esc(g.clue)}</div>` : ""}
+      </div></details>
+      <ol class="qs">${g.qs.map((q,qi) => {
+        const parts = q[0].split("___");
+        let s = "";
+        parts.forEach((p,pi) => {
+          s += esc(p);
+          if (pi < parts.length - 1) {
+            const id = `g${g.n}-q${qi}-b${pi}`;
+            s += `<input class="blank" id="${id}" data-a="${q[pi+1].join("|")}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="第 ${qi+1} 題空格">`;
+          }
+        });
+        return `<li><span class="q en">${s}</span><span class="fixes"></span></li>`;
+      }).join("")}</ol>
+      <div class="g-actions">
+        <button class="chk">檢查這組</button>
+        <button class="ghost rst">清空</button>
+        <span class="g-result" aria-live="polite"></span>
+      </div>
+    </article>`;
+  });
+  sec.innerHTML = html;
+  main.appendChild(sec);
+});
+
+document.querySelectorAll("input.blank").forEach(i => {
+  if (saved[i.id]) i.value = saved[i.id];
+  i.addEventListener("input", () => { i.classList.remove("ok","no"); persist(); });
+  i.addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); i.closest(".group").querySelector(".chk").click(); }
+  });
+});
+
+function checkGroup(card){
+  let right = 0, total = 0;
+  card.querySelectorAll("ol.qs li").forEach(li => {
+    const fixes = li.querySelector(".fixes"); fixes.innerHTML = "";
+    li.querySelectorAll("input.blank").forEach(inp => {
+      total++;
+      const ans = inp.dataset.a.split("|");
+      const ok = inp.value.trim() && ans.some(a => norm(a) === norm(inp.value));
+      inp.classList.toggle("ok", !!ok); inp.classList.toggle("no", !ok);
+      if (ok) right++;
+      else fixes.insertAdjacentHTML("beforeend", `<span class="fix">正解：<b>${ans[0]}</b></span>`);
+    });
+  });
+  card.querySelector(".g-result").textContent = right === total ? `全對 ${right}/${total}` : `對 ${right}/${total}，看一下正解再試一次`;
+  return {right,total};
+}
+function resetGroup(card){
+  card.querySelectorAll("input.blank").forEach(i => { i.value=""; i.classList.remove("ok","no"); });
+  card.querySelectorAll(".fixes").forEach(f => f.innerHTML = "");
+  card.querySelector(".g-result").textContent = "";
+  persist();
+}
+document.querySelectorAll(".group").forEach(card => {
+  card.querySelector(".chk").addEventListener("click", () => checkGroup(card));
+  card.querySelector(".rst").addEventListener("click", () => resetGroup(card));
+});
+
+document.getElementById("checkAll").addEventListener("click", () => {
+  let R=0,T=0; const miss=[];
+  document.querySelectorAll(".group").forEach(card => {
+    const {right,total} = checkGroup(card); R+=right; T+=total;
+    if (right < total) miss.push(card.dataset.n + "　" + card.querySelector(".g-title").textContent);
+  });
+  document.getElementById("score").innerHTML = `${R} <small>/ ${T}</small>`;
+  document.getElementById("sumText").textContent = miss.length ? `這 ${miss.length} 組還要再看一次：` : "15 組全對。";
+  document.getElementById("reviewList").innerHTML = miss.map(m=>`<li class="en">${m}</li>`).join("");
+});
+document.getElementById("resetAll").addEventListener("click", () => {
+  if (!confirm("確定要清空全部答案？")) return;
+  document.querySelectorAll(".group").forEach(resetGroup);
+  document.getElementById("score").innerHTML = `— <small>/ —</small>`;
+  document.getElementById("sumText").textContent = "按「全部檢查」算出分數。";
+  document.getElementById("reviewList").innerHTML = "";
+});
+</script>
+</body>
+</html>
