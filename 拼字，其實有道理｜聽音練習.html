@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>拼字，其實有道理｜聽音練習</title>
+<style>
+:root{
+  --bg:#f6f1ea; --paper:#fffdf9; --ink:#3a2e28; --soft:#85766b; --line:#e3d8cc;
+  --sound:#5f7d95; --sound-soft:#e4ecf2; --clay:#a9593a; --ok:#5d7f55; --no:#b04a3a;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#1f1a17; --paper:#2a2420; --ink:#efe6dc; --soft:#b3a497; --line:#40362f;
+  --sound:#9db7cb; --sound-soft:#2f3a43; --clay:#d98d6c; --ok:#9cc08f; --no:#e08a7a; } }
+:root[data-theme="dark"]{ --bg:#1f1a17; --paper:#2a2420; --ink:#efe6dc; --soft:#b3a497; --line:#40362f;
+  --sound:#9db7cb; --sound-soft:#2f3a43; --clay:#d98d6c; --ok:#9cc08f; --no:#e08a7a; }
+html{ scroll-padding-top:env(safe-area-inset-top,0px); }
+*{ box-sizing:border-box; }
+body{ margin:0; background:var(--bg); color:var(--ink); font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif; -webkit-text-size-adjust:100%; }
+.wrap{ max-width:640px; margin:0 auto; padding:18px 18px 60px; }
+header h1{ font-size:15px; font-weight:500; color:var(--soft); margin:6px 0 2px; letter-spacing:.04em; }
+.unit-title{ font-size:25px; font-weight:800; margin:4px 0 2px; line-height:1.3; }
+.unit-sub{ font-size:14px; color:var(--soft); margin-bottom:14px; }
+.chips{ display:flex; gap:8px; overflow-x:auto; padding:4px 0 12px; scrollbar-width:none; }
+.chips::-webkit-scrollbar{ display:none; }
+.chip{ flex:none; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:18px; padding:7px 13px; font-size:14px; cursor:pointer; font-family:inherit; }
+.chip[aria-pressed="true"]{ background:var(--ink); color:var(--bg); border-color:var(--ink); }
+.bar{ position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--bg); padding:8px 0 10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; border-bottom:1px solid var(--line); }
+.seg{ display:flex; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:var(--paper); }
+.seg button{ border:0; background:none; padding:8px 14px; font-size:14px; color:var(--soft); font-family:inherit; cursor:pointer; }
+.seg button[aria-pressed="true"]{ background:var(--sound-soft); color:var(--ink); font-weight:700; }
+.spacer{ flex:1; }
+.playall{ border:0; background:var(--sound); color:#fff; border-radius:10px; padding:9px 14px; font-size:14px; font-family:inherit; cursor:pointer; }
+:root[data-theme="dark"] .playall{ color:#1f1a17; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .playall{ color:#1f1a17; } }
+ul.words{ list-style:none; margin:6px 0 0; padding:0; }
+.row{ display:flex; align-items:center; gap:12px; padding:12px 2px; border-bottom:1px solid var(--line); cursor:pointer; }
+.row .w{ font-size:22px; letter-spacing:.02em; font-family:"Carlito","Segoe UI","Helvetica Neue",Arial,sans-serif; }
+.row .zh{ font-size:13px; color:var(--soft); margin-left:auto; text-align:right; }
+.spk{ flex:none; width:40px; height:40px; border-radius:50%; border:0; background:var(--sound-soft); color:var(--sound); display:grid; place-items:center; cursor:pointer; }
+.spk svg{ width:20px; height:20px; }
+.row.on .spk{ background:var(--sound); color:var(--paper); }
+.row.on .w{ color:var(--sound); }
+.note{ font-size:13px; color:var(--soft); line-height:1.7; margin:14px 0; }
+.warn{ background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:14px; line-height:1.7; margin:12px 0; display:none; }
+/* dictation */
+.dict{ background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:22px 18px; margin-top:16px; text-align:center; }
+.dcount{ font-size:13px; color:var(--soft); }
+.bigplay{ width:84px; height:84px; border-radius:50%; border:0; background:var(--sound); color:#fff; margin:16px auto 8px; display:grid; place-items:center; cursor:pointer; }
+.bigplay svg{ width:38px; height:38px; }
+.hint{ min-height:22px; font-size:15px; color:var(--soft); }
+.hintbtn{ border:0; background:none; color:var(--sound); font-size:14px; text-decoration:underline; cursor:pointer; font-family:inherit; }
+.answer{ width:100%; max-width:320px; font-size:24px; text-align:center; padding:10px; border:0; border-bottom:2px solid var(--ink); background:transparent; color:var(--ink); margin:14px auto 6px; display:block; font-family:"Carlito","Segoe UI",Arial,sans-serif; letter-spacing:.04em; border-radius:0; }
+.answer:focus{ outline:none; border-bottom-color:var(--sound); }
+.actions{ display:flex; gap:10px; justify-content:center; margin-top:14px; }
+.btn{ border:1px solid var(--ink); background:var(--ink); color:var(--bg); border-radius:10px; padding:10px 20px; font-size:15px; font-family:inherit; cursor:pointer; }
+.btn.ghost{ background:none; color:var(--ink); }
+.result{ min-height:52px; margin-top:12px; font-size:16px; line-height:1.6; }
+.result .ok{ color:var(--ok); font-weight:700; }
+.result .no{ color:var(--no); font-weight:700; }
+.result .rightw{ font-size:22px; font-family:"Carlito","Segoe UI",Arial,sans-serif; letter-spacing:.03em; }
+.summary h3{ margin:4px 0 6px; font-size:20px; }
+.miss{ text-align:left; margin:12px auto 0; max-width:320px; font-size:15px; line-height:1.9; }
+button:focus-visible,.chip:focus-visible{ outline:2px solid var(--sound); outline-offset:2px; }
+footer{ margin-top:28px; font-size:12px; color:var(--soft); text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>拼字，其實有道理｜聽音練習</h1>
+  <div class="unit-title" id="utitle"></div>
+  <div class="unit-sub" id="usub"></div>
+</header>
+<nav class="chips" id="chips" aria-label="選擇課次"></nav>
+<div class="warn" id="warn">這個瀏覽器無法播放語音。請改用手機內建的 Safari（iPhone）或 Chrome（Android）開啟。</div>
+<div class="bar">
+  <div class="seg" role="group" aria-label="模式">
+    <button id="mListen" aria-pressed="true">聽讀</button>
+    <button id="mDict" aria-pressed="false">聽寫</button>
+  </div>
+  <div class="seg" role="group" aria-label="語速">
+    <button id="sN" aria-pressed="true">正常</button>
+    <button id="sS" aria-pressed="false">慢速</button>
+  </div>
+  <div class="spacer"></div>
+  <button class="playall" id="playall">全部播放</button>
+</div>
+<section id="listen">
+  <p class="note">點一下單字就會念出來。先聽，再對照講義上的拼法，想一想是哪一條規則。</p>
+  <ul class="words" id="list"></ul>
+</section>
+<section id="dict" hidden>
+  <div class="dict" id="dbox"></div>
+</section>
+<footer>英語創意發想社｜Sharon Chiu</footer>
+</div>
+<script>
+const DATA = [{"key": "1", "title": "-ck、-ke 還是 -k？", "sound": "/k/", "words": [["duck", "鴨子"], ["bike", "腳踏車"], ["book", "書"], ["neck", "脖子"], ["cake", "蛋糕"], ["week", "星期"], ["clock", "時鐘"], ["joke", "笑話"], ["milk", "牛奶"], ["sock", "襪子"], ["lake", "湖"], ["speak", "說"], ["truck", "卡車"], ["smoke", "煙；抽菸"], ["desk", "書桌"], ["stick", "棍子；黏貼"], ["snake", "蛇"], ["cook", "煮；廚師"], ["black", "黑色的"], ["take", "拿"], ["park", "公園"], ["lock", "鎖"], ["wake", "醒來"], ["thank", "感謝"], ["kick", "踢"], ["shake", "搖動"], ["break", "打破"], ["pick", "挑選"], ["drink", "喝"], ["luck", "運氣"], ["pocket", "口袋"], ["ticket", "票"], ["jacket", "夾克"], ["chicken", "雞"], ["quick", "快的"], ["snack", "點心"], ["knock", "敲"], ["thick", "厚的"], ["weekend", "週末"], ["mistake", "錯誤"], ["back", "背部；後面"], ["check", "檢查"], ["pack", "打包"], ["rock", "岩石"], ["sick", "生病的"], ["track", "軌道；追蹤"], ["trick", "把戲；騙"], ["lick", "舔"], ["brick", "磚塊"], ["shock", "震驚"], ["lucky", "幸運的"], ["necklace", "項鍊"], ["package", "把...打包"], ["bake", "烘烤"], ["make", "製造"], ["like", "喜歡"], ["strike", "打擊；罷工"], ["coke", "可樂"], ["look", "看"], ["weak", "虛弱的"], ["steak", "牛排"], ["dark", "黑暗的"], ["bank", "銀行"], ["think", "想"], ["pink", "粉紅色的"], ["ink", "墨水"], ["sink", "水槽；下沉"], ["ask", "問"], ["fork", "叉子"], ["work", "工作"], ["walk", "走路"], ["talk", "講話"]]}, {"key": "2", "title": "-tch 還是 -ch？", "sound": "/tʃ/", "words": [["catch", "接住"], ["beach", "海灘"], ["watch", "手錶；觀看"], ["lunch", "午餐"], ["match", "比賽；火柴"], ["teach", "教"], ["kitchen", "廚房"], ["speech", "演講"], ["ketchup", "番茄醬"], ["bench", "長椅"], ["stretch", "伸展"], ["coach", "教練"], ["pitch", "投球"], ["peach", "桃子"], ["church", "教堂"], ["reach", "到達"], ["branch", "樹枝；分店"], ["inch", "英寸"], ["search", "搜尋"], ["each", "每個"], ["much", "很多"], ["rich", "富有的"], ["such", "如此的"], ["which", "哪一個"], ["teacher", "老師"], ["cockroach", "蟑螂"], ["brunch", "早午餐"]]}, {"key": "3", "title": "-dge 還是 -ge？", "sound": "/dʒ/", "words": [["bridge", "橋"], ["age", "年齡"], ["edge", "邊緣"], ["cage", "籠子"], ["fridge", "冰箱"], ["page", "頁"], ["judge", "法官；判斷"], ["stage", "舞台"], ["huge", "巨大的"], ["large", "大的"], ["orange", "柳橙"], ["strange", "奇怪的"], ["change", "改變"], ["charge", "收費"], ["village", "村莊"], ["message", "訊息"], ["language", "語言"], ["garbage", "垃圾"], ["cabbage", "高麗菜"], ["package", "包裹"], ["damage", "損害"], ["courage", "勇氣"], ["knowledge", "知識"], ["range", "範圍"], ["arrange", "安排"], ["marriage", "結婚"], ["garage", "車庫"], ["teenage", "青少年的"]]}, {"key": "4", "title": "FLOSS Rule：什麼時候要雙寫？", "sound": "FLOSS", "words": [["off", "離開"], ["bell", "鈴"], ["class", "班級"], ["fill", "裝滿"], ["yes", "是"], ["guess", "猜"], ["smell", "聞"], ["jazz", "爵士樂"], ["glass", "玻璃"], ["still", "仍然"], ["bus", "公車"], ["kiss", "親吻"], ["spell", "拼字"], ["dress", "洋裝"], ["if", "如果"], ["skill", "技能"], ["cross", "越過"], ["staff", "員工"], ["doll", "洋娃娃"], ["miss", "錯過；想念"], ["gas", "瓦斯"], ["shell", "貝殼"], ["boss", "老闆"], ["hill", "山丘"], ["stuff", "東西"], ["grass", "草"], ["this", "這個"], ["pull", "拉"], ["chess", "西洋棋"], ["buzz", "嗡嗡聲"], ["small", "小的"], ["stiff", "僵硬的"], ["all", "所有的"], ["ball", "球"], ["call", "打電話；叫"], ["fall", "落下；秋天"], ["hall", "大廳"], ["tall", "高的"], ["wall", "牆"], ["cell", "細胞；手機"], ["sell", "賣"], ["tell", "告訴"], ["well", "好地；很好"], ["ill", "生病的"], ["kill", "殺"], ["till", "直到"], ["will", "將"], ["full", "滿的；飽的"], ["dull", "無聊的；鈍的"], ["pass", "及格"], ["mass", "大量；質量"], ["less", "較少的"], ["press", "按；壓"], ["stress", "壓力"], ["loss", "損失"], ["of", "…的"], ["us", "我們"], ["family", "家庭"]]}, {"key": "5", "title": "神奇的 e", "sound": "Magic e", "words": [["hate", "討厭"], ["hat", "帽子"], ["plane", "飛機"], ["plan", "計畫"], ["tape", "膠帶"], ["tap", "輕拍；水龍頭"], ["bite", "咬"], ["bit", "一點點"], ["kite", "風箏"], ["kit", "工具組"], ["pine", "松樹"], ["pin", "別針"], ["ride", "騎"], ["rid", "擺脫"], ["wine", "葡萄酒"], ["win", "贏"], ["hope", "希望"], ["hop", "跳"], ["note", "筆記"], ["not", "不"], ["cute", "可愛的"], ["cut", "切"], ["tube", "管子"], ["tub", "浴缸"], ["name", "名字"], ["face", "臉"], ["game", "遊戲"], ["time", "時間"], ["smile", "微笑"], ["nice", "好的"], ["home", "家"], ["nose", "鼻子"], ["stone", "石頭"], ["rule", "規則"], ["cake", "蛋糕"], ["gate", "大門"], ["grade", "年級；成績"], ["late", "晚的"], ["make", "製造"], ["page", "頁"], ["place", "地方"], ["safe", "安全的"], ["same", "相同的"], ["save", "救"], ["shape", "形狀"], ["snake", "蛇行"], ["space", "空間"], ["take", "拿"], ["wake", "叫醒"], ["wave", "揮動"], ["whale", "鯨魚"], ["bike", "腳踏車"], ["drive", "開車"], ["fine", "好的"], ["five", "五的"], ["hide", "躲"], ["ice", "冰"], ["knife", "刀子"], ["life", "生活；生命"], ["like", "喜歡"], ["line", "線；排隊"], ["mile", "英里"], ["nine", "九"], ["price", "價格"], ["prize", "獎品"], ["rice", "米；飯"], ["shine", "照耀"], ["side", "邊；側"], ["size", "尺寸"], ["slide", "滑；溜滑梯"], ["twice", "兩次"], ["white", "白色的"], ["wide", "寬的"], ["write", "寫"], ["bone", "骨頭"], ["close", "關；接近的"], ["hole", "洞"], ["joke", "開玩笑"], ["phone", "打電話"], ["rope", "繩子"], ["rose", "玫瑰"], ["smoke", "抽煙"], ["stove", "爐灶"], ["those", "那些"], ["vote", "投票"], ["whole", "完整的"], ["huge", "巨大的"], ["rude", "無禮的"], ["use", "使用"]]}, {"key": "6", "title": "final -ve 的規則", "sound": "-ve", "words": [["have", "有"], ["save", "拯救"], ["give", "給"], ["five", "五"], ["love", "愛"], ["drive", "開車"], ["live", "住"], ["brave", "勇敢的"], ["glove", "手套"], ["wave", "波浪"], ["above", "在上面"], ["cave", "洞穴"], ["dove", "鴿子"], ["stove", "爐子"], ["alive", "活著的"], ["arrive", "抵達"], ["active", "活躍的"], ["expensive", "昂貴的"], ["positive", "正面的"], ["negative", "負面的"], ["twelve", "十二"], ["solve", "解決"], ["serve", "服務"], ["move", "移動"], ["improve", "改善"], ["prove", "證明"], ["talkative", "愛說話的"]]}, {"key": "7", "title": "為什麼 rabbit 有兩個 b？", "sound": "VC/CV", "words": [["happy", "快樂的"], ["paper", "紙"], ["camel", "駱駝"], ["dinner", "晚餐"], ["tiger", "老虎"], ["lemon", "檸檬"], ["summer", "夏天"], ["music", "音樂"], ["river", "河"], ["letter", "信"], ["robot", "機器人"], ["seven", "七"], ["butter", "奶油"], ["baby", "嬰兒"], ["visit", "拜訪"], ["funny", "好笑的"], ["lady", "女士"], ["city", "城市"], ["puppy", "小狗"], ["open", "打開"], ["study", "學習"], ["hobby", "嗜好"], ["super", "超級的"], ["finish", "完成"], ["rabbit", "兔子"], ["human", "人類"], ["planet", "行星"], ["carrot", "紅蘿蔔"], ["total", "總共的"], ["travel", "旅行"], ["kitten", "小貓"], ["lesson", "課"], ["tennis", "網球"], ["bottom", "底部"], ["silly", "傻的"], ["soccer", "足球"], ["better", "更好的"], ["supper", "晚餐"], ["sunny", "晴朗的"], ["pepper", "胡椒"], ["hammer", "鐵鎚"], ["cotton", "棉花"], ["button", "鈕扣"], ["dollar", "美元"], ["mirror", "鏡子"], ["pillow", "枕頭"], ["final", "最終的"], ["silent", "寂靜的"], ["never", "永不"], ["salad", "沙拉"], ["second", "第二的"], ["melon", "瓜"], ["limit", "限制"], ["habit", "習慣"], ["diner", "用餐者"]]}, {"key": "8", "title": "little 和 title 差在哪？", "sound": "C + le", "words": [["little", "小的"], ["table", "桌子"], ["candle", "蠟燭"], ["apple", "蘋果"], ["title", "標題"], ["uncle", "叔叔；舅舅"], ["middle", "中間"], ["eagle", "老鷹"], ["simple", "簡單的"], ["bottle", "瓶子"], ["needle", "針"], ["handle", "處理；把手"], ["puzzle", "謎題"], ["cable", "電纜"], ["circle", "圓圈"], ["battle", "戰役"], ["noodle", "麵條"], ["single", "單一的"], ["settle", "安頓；解決"], ["beetle", "甲蟲"], ["temple", "寺廟"], ["bubble", "泡泡"], ["people", "人們"], ["turtle", "海龜"], ["purple", "紫色的"], ["kettle", "水壺"], ["riddle", "謎"], ["cattle", "牛"], ["sample", "樣品"], ["gentle", "溫柔的"], ["humble", "謙虛的"], ["triangle", "三角形"], ["bicycle", "腳踏車"], ["pickle", "醃黃瓜"], ["tickle", "搔癢"]]}, {"key": "9", "title": "兩個母音，各念各的", "sound": "V/V", "words": [["lion", "獅子"], ["poem", "詩"], ["piano", "鋼琴"], ["idea", "想法"], ["radio", "收音機"], ["quiet", "安靜的"], ["science", "科學"], ["violin", "小提琴"], ["giant", "巨人"], ["trial", "審判；試驗"], ["diary", "日記"], ["diamond", "鑽石"], ["poet", "詩人"], ["cruel", "殘忍的"], ["create", "創造"], ["video", "影片"], ["cereal", "穀片"], ["usual", "平常的"], ["period", "期間"], ["serious", "嚴重的"], ["area", "地區"], ["boat", "船"], ["meat", "肉"], ["rain", "雨"], ["week", "星期"], ["book", "書"], ["quite", "相當"], ["diet", "飲食"]]}, {"key": "S", "title": "音節切分總練習：五隻動物", "sound": "音節", "words": [["rabbit", "兔子"], ["tiger", "老虎"], ["camel", "駱駝"], ["lion", "獅子"], ["turtle", "海龜"], ["napkin", "餐巾"], ["music", "音樂"], ["lemon", "檸檬"], ["poem", "詩"], ["apple", "蘋果"], ["picnic", "野餐"], ["paper", "紙"], ["river", "河"], ["piano", "鋼琴"], ["little", "小的"], ["basket", "籃子"], ["robot", "機器人"], ["seven", "七"], ["giant", "巨人"], ["purple", "紫色的"], ["window", "窗戶"], ["baby", "嬰兒"], ["visit", "拜訪"], ["diary", "日記"], ["candle", "蠟燭"]]}, {"key": "10", "title": "con- 還是 com-？", "sound": "con / com", "words": [["compare", "比較"], ["continue", "繼續"], ["computer", "電腦"], ["contact", "聯絡"], ["company", "公司"], ["control", "控制"], ["complete", "完成"], ["consider", "考慮"], ["complain", "抱怨"], ["contain", "包含"], ["combine", "結合"], ["confirm", "確認"], ["command", "命令"], ["conflict", "衝突"], ["compete", "競爭"], ["convenient", "方便的"], ["committee", "委員會"], ["conversation", "對話"], ["communicate", "溝通"], ["concert", "音樂會"], ["complex", "複雜的"], ["condition", "情況"], ["comfortable", "舒服的"], ["confuse", "使困惑"], ["impossible", "不可能的"], ["inside", "在裡面"], ["important", "重要的"], ["invite", "邀請"], ["improve", "改善"], ["increase", "增加"], ["impolite", "不禮貌的"], ["include", "包括"], ["impatient", "不耐煩的"], ["introduce", "介紹"], ["invent", "發明"], ["independent", "獨立的"], ["congratulations", "恭喜"], ["confident", "有信心的"], ["connect", "連接"], ["conclude", "下結論"], ["comfort", "舒適"], ["come", "來"], ["comb", "梳子"]]}, {"key": "11", "title": "加字尾：雙寫、去 e，還是直接加？", "sound": "-ing · -ed · -er", "words": [["stop", "停止"], ["stopped", "停止"], ["make", "製造"], ["making", "做"], ["help", "幫忙"], ["helping", "幫忙"], ["run", "跑"], ["running", "跑"], ["hope", "希望"], ["hoped", "希望"], ["rain", "下雨"], ["raining", "下雨"], ["swim", "游泳"], ["swimming", "游泳"], ["write", "寫"], ["writing", "寫"], ["play", "玩"], ["played", "玩"], ["big", "大的"], ["bigger", "更大的"], ["come", "到來"], ["coming", "來"], ["jump", "跳躍"], ["jumped", "跳"], ["sit", "坐"], ["sitting", "坐"], ["dance", "跳舞"], ["dancing", "跳舞"], ["cook", "煮"], ["cooking", "煮"], ["hot", "熱的"], ["hottest", "最熱的"], ["use", "使用"], ["used", "使用"], ["fix", "修理"], ["fixing", "修理"], ["shop", "購物"], ["shopping", "購物"], ["ride", "騎"], ["riding", "騎"], ["snow", "下雪"], ["snowing", "下雪"], ["plan", "計劃"], ["planned", "計畫"], ["begin", "開始"], ["beginning", "開始"], ["sun", "太陽"], ["sunny", "晴朗的"], ["visit", "訪問"], ["visiting", "拜訪"], ["nice", "好的"], ["nicest", "最好的"], ["open", "打開的"], ["opened", "打開"], ["get", "得到"], ["getting", "得到"], ["stopping", "停止（-ing）"], ["put", "放置"], ["putting", "放（-ing）"], ["cut", "切割"], ["cutting", "切（-ing）"], ["drop", "掉落"], ["dropped", "掉落了"], ["thin", "瘦的"], ["thinner", "比較瘦的"], ["take", "拿"], ["taking", "拿（-ing）"], ["using", "使用（-ing）"], ["move", "移動"], ["moved", "搬動了"], ["smile", "微笑"], ["smiled", "笑了"], ["nicer", "比較好的"], ["large", "大的"], ["largest", "最大的"], ["change", "改變"], ["changing", "改變（-ing）"], ["helped", "幫了"], ["jumping", "跳（-ing）"], ["walk", "走路"], ["walked", "走了"], ["cooked", "煮了"], ["eat", "吃"], ["eating", "吃（-ing）"], ["playing", "玩（-ing）"], ["fixed", "修好了"], ["happen", "發生"], ["happened", "發生了"], ["hoping", "希望（-ing）"], ["hop", "單腳跳"], ["hopping", "單腳跳（-ing）"], ["care", "照顧；在乎"], ["careful", "小心的"], ["sad", "悲傷的"], ["sadly", "悲傷地"]]}];
+const SPK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+let unit = 0, rate = 0.9, mode = 'listen', voice = null, playing = false;
+const synth = window.speechSynthesis;
+if(!synth){ document.getElementById('warn').style.display='block'; }
+function pickVoice(){
+  if(!synth) return;
+  const vs = synth.getVoices().filter(v=>/^en[-_]/i.test(v.lang));
+  const pref = ['Samantha','Google US English','Microsoft Aria','Microsoft Jenny','Alex','Karen','Daniel'];
+  voice = null;
+  for(const p of pref){ const f=vs.find(v=>v.name.includes(p)); if(f){ voice=f; break; } }
+  if(!voice) voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0] || null;
+}
+if(synth){ pickVoice(); synth.onvoiceschanged = pickVoice; }
+function say(text, done){
+  if(!synth){ done&&done(); return; }
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = voice ? voice.lang : 'en-US'; if(voice) u.voice = voice;
+  u.rate = rate; u.pitch = 1;
+  u.onend = ()=>done&&done(); u.onerror = ()=>done&&done();
+  synth.speak(u);
+}
+const qs = new URLSearchParams(location.search);
+const startU = (qs.get('u')||'1').toUpperCase();
+unit = Math.max(0, DATA.findIndex(d=>d.key===startU));
+function renderChips(){
+  const c = document.getElementById('chips'); c.innerHTML='';
+  DATA.forEach((d,i)=>{
+    const b=document.createElement('button'); b.className='chip'; b.textContent= d.key==='S' ? '音節切分' : `第 ${d.key} 課　${d.sound}`;
+    b.setAttribute('aria-pressed', i===unit); b.onclick=()=>{ stopAll(); unit=i; render(); b.scrollIntoView({inline:'center',block:'nearest'}); };
+    c.appendChild(b);
+  });
+  const on=c.children[unit]; if(on) setTimeout(()=>on.scrollIntoView({inline:'center',block:'nearest'}),50);
+}
+function renderList(){
+  const ul=document.getElementById('list'); ul.innerHTML='';
+  DATA[unit].words.forEach(([w,z],i)=>{
+    const li=document.createElement('li'); li.className='row'; li.dataset.i=i;
+    li.innerHTML=`<button class="spk" aria-label="播放 ${w}">${SPK}</button><span class="w">${w}</span><span class="zh">${z||''}</span>`;
+    li.onclick=()=>{ stopAll(); mark(i); say(w,()=>mark(-1)); };
+    ul.appendChild(li);
+  });
+}
+function mark(i){ document.querySelectorAll('.row').forEach(r=>r.classList.toggle('on', +r.dataset.i===i)); }
+function stopAll(){ playing=false; if(synth) synth.cancel(); mark(-1); document.getElementById('playall').textContent='全部播放'; }
+document.getElementById('playall').onclick=()=>{
+  if(playing){ stopAll(); return; }
+  playing=true; document.getElementById('playall').textContent='停止';
+  const ws=DATA[unit].words; let i=0;
+  const next=()=>{ if(!playing||i>=ws.length){ stopAll(); return; }
+    mark(i); const row=document.querySelector(`.row[data-i="${i}"]`); row&&row.scrollIntoView({block:'center',behavior:'smooth'});
+    say(ws[i][0],()=>{ i++; setTimeout(next, 900); }); };
+  next();
+};
+// dictation
+let dq=[], di=0, miss=[], checked=false;
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function newRound(){ dq=shuffle(DATA[unit].words).slice(0,10); di=0; miss=[]; drawQ(); }
+function drawQ(){
+  const box=document.getElementById('dbox'); checked=false;
+  if(di>=dq.length){
+    const score=dq.length-miss.length;
+    box.innerHTML=`<div class="summary"><h3>${score} / ${dq.length}</h3><div class="dcount">${miss.length? '寫錯的字，回講義找出它屬於哪一條規則：':'全對。換一課，或再來一組。'}</div>
+      ${miss.length? '<div class="miss">'+miss.map(([w,z,a])=>`${w}　<span style="color:var(--soft)">${z}｜你寫 ${a||'（空白）'}</span>`).join('<br>')+'</div>':''}
+      <div class="actions"><button class="btn" id="again">再來一組</button></div></div>`;
+    document.getElementById('again').onclick=newRound; return;
+  }
+  const [w,z]=dq[di];
+  box.innerHTML=`<div class="dcount">第 ${di+1} 題 / 共 ${dq.length} 題</div>
+    <button class="bigplay" id="bp" aria-label="播放">${SPK}</button>
+    <div class="hint" id="hint"><button class="hintbtn" id="hb">看中文提示</button></div>
+    <input class="answer" id="ans" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text" aria-label="寫出你聽到的字">
+    <div class="actions"><button class="btn ghost" id="rep">再聽一次</button><button class="btn" id="chk">檢查</button></div>
+    <div class="result" id="res"></div>`;
+  const play=()=>say(w);
+  document.getElementById('bp').onclick=play; document.getElementById('rep').onclick=play;
+  document.getElementById('hb').onclick=()=>{ document.getElementById('hint').textContent=z||'（無）'; };
+  const ans=document.getElementById('ans');
+  const chk=document.getElementById('chk');
+  const go=()=>{
+    if(checked){ di++; drawQ(); return; }
+    const a=ans.value.trim().toLowerCase(); checked=true;
+    const res=document.getElementById('res');
+    if(a===w.toLowerCase()){ res.innerHTML='<span class="ok">正確</span>'; }
+    else { miss.push([w,z,a]); res.innerHTML=`<span class="no">再看一次</span><br><span class="rightw">${w}</span>`; }
+    chk.textContent = di===dq.length-1 ? '看成績' : '下一題';
+  };
+  chk.onclick=go; ans.onkeydown=e=>{ if(e.key==='Enter') go(); };
+  setTimeout(play, 250);
+}
+function setMode(m){
+  stopAll(); mode=m;
+  document.getElementById('mListen').setAttribute('aria-pressed', m==='listen');
+  document.getElementById('mDict').setAttribute('aria-pressed', m==='dict');
+  document.getElementById('listen').hidden = m!=='listen';
+  document.getElementById('dict').hidden = m!=='dict';
+  document.getElementById('playall').style.visibility = m==='listen'?'visible':'hidden';
+  if(m==='dict') newRound();
+}
+document.getElementById('mListen').onclick=()=>setMode('listen');
+document.getElementById('mDict').onclick=()=>setMode('dict');
+function setRate(r){ rate=r; document.getElementById('sN').setAttribute('aria-pressed', r>0.8); document.getElementById('sS').setAttribute('aria-pressed', r<=0.8); }
+document.getElementById('sN').onclick=()=>setRate(0.9);
+document.getElementById('sS').onclick=()=>setRate(0.6);
+function render(){
+  const d=DATA[unit];
+  document.getElementById('utitle').textContent= d.key==='S' ? d.title : `第 ${d.key} 課　${d.title}`;
+  document.getElementById('usub').textContent=`${d.words.length} 個字`;
+  renderChips(); renderList();
+  if(mode==='dict') newRound();
+}
+render();
+</script>
+</body>
+</html>
