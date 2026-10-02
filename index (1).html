@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>射氣球填空｜115學測 × L1 × L2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-top:#D5DEE5; --sky-bottom:#EEF0EC;
+  --paper:#F7F3EC; --ink:#3E2F27; --ink-soft:#7A6A60;
+  --line:#CDBFB2; --accent:#7A5C58; --ok:#5E7466; --bad:#A0584E;
+  --b1:#DDBDB6; --b2:#D9C6AA; --b3:#BDB3C8; --b4:#B7C2C8; --b5:#C4C7B2;
+  --shadow:rgba(62,47,39,.14);
+  box-sizing:border-box;--fs:1;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --sky-top:#232A31; --sky-bottom:#2E2B29;
+    --paper:#34302C; --ink:#EDE4DA; --ink-soft:#B3A69A;
+    --line:#5A5048; --accent:#D9B3A8; --ok:#A9C2B0; --bad:#E39A8F;
+    --b1:#9C7F79; --b2:#97876E; --b3:#857C92; --b4:#7C8A92; --b5:#8A8E78;
+    --shadow:rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --sky-top:#232A31; --sky-bottom:#2E2B29;
+  --paper:#34302C; --ink:#EDE4DA; --ink-soft:#B3A69A;
+  --line:#5A5048; --accent:#D9B3A8; --ok:#A9C2B0; --bad:#E39A8F;
+  --b1:#9C7F79; --b2:#97876E; --b3:#857C92; --b4:#7C8A92; --b5:#8A8E78;
+  --shadow:rgba(0,0,0,.35);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{height:100%;margin:0;background:var(--sky-bottom);color:var(--ink);
+  font-family:"Atkinson Hyperlegible","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  -webkit-tap-highlight-color:transparent;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{height:100%;display:flex;flex-direction:column;max-width:1200px;margin:0 auto}
+
+.bar{display:flex;align-items:center;gap:14px;padding:10px 16px;font-size:16px;color:var(--ink-soft);
+  background:var(--sky-top)}
+.bar b{color:var(--ink);font-size:21px;font-variant-numeric:tabular-nums}
+.bar .stat{display:flex;align-items:baseline;gap:5px}
+.bar .grow{flex:1}
+.iconbtn{background:none;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:15px;color:var(--ink-soft)}
+.progress{height:3px;background:var(--line)}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s}
+
+.arena{position:relative;flex:1;overflow:hidden;
+  background:linear-gradient(var(--sky-top),var(--sky-bottom));touch-action:manipulation}
+.balloon{position:absolute;left:0;top:0;will-change:transform;border:none;padding:0;background:none}
+.balloon .body{display:block;position:relative;padding:12px 15px 13px;border-radius:50% 50% 48% 48% / 55% 55% 45% 45%;
+  background:radial-gradient(circle at 30% 28%,rgba(255,255,255,.55),rgba(255,255,255,0) 42%),var(--c);
+  box-shadow:inset -4px -6px 10px rgba(0,0,0,.08),0 6px 12px var(--shadow);
+  font-size:calc(clamp(17px,2vw,26px) * var(--fs));font-weight:700;color:#3E2F27;white-space:nowrap;letter-spacing:.01em;
+  transition:transform .15s}
+.balloon .body::after{content:"";position:absolute;left:50%;bottom:-5px;margin-left:-4px;
+  border:4px solid transparent;border-top:6px solid var(--c);border-bottom:0}
+.balloon .str{display:block;width:1px;height:24px;margin:5px auto 0;background:var(--ink-soft);opacity:.45}
+.balloon:hover .body{transform:scale(1.06)}
+.balloon.wrong .body{animation:shake .4s}
+.balloon.pop{pointer-events:none}
+.balloon.pop .body{animation:pop .28s forwards}
+.balloon.pop .str{opacity:0;transition:opacity .2s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes pop{to{transform:scale(1.5);opacity:0}}
+.spark{position:absolute;width:6px;height:6px;border-radius:50%;pointer-events:none;background:var(--c);
+  animation:spark .5s ease-out forwards}
+@keyframes spark{to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
+
+.strip{background:var(--paper);border-top:1px solid var(--line);padding:16px 18px 18px;
+  box-shadow:0 -8px 20px var(--shadow)}
+.sentence{font-family:"Newsreader",Georgia,serif;font-size:calc(clamp(21px,2.9vw,38px) * var(--fs));line-height:1.55;max-width:62ch;margin:0 auto;min-height:3.1em}
+.blank{display:inline-block;min-width:6.5em;border-bottom:2px solid var(--ink);text-align:center;margin:0 .15em;line-height:1.2}
+.blank.filled{color:var(--accent);font-weight:600;border-bottom-color:var(--accent)}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;max-width:62ch;margin:12px auto 0;font-size:15px;color:var(--ink-soft)}
+.meta .src{border:1px solid var(--line);border-radius:4px;padding:2px 7px}
+.meta .hint{color:var(--accent)}
+.meta .grow{flex:1}
+.ghost{background:none;border:1px solid var(--line);border-radius:6px;padding:8px 14px;font-size:16px}
+.ghost:hover{border-color:var(--ink-soft)}
+.flash-bad{animation:fb .35s}
+@keyframes fb{0%{background:color-mix(in srgb,var(--bad) 18%,var(--paper))}100%{background:var(--paper)}}
+
+.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;z-index:5;
+  background:color-mix(in srgb,var(--sky-bottom) 70%,transparent);backdrop-filter:blur(3px)}
+.overlay[hidden]{display:none}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:26px 24px;width:min(520px,100%);
+  max-height:100%;overflow:auto;box-shadow:0 14px 40px var(--shadow)}
+.panel h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:clamp(28px,4vw,40px);margin:0 0 6px;line-height:1.15}
+.panel p{margin:0 0 18px;color:var(--ink-soft);line-height:1.6;font-size:15px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.choice{text-align:left;background:none;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.choice small{display:block;color:var(--ink-soft);font-size:12px;margin-top:2px}
+.choice[aria-pressed="true"]{border-color:var(--ink);background:color-mix(in srgb,var(--b4) 30%,var(--paper))}
+.go{width:100%;border:none;border-radius:10px;padding:14px;background:var(--ink);color:var(--paper);font-size:17px;font-weight:700}
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 18px;text-align:center}
+.results div{border:1px solid var(--line);border-radius:10px;padding:10px 4px}
+.results b{display:block;font-size:24px;font-family:"Newsreader",Georgia,serif}
+.results span{font-size:12px;color:var(--ink-soft)}
+.review{list-style:none;padding:0;margin:0 0 18px;font-size:16px}
+.review li{border-top:1px solid var(--line);padding:10px 0;line-height:1.5}
+.review li b{color:var(--accent)}
+.review li em{display:block;font-family:"Newsreader",Georgia,serif;color:var(--ink-soft)}
+.row{display:flex;gap:10px}
+.row .go{flex:1}
+.row .ghost{flex:1;border-radius:10px;padding:14px;font-size:16px}
+
+.capy{position:absolute;left:50%;bottom:4px;width:clamp(96px,11vw,140px);transform:translateX(-50%);z-index:2;pointer-events:none}
+.capy .face{display:block;transform:scaleX(var(--flip,1));transition:transform .12s}
+.capy svg{display:block;width:100%;height:auto;transform-origin:50% 100%}
+.capy.throw svg{animation:throw .26s}
+.capy.happy svg{animation:hop .45s}
+.capy.sad svg{animation:nope .5s}
+@keyframes throw{0%{transform:rotate(0)}35%{transform:rotate(-9deg) scale(.95,1.05)}70%{transform:rotate(7deg) scale(1.04,.96)}100%{transform:rotate(0)}}
+@keyframes hop{0%,100%{transform:translateY(0)}40%{transform:translateY(-16px) scale(.97,1.04)}70%{transform:translateY(0) scale(1.05,.95)}}
+@keyframes nope{0%,100%{transform:rotate(0)}25%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}75%{transform:rotate(-3deg)}}
+.dart{position:absolute;left:0;top:0;width:46px;height:12px;margin:-6px 0 0 -23px;pointer-events:none;z-index:3;will-change:transform}
+.floaty{position:absolute;pointer-events:none;z-index:4;font-weight:700;font-size:calc(20px * var(--fs));color:var(--accent);
+  transform:translate(-50%,-50%);animation:rise .8s ease-out forwards;white-space:nowrap}
+.floaty.bad{color:var(--bad)}
+@keyframes rise{0%{opacity:0;margin-top:6px}20%{opacity:1}100%{opacity:0;margin-top:-46px}}
+@media (max-width:560px){
+  .bar{gap:10px;padding:8px 12px;font-size:13px}
+  .bar b{font-size:17px}
+  .balloon .body{padding:10px 12px 11px;font-size:calc(16px * var(--fs))}
+  .balloon .str{height:16px}
+  .strip{padding:12px 14px 14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .balloon.pop .body,.spark{animation-duration:.01s}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="bar">
+    <span class="stat">分數 <b id="score">0</b></span>
+    <span class="stat">連擊 <b id="combo">0</b></span>
+    <span class="stat">剩下 <b id="left">0</b></span>
+    <span class="grow"></span>
+    <span class="stat"><b id="time">0:00</b></span>
+    <button class="iconbtn" id="sizeBtn" aria-label="調整字級">字級 大</button>
+    <button class="iconbtn" id="soundBtn" aria-label="音效開關">音效 開</button>
+  </div>
+  <div class="progress"><i id="prog"></i></div>
+
+  <div class="arena" id="arena">
+    <div class="capy" id="capy"><span class="face"><svg viewBox="0 0 130 92" aria-hidden="true">
+      <ellipse cx="62" cy="88" rx="50" ry="4" fill="#000" opacity=".08"/>
+      <rect x="22" y="70" width="12" height="16" rx="5" fill="#8C6548"/>
+      <rect x="70" y="70" width="12" height="16" rx="5" fill="#8C6548"/>
+      <ellipse cx="52" cy="60" rx="44" ry="26" fill="#A87F5E"/>
+      <rect x="40" y="70" width="12" height="16" rx="5" fill="#97704F"/>
+      <rect x="86" y="68" width="12" height="18" rx="5" fill="#97704F"/>
+      <rect x="66" y="24" width="54" height="40" rx="18" fill="#A87F5E"/>
+      <rect x="98" y="36" width="24" height="26" rx="11" fill="#8C6548"/>
+      <ellipse cx="114" cy="44" rx="2.4" ry="1.8" fill="#3E2F27"/>
+      <ellipse cx="72" cy="27" rx="6.5" ry="5" fill="#8C6548"/>
+      <circle cx="92" cy="38" r="3.4" fill="#3E2F27"/><circle cx="93.2" cy="36.8" r="1" fill="#fff"/>
+      <path d="M104 56 q5 3 10 0" stroke="#3E2F27" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <circle cx="86" cy="18" r="8.5" fill="#E2AE4F"/><path d="M86 10 q4 -5 8 -3 q-3 4 -8 3" fill="#8A9A6B"/>
+    </svg></span></div>
+    <div class="overlay" id="startOv">
+      <div class="panel">
+        <h1>射氣球填空</h1>
+        <p>下方紙條會出現一個句子，空格裡的字完全挖空。從天上飄的氣球裡，點破正確的那一顆。每一輪 15 顆。下面的水豚會幫你射飛鏢。</p>
+        <div class="choices" id="choices"></div>
+        <button class="go" id="startBtn">開始挑戰</button>
+      </div>
+    </div>
+    <div class="overlay" id="endOv" hidden>
+      <div class="panel">
+        <h1 id="endTitle">全部射完了</h1>
+        <div class="results">
+          <div><b id="rScore">0</b><span>分數</span></div>
+          <div><b id="rTime">0:00</b><span>時間</span></div>
+          <div><b id="rAcc">0%</b><span>一次命中率</span></div>
+        </div>
+        <p id="reviewLabel">這幾個字值得再看一次：</p>
+        <ul class="review" id="review"></ul>
+        <div class="row">
+          <button class="ghost" id="menuBtn">換範圍</button>
+          <button class="go" id="againBtn">再來一輪</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip" id="strip">
+    <div class="sentence" id="sentence">選好範圍就可以開始。</div>
+    <div class="meta">
+      <span class="src" id="src">—</span>
+      <span class="hint" id="hint"></span>
+      <span class="grow"></span>
+      <button class="ghost" id="hintBtn" disabled>中文提示 −5</button>
+      <button class="ghost" id="skipBtn" disabled>跳過</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const BANK = [
+// ===== 115 學測 =====
+{w:"tight",s:"The mayor has such a ___ schedule that it takes weeks to arrange an interview with her.",zh:"緊湊的",src:"115"},
+{w:"amateur",s:"Jane started as an ___ art designer, but now she has a professional studio of her own.",zh:"業餘的",src:"115"},
+{w:"vacancy",s:"The teaching ___ at the famous high school soon attracted more than a dozen well-qualified applicants.",zh:"職缺",src:"115"},
+{w:"initially",s:"Designed by a young engineer, the new product has created far more profit than ___ expected.",zh:"起初",src:"115"},
+{w:"consumption",s:"It has been confirmed that a balanced ___ of fruit and vegetables is a key element to good health.",zh:"攝取；食用",src:"115"},
+{w:"dreads",s:"As a shy boy afraid of making public appearances, Timmy ___ the thought of speaking before large audiences.",zh:"懼怕",src:"115"},
+{w:"passion",s:"To the newly-crowned winner of the piano competition, music is his life's ___.",zh:"熱情；熱愛",src:"115"},
+{w:"assaulted",s:"The drunk driver who shouted at passers-by and ___ them with glass bottles was quickly arrested.",zh:"攻擊",src:"115"},
+{w:"elbow",s:"There were so many people that I had to ___ my way through the crowd to board the bus in time.",zh:"用手肘推擠",src:"115"},
+{w:"grave",s:"Deadly shootings on US campuses have raised ___ concerns about how to prevent such tragic incidents.",zh:"嚴重的",src:"115"},
+{w:"communicate",s:"A new study indicates that rhinos have a smelly way to ___.",zh:"溝通",src:"115"},
+{w:"clues",s:"Different chemicals in their poop provide important ___ about the age, sex, and health of each rhino.",zh:"線索",src:"115"},
+{w:"dominant",s:"Researchers find that ___ males are particularly responsive to the \u201cfake poop.\u201d",zh:"具支配地位的",src:"115"},
+{w:"accommodate",s:"Teahouses thus sprang up to ___ the weary travelers, offering them a cup of tea.",zh:"容納；接待",src:"115"},
+{w:"unproductive",s:"Taking a nap in the middle of the day is by no means ___.",zh:"沒有生產力的",src:"115"},
+{w:"function",s:"Research has shown that napping is linked with brain size and ___.",zh:"功能",src:"115"},
+{w:"risk",s:"Our brain starts shrinking, which gradually slows cognition and increases dementia ___ in later life.",zh:"風險",src:"115"},
+{w:"delay",s:"Napping may significantly ___ age-related brain shrinkage.",zh:"延緩",src:"115"},
+{w:"retain",s:"For students cramming for college exams, napping will help ___ acquired knowledge and learned skills.",zh:"保留；記住",src:"115"},
+{w:"point to",s:"Some studies recommend napping for 20 to 40 minutes, while others ___ shorter naps.",zh:"指向；支持",src:"115"},
+{w:"depend on",s:"The best nap length may ___ a person's physical condition and fatigue level.",zh:"取決於",src:"115"},
+{w:"dramatic",s:"For some people, even a five-minute nap can bring about surprisingly ___ benefits.",zh:"顯著的",src:"115"},
+{w:"minimal",s:"Find yourself a quiet place with ___ light or with blackout curtains.",zh:"極少的",src:"115"},
+{w:"atmosphere",s:"You can add some soothing nature sounds to create a relaxing ___.",zh:"氛圍",src:"115"},
+{w:"perseverance",s:"The discovery marked the final chapter in a legendary story of extraordinary courage and ___.",zh:"毅力",src:"115"},
+{w:"exacerbated",s:"Freezing water rushed in and ___ the situation.",zh:"使惡化",src:"115"},
+{w:"hindered",s:"Help was almost at hand, but ice and bad weather ___ their return.",zh:"阻礙",src:"115"},
+{w:"captivating",s:"A fantastic spiral staircase provides a ___ focal point as it winds up the building.",zh:"迷人的",src:"115"},
+{w:"heritage",s:"This prominent structure actually has a long and rich ___.",zh:"傳承；遺產",src:"115"},
+{w:"orientation",s:"Today, map ___ is taking on a new perspective.",zh:"方位；定向",src:"115"},
+{w:"innovation",s:"Wonder Village is a place where tradition coexists harmoniously with ___.",zh:"創新",src:"115"},
+{w:"blended",s:"In Wonder Village, local features are perfectly ___ with foreign elements.",zh:"融合",src:"115"},
+// ===== 115 學測（擴充：短文原句 + 詞彙題選項）=====
+{w:"reproductive",s:"Different rhinos leave chemicals that provide clues about the age, sex, general health, and ___ conditions of each rhino.",zh:"生殖的",src:"115"},
+{w:"harmony",s:"This is of great significance for the peace and ___ in the group.",zh:"和諧",src:"115"},
+{w:"significance",s:"This is of great ___ for the peace and harmony in the group.",zh:"重要性",src:"115"},
+{w:"responsive",s:"Dominant males are particularly ___ to the fake poop that carries chemicals from females ready to mate.",zh:"有反應的",src:"115"},
+{w:"sniff",s:"The males ___ it for longer duration and come back to the same spot more frequently.",zh:"嗅；聞",src:"115"},
+{w:"mating",s:"They are gathering information about ___ opportunities from the poop.",zh:"交配",src:"115"},
+{w:"weary",s:"Teahouses sprang up to accommodate the ___ travelers, offering them a cup of tea.",zh:"疲倦的",src:"115"},
+{w:"digestion",s:"Centuries later, the ability of tea to aid in ___ finally became known.",zh:"消化",src:"115"},
+{w:"delicacies",s:"The tradition of these Cantonese ___ was born.",zh:"佳餚；美食",src:"115"},
+{w:"banquet",s:"The small size allows the customer to order a great variety of dishes, creating a ___ of different tastes and flavors.",zh:"宴席",src:"115"},
+{w:"customary",s:"It is ___ for big groups to enjoy simple dishes together as a joyful social activity.",zh:"習慣上的",src:"115"},
+{w:"cognition",s:"Napping can boost our ___ and memory.",zh:"認知",src:"115"},
+{w:"dementia",s:"Napping may lower the possibility of developing ___.",zh:"失智症",src:"115"},
+{w:"habitual",s:"The brain size of ___ nappers, however, is found to be better preserved.",zh:"習慣性的",src:"115"},
+{w:"preserved",s:"The brain size of habitual nappers is found to be better ___.",zh:"保存",src:"115"},
+{w:"cramming",s:"For students ___ for college exams, napping will help retain acquired knowledge.",zh:"臨時抱佛腳",src:"115"},
+{w:"fatigue",s:"The best nap length may depend on a person's physical condition and ___ level.",zh:"疲勞",src:"115"},
+{w:"soothing",s:"You can also add some ___ nature sounds to create a relaxing atmosphere.",zh:"撫慰的",src:"115"},
+{w:"gesture",s:"Smiling is a ___ that many people engage in dozens of times a day without thought.",zh:"手勢；表示",src:"115"},
+{w:"portraits",s:"In the West, ___ of men and women before the 1700s typically depicted them with a serious expression.",zh:"肖像畫",src:"115"},
+{w:"decayed",s:"The absence of smiles stemmed partly from the attempt to hide their ___ teeth.",zh:"蛀壞的",src:"115"},
+{w:"hygiene",s:"Their teeth were decayed because of poor dental ___.",zh:"衛生",src:"115"},
+{w:"emerged",s:"Paintings with white-toothed smiles ___ after the 1700s.",zh:"出現",src:"115"},
+{w:"interpretations",s:"Recent studies show that ___ of smiling may vary from culture to culture.",zh:"詮釋",src:"115"},
+{w:"individualism",s:"People smile more when they are from countries that are high in ___ and low in population.",zh:"個人主義",src:"115"},
+{w:"precedence",s:"The needs and rights of the individual take ___ over those of the group.",zh:"優先",src:"115"},
+{w:"newcomers",s:"___ from different parts of the world are found to smile more.",zh:"新來者",src:"115"},
+{w:"straightforward",s:"For them, smiling is a ___ way to indicate that one is reliable and trustworthy.",zh:"直接了當的",src:"115"},
+{w:"trustworthy",s:"Smiling is a straightforward way to indicate that one is reliable and ___.",zh:"值得信賴的",src:"115"},
+{w:"psychologists",s:"As many ___ now point out, this simple gesture is far more complicated than it may appear.",zh:"心理學家",src:"115"},
+{w:"vessel",s:"The Endurance, the lost ___ of the famed polar explorer Ernest Shackleton, was found in Antarctica.",zh:"船隻",src:"115"},
+{w:"expedition",s:"All the members of the ___ team survived, but the Endurance remained lost under the sea.",zh:"探險",src:"115"},
+{w:"crew",s:"Shackleton ordered his ___ to abandon the ship.",zh:"全體船員",src:"115"},
+{w:"abandon",s:"Shackleton ordered his crew to ___ the ship.",zh:"放棄；棄（船）",src:"115"},
+{w:"trapped",s:"The Endurance was soon completely ___ in pack ice.",zh:"受困的",src:"115"},
+{w:"uninhabited",s:"They sailed more than a hundred miles to the ___ Elephant Island.",zh:"無人居住的",src:"115"},
+{w:"rescue",s:"Shackleton got back with a ship big enough to ___ the rest of his men.",zh:"救援",src:"115"},
+{w:"spiral",s:"In many old castles in Europe, visitors often find a fantastic ___ staircase.",zh:"螺旋形的",src:"115"},
+{w:"ascend",s:"The staircases were so narrow that attackers would have to ___ one at a time.",zh:"向上爬",src:"115"},
+{w:"uneven",s:"The attackers' challenge was complicated by the ___ steps of the staircase.",zh:"不平整的",src:"115"},
+{w:"stumble",s:"The attackers were much more likely to ___ and fall in the dimly lit staircase.",zh:"絆倒",src:"115"},
+{w:"affordable",s:"Steel frames became cost-effective, and thus ___ for a much wider staircase market.",zh:"負擔得起的",src:"115"},
+{w:"timeless",s:"The ___ appeal of their classical design makes spiral staircases a much-desired feature.",zh:"永恆的",src:"115"},
+{w:"luxury",s:"Spiral staircases are a much-desired feature in ___ homes, offices, and public buildings.",zh:"豪華的",src:"115"},
+{w:"ancient",s:"Documents from ___ times indicate that many maps in early ages were pointing to the east.",zh:"古代的",src:"115"},
+{w:"ample",s:"___ evidence from the Old Testament suggests that east was at the top of maps.",zh:"充足的",src:"115"},
+{w:"livelihood",s:"The Nile, vital to Egyptian ___, originated in the south.",zh:"生計",src:"115"},
+{w:"originated",s:"The Nile, vital to Egyptian livelihood, ___ in the south.",zh:"起源於",src:"115"},
+{w:"imperialism",s:"The expansion of European ___ further established the north-up practice as the standard.",zh:"帝國主義",src:"115"},
+{w:"dynamic",s:"On GPS systems, the layouts are ___, oriented toward our travel path.",zh:"動態的",src:"115"},
+{w:"perspective",s:"Today, map orientation is taking on a new ___.",zh:"觀點",src:"115"},
+{w:"destinations",s:"We've ended up with ourselves in the middle, and our ___ at the top.",zh:"目的地",src:"115"},
+{w:"indigenous",s:"Wonder Village is a famous ___ district in eastern Taiwan.",zh:"原住民的",src:"115"},
+{w:"historic",s:"The ___ village exhibits the traditional way of life of the tribe there.",zh:"歷史悠久的",src:"115"},
+{w:"exhibits",s:"The historic village ___ the traditional way of life of the tribe there.",zh:"展示",src:"115"},
+{w:"commercial",s:"Wonder Village has become not only a cultural center but also a unique ___ zone.",zh:"商業的",src:"115"},
+{w:"customized",s:"The fragrances at this scent shop are largely ___ to meet the individual shopper's taste.",zh:"客製化的",src:"115"},
+{w:"artisans",s:"The shop showcases the skill and spirit of neighborhood ___.",zh:"工匠",src:"115"},
+{w:"handcrafted",s:"Aside from ___ beer, the menu boasts hand-made gourmet pizzas.",zh:"手工製作的",src:"115"},
+{w:"antique",s:"At this tiny ___ store you can always find something different.",zh:"古董",src:"115"},
+{w:"diverse",s:"Wonder Village is a place where the old meets the new: ___, unique, and always full of surprises.",zh:"多樣的",src:"115"},
+{w:"hasty",s:"Don't make a ___ decision; take a day to think it over.",zh:"倉促的",src:"115"},
+{w:"diligent",s:"Amy is a ___ student who reviews her notes every night.",zh:"勤勉的",src:"115"},
+{w:"routine",s:"Brushing my teeth is part of my daily ___.",zh:"例行公事",src:"115"},
+{w:"condemned",s:"The mayor publicly ___ the violence and promised to find those responsible.",zh:"譴責",src:"115"},
+{w:"fundamentally",s:"The two plans are ___ different, even though they look similar.",zh:"根本上",src:"115"},
+{w:"inspiration",s:"The old poem was the ___ for her first novel.",zh:"靈感",src:"115"},
+{w:"harsh",s:"The explorers had to survive ___ winter weather with very little food.",zh:"嚴酷的",src:"115"},
+// ===== Lesson 1 =====
+{w:"diverged",s:"Two roads ___ in a yellow wood.",zh:"分岔",src:"L1"},
+{w:"contemporaries",s:"Unlike many of his ___, who favored complicated language, Frost wrote in a simple style.",zh:"同時代的人",src:"L1"},
+{w:"walks",s:"Frost wrote in a style that could be understood by readers from all ___ of life.",zh:"（all walks of life）各行各業",src:"L1"},
+{w:"plain",s:"His poetry appears as ___ as everyday conversation.",zh:"簡單的；樸素的",src:"L1"},
+{w:"penetrating",s:"However, beneath this simplicity lie ___ insights into life.",zh:"精闢的",src:"L1"},
+{w:"renowned",s:"One of his most ___ works, \u201cThe Road Not Taken,\u201d draws profound meaning from ordinary experiences.",zh:"著名的",src:"L1"},
+{w:"outstanding",s:"The poem exemplifies his ___ ability to draw profound meaning from ordinary experiences.",zh:"傑出的",src:"L1"},
+{w:"published",s:"The poem, first ___ in 1915, originated from Frost's friendship with Edward Thomas.",zh:"出版",src:"L1"},
+{w:"composed",s:"Frost ___ the poem partly as a gentle comment on his friend's indecision.",zh:"創作（詩、曲）",src:"L1"},
+{w:"indecision",s:"Frost composed the poem partly as a gentle comment on his friend's ___.",zh:"猶豫不決",src:"L1"},
+{w:"depicts",s:"The poem, which on the surface ___ a solitary traveler's journey, presents a reflection on life.",zh:"描繪",src:"L1"},
+{w:"solitary",s:"On the surface, the poem depicts a ___ traveler's journey in an autumn forest.",zh:"獨自的",src:"L1"},
+{w:"compelling",s:"The image of two paths functions as a ___ metaphor for the crucial decisions we face.",zh:"引人入勝的；有說服力的",src:"L1"},
+{w:"predictions",s:"We hesitate because our ___ about the future are clouded by uncertainty.",zh:"預測",src:"L1"},
+{w:"acceptance",s:"The third stanza demonstrates mature ___ of choice's irreversible nature.",zh:"接受",src:"L1"},
+{w:"declaration",s:"Some readers celebrate the speaker's ___, \u201cI took the one less traveled by.\u201d",zh:"宣告；聲明",src:"L1"},
+{w:"unconventional",s:"Some readers see the ending as encouragement to choose an ___ path.",zh:"不落俗套的",src:"L1"},
+{w:"justifying",s:"They suggest that the speaker is simply ___ his decision.",zh:"為…辯護；合理化",src:"L1"},
+{w:"stems",s:"The poem's lasting fascination ___ from its final stanza.",zh:"（stem from）源自",src:"L1"},
+{w:"encounter",s:"Throughout our lives, we ___ numerous crossroads, such as choosing a university major.",zh:"遭遇",src:"L1"},
+{w:"essence",s:"The poem has an enduring appeal because it gets at the ___ of decision-making.",zh:"本質",src:"L1"},
+{w:"chord",s:"It strikes a ___ with anyone who has faced difficult decisions.",zh:"（strike a chord）引起共鳴",src:"L1"},
+// ===== Lesson 2 Battling Fake News =====
+{w:"defined",s:"Fake news can be ___ as news containing false or misleading information that appears truthful.",zh:"定義",src:"L2"},
+{w:"misleading",s:"Fake news can be defined as news containing false or ___ information that appears truthful.",zh:"誤導的",src:"L2"},
+{w:"truthful",s:"Fake news contains false or misleading information that appears ___.",zh:"真實的",src:"L2"},
+{w:"existence",s:"Although fake news has long been in ___, the Internet has made sharing it easier than ever.",zh:"（in existence）存在",src:"L2"},
+{w:"deceived",s:"People may be ___ by fake news, believing the content to be genuine.",zh:"欺騙",src:"L2"},
+{w:"genuine",s:"People may believe the content to be ___ without questioning the sources.",zh:"真的；非偽造的",src:"L2"},
+{w:"journalism",s:"First, fake news can come from sloppy ___.",zh:"新聞工作",src:"L2"},
+{w:"prior",s:"Journalists sometimes write stories without fact-checking their sources ___ to publication.",zh:"（prior to）在…之前",src:"L2"},
+{w:"political",s:"Some news contains deliberately false information to achieve social or ___ goals.",zh:"政治的",src:"L2"},
+{w:"candidate",s:"Examples include attempts to influence people to vote for a certain ___.",zh:"候選人",src:"L2"},
+{w:"illustrates",s:"The following example ___ the potential long-lasting consequences of spreading false information.",zh:"說明",src:"L2"},
+{w:"extensive",s:"The media provided ___ coverage of this flawed study.",zh:"廣泛的",src:"L2"},
+{w:"flawed",s:"The media widely spread this ___ study, leading to the belief that the vaccine could cause autism.",zh:"有缺陷的",src:"L2"},
+{w:"shattered",s:"As a result, public confidence in the vaccine was ___, and vaccination rates declined.",zh:"使（信心）破滅",src:"L2"},
+{w:"subsequent",s:"However, ___ studies with larger samples revealed different findings.",zh:"之後的",src:"L2"},
+{w:"inaccurate",s:"The original study was eventually proved ___.",zh:"不正確的",src:"L2"},
+{w:"harm",s:"Some parents refused to vaccinate their children for fear that it might do more ___ than good.",zh:"（do more harm than good）弊大於利",src:"L2"},
+{w:"manipulate",s:"Another example shows how companies ___ the news for their own advantage.",zh:"操縱",src:"L2"},
+{w:"exaggerating",s:"A hypermarket sent an email to media outlets, ___ an upcoming increase in the price of toilet paper.",zh:"誇大",src:"L2"},
+{w:"mainstream",s:"Two ___ media outlets reported on the imminent price hike without fact-checking.",zh:"主流的",src:"L2"},
+{w:"panic",s:"The reporting prompted a wave of ___ buying among Taiwanese people.",zh:"恐慌",src:"L2"},
+{w:"necessity",s:"Many feared that if they didn't stock up, they would run out of the precious daily ___.",zh:"必需品",src:"L2"},
+{w:"evaluate",s:"Whenever we come across new information, it is essential to ___ its validity.",zh:"評估",src:"L2"},
+{w:"notable",s:"One ___ feature of reliable reporting is the inclusion of the writer's name.",zh:"顯著的",src:"L2"},
+{w:"biography",s:"The writer's name allows readers to view that writer's ___ and verify his or her credibility.",zh:"傳記；簡歷",src:"L2"},
+{w:"credibility",s:"Readers can view the writer's biography and verify his or her ___.",zh:"可信度",src:"L2"},
+{w:"cites",s:"Another important sign is whether the article ___ multiple primary sources.",zh:"引用",src:"L2"},
+{w:"objective",s:"Factual reports are usually written in an ___ manner that avoids emotional manipulation.",zh:"客觀的",src:"L2"},
+{w:"victim",s:"We must all watch out for fake news lest we fall ___ to it.",zh:"（fall victim to）成為…的受害者",src:"L2"},
+{w:"critically",s:"Useful strategies include thinking ___ about what we are reading.",zh:"批判性地",src:"L2"}
+];
+const SRC_NAME={"115":"115 學測","L1":"L1 The Road Not Taken","L2":"L2 Battling Fake News"};
+const RANGES=[
+  {key:"mix",label:"全部混合",keys:["115","L1","L2"]},
+  {key:"115",label:"115 學測",keys:["115"]},
+  {key:"L1",label:"L1 The Road Not Taken",keys:["L1"]},
+  {key:"L2",label:"L2 Battling Fake News",keys:["L2"]}
+];
+const COLORS=["var(--b1)","var(--b2)","var(--b3)","var(--b4)","var(--b5)"];
+const $=id=>document.getElementById(id);
+const arena=$("arena");
+let range="mix", queue=[], cur=null, balloons=[], score=0, combo=0, firstTry=0, answered=0;
+let mistakes=new Map(), startT=0, timerId=null, running=false, locked=false, curWrong=false, curHint=false;
+let sound=true, actx=null, total=0, W=0, H=0, lastT=0;
+
+// ---- range picker
+const choicesEl=$("choices");
+RANGES.forEach(r=>{
+  const n=BANK.filter(b=>r.keys.includes(b.src)).length;
+  const b=document.createElement("button");
+  b.className="choice"; b.dataset.key=r.key;
+  b.innerHTML=`${r.label}<small>${n} 個字・每輪 ${Math.min(15,n)} 顆</small>`;
+  b.setAttribute("aria-pressed",r.key===range);
+  b.onclick=()=>{range=r.key;[...choicesEl.children].forEach(c=>c.setAttribute("aria-pressed",c.dataset.key===range));};
+  choicesEl.appendChild(b);
+});
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+function fmt(ms){const s=Math.floor(ms/1000);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");}
+
+// ---- sound
+function tone(f1,f2,dur,type="sine",vol=.15){
+  if(!sound) return;
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    const o=actx.createOscillator(),g=actx.createGain(),t=actx.currentTime;
+    o.type=type;o.frequency.setValueAtTime(f1,t);o.frequency.exponentialRampToValueAtTime(f2,t+dur);
+    g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+    o.connect(g).connect(actx.destination);o.start(t);o.stop(t+dur);
+  }catch(e){}
+}
+const SIZES=[["大",1],["特大",1.25],["投影",1.5]];let sizeI=0;
+try{sizeI=+localStorage.getItem("bp-size")||0;}catch(e){}
+function applySize(){const [n,v]=SIZES[sizeI];document.documentElement.style.setProperty("--fs",v);$("sizeBtn").textContent="字級 "+n;
+  balloons.forEach(b=>{b.w=b.el.offsetWidth;b.h=b.el.offsetHeight;});}
+$("sizeBtn").onclick=()=>{sizeI=(sizeI+1)%SIZES.length;try{localStorage.setItem("bp-size",sizeI)}catch(e){}applySize();};
+applySize();
+$("soundBtn").onclick=()=>{sound=!sound;$("soundBtn").textContent="音效 "+(sound?"開":"關");};
+
+// ---- round setup
+function startRound(){
+  const keys=RANGES.find(r=>r.key===range).keys;
+  const seen=new Set();
+  const pool=shuffle(BANK.filter(b=>keys.includes(b.src))).filter(b=>{if(seen.has(b.w))return false;seen.add(b.w);return true;});
+  let picked;
+  if(keys.length>1){
+    const per=Math.floor(15/keys.length);
+    picked=[];keys.forEach(k=>picked.push(...pool.filter(b=>b.src===k).slice(0,per)));
+    pool.forEach(b=>{if(picked.length<15&&!picked.includes(b))picked.push(b);});
+  }else picked=pool.slice(0,15);
+  queue=shuffle([...picked]); total=picked.length;
+  score=0;combo=0;firstTry=0;answered=0;mistakes=new Map();
+  $("startOv").hidden=true;$("endOv").hidden=true;
+  makeBalloons(picked);
+  startT=performance.now();clearInterval(timerId);
+  timerId=setInterval(()=>$("time").textContent=fmt(performance.now()-startT),250);
+  running=true;$("hintBtn").disabled=false;$("skipBtn").disabled=false;
+  nextQ(); updateBar();
+}
+
+function makeBalloons(items){
+  balloons.forEach(b=>b.el.remove());balloons=[];
+  W=arena.clientWidth;H=arena.clientHeight;
+  items.forEach((it,i)=>{
+    const el=document.createElement("button");
+    el.className="balloon";el.type="button";
+    const c=COLORS[i%COLORS.length];
+    el.style.setProperty("--c",c);
+    el.innerHTML=`<span class="body">${it.w}</span><span class="str"></span>`;
+    el.setAttribute("aria-label",it.w);
+    arena.appendChild(el);
+    const w=el.offsetWidth,h=el.offsetHeight;
+    // pick least-overlapping spot
+    let best=null,bestScore=Infinity;
+    for(let k=0;k<30;k++){
+      const x=Math.random()*Math.max(1,W-w), y=Math.random()*Math.max(1,floorY()-h);
+      let ov=0;balloons.forEach(o=>{const dx=Math.max(0,Math.min(x+w,o.x+o.w)-Math.max(x,o.x));const dy=Math.max(0,Math.min(y+h,o.y+o.h)-Math.max(y,o.y));ov+=dx*dy;});
+      if(ov<bestScore){bestScore=ov;best={x,y};}
+      if(ov===0)break;
+    }
+    const sp=12+Math.random()*18, ang=Math.random()*Math.PI*2;
+    const b={el,word:it.w,x:best.x,y:best.y,w,h,vx:Math.cos(ang)*sp,vy:Math.sin(ang)*sp,ph:Math.random()*6.28,alive:true};
+    el.addEventListener("pointerdown",e=>{e.preventDefault();throwDart(b);});
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();throwDart(b);}});
+    balloons.push(b);
+  });
+}
+
+function nextQ(){
+  if(!queue.length){endRound();return;}
+  cur=queue.shift();curWrong=false;curHint=false;locked=false;
+  renderSentence(false);
+  $("src").textContent=SRC_NAME[cur.src];
+  $("hint").textContent="";
+}
+function renderSentence(filled){
+  const parts=cur.s.split("___");
+  const esc=t=>t.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+  $("sentence").innerHTML=esc(parts[0])+`<span class="blank${filled?" filled":""}">${filled?cur.w:"&nbsp;"}</span>`+esc(parts[1]||"");
+}
+
+const capy=$("capy");
+let flying=false;
+function floorY(){return H-(capy.offsetHeight||100)-14;}
+function capyMood(c){capy.classList.remove("throw","happy","sad");void capy.offsetWidth;capy.classList.add(c);}
+function floaty(x,y,text,bad){const f=document.createElement("span");f.className="floaty"+(bad?" bad":"");f.textContent=text;
+  f.style.left=x+"px";f.style.top=y+"px";arena.appendChild(f);setTimeout(()=>f.remove(),850);}
+const DART_SVG='<svg viewBox="0 0 46 12"><path d="M2 2 L10 6 L2 10 L6 6 Z" fill="#B5838D"/><path d="M4 2 L12 6 L4 10" fill="none" stroke="#7A5C58" stroke-width="1"/><rect x="9" y="5" width="28" height="2" rx="1" fill="#5A4A40"/><path d="M36 3 L46 6 L36 9 Z" fill="#3E2F27"/></svg>';
+function throwDart(b){
+  if(!running||locked||flying||!b.alive)return;
+  flying=true;
+  const ar=arena.getBoundingClientRect(), cr=capy.getBoundingClientRect();
+  const sx=cr.left-ar.left+cr.width*0.5, sy=cr.top-ar.top+cr.height*0.2;
+  capy.style.setProperty("--flip", (b.x+b.w/2)<sx?-1:1);
+  capy.querySelector(".face").style.setProperty("--flip",(b.x+b.w/2)<sx?-1:1);
+  capyMood("throw");
+  tone(1200,320,.09,"sine",.06);
+  const d=document.createElement("div");d.className="dart";d.innerHTML=DART_SVG;arena.appendChild(d);
+  const t0=performance.now(), dur=230, arc=40;
+  function step(t){
+    const k=Math.min(1,(t-t0)/dur);
+    const tx=b.x+b.w/2, ty=b.y+b.h*0.5;
+    const x=sx+(tx-sx)*k, y=sy+(ty-sy)*k-Math.sin(Math.PI*k)*arc;
+    const dx=tx-sx, dy=(ty-sy)-arc*Math.PI*Math.cos(Math.PI*k);
+    d.style.transform=`translate(${x}px,${y}px) rotate(${Math.atan2(dy,dx)}rad)`;
+    if(k<1){requestAnimationFrame(step);return;}
+    flying=false;
+    if(b.alive&&b.word===cur.w){d.remove();floaty(tx,ty,"+"+(10+Math.min(combo,10)*2)+(combo>=2?"  "+(combo+1)+" 連擊":""));shoot(b);capyMood("happy");}
+    else{dropDart(d,x,y,Math.atan2(dy,dx));if(b.alive)shoot(b);floaty(tx,ty,"✕",true);capyMood("sad");}
+  }
+  requestAnimationFrame(step);
+}
+function dropDart(d,x,y,a){
+  let vy=-120,vx=(Math.random()-.5)*80,t0=performance.now(),last=t0;
+  function f(t){const dt=(t-last)/1000;last=t;vy+=1100*dt;x+=vx*dt;y+=vy*dt;a+=6*dt;
+    const age=t-t0;d.style.opacity=Math.max(0,1-age/600);
+    d.style.transform=`translate(${x}px,${y}px) rotate(${a}rad)`;
+    if(age<600)requestAnimationFrame(f);else d.remove();}
+  requestAnimationFrame(f);
+}
+function shoot(b){
+  if(!running||locked||!b.alive)return;
+  if(b.word===cur.w){
+    locked=true;b.alive=false;
+    combo++;answered++;
+    if(!curWrong&&!curHint)firstTry++;
+    score+=10+Math.min(combo-1,10)*2;
+    tone(520,1300,.12);
+    popFx(b);
+    renderSentence(true);
+    updateBar();
+    setTimeout(nextQ,750);
+  }else{
+    combo=0;curWrong=true;
+    mistakes.set(cur.w,cur);
+    tone(180,90,.16,"triangle",.14);
+    b.el.classList.remove("wrong");void b.el.offsetWidth;b.el.classList.add("wrong");
+    const s=$("strip");s.classList.remove("flash-bad");void s.offsetWidth;s.classList.add("flash-bad");
+    updateBar();
+  }
+}
+function popFx(b){
+  b.el.classList.add("pop");
+  const cx=b.x+b.w/2, cy=b.y+b.h*0.35, c=b.el.style.getPropertyValue("--c");
+  for(let i=0;i<9;i++){
+    const s=document.createElement("span");s.className="spark";
+    const a=i/9*6.28, r=30+Math.random()*25;
+    s.style.left=cx+"px";s.style.top=cy+"px";s.style.setProperty("--c",c);
+    s.style.setProperty("--dx",Math.cos(a)*r+"px");s.style.setProperty("--dy",Math.sin(a)*r+"px");
+    arena.appendChild(s);setTimeout(()=>s.remove(),550);
+  }
+  setTimeout(()=>{b.el.remove();balloons=balloons.filter(x=>x!==b);},300);
+}
+
+$("hintBtn").onclick=()=>{
+  if(!running||locked||curHint)return;
+  curHint=true;score=Math.max(0,score-5);mistakes.set(cur.w,cur);
+  $("hint").textContent="提示："+cur.zh;updateBar();
+};
+$("skipBtn").onclick=()=>{
+  if(!running||locked)return;
+  combo=0;mistakes.set(cur.w,cur);queue.push(cur);updateBar();nextQ();
+};
+
+function updateBar(){
+  $("score").textContent=score;$("combo").textContent=combo;
+  $("left").textContent=total-answered;
+  $("prog").style.width=(total?answered/total*100:0)+"%";
+}
+
+function endRound(){
+  running=false;clearInterval(timerId);
+  $("hintBtn").disabled=true;$("skipBtn").disabled=true;
+  const t=performance.now()-startT;
+  $("rScore").textContent=score;$("rTime").textContent=fmt(t);
+  $("rAcc").textContent=Math.round(firstTry/total*100)+"%";
+  $("endTitle").textContent=mistakes.size===0?"全部一次命中":"全部射完了";
+  const list=$("review");list.innerHTML="";
+  if(mistakes.size===0){$("reviewLabel").textContent="沒有一個字需要提示，也沒有射錯。";}
+  else{
+    $("reviewLabel").textContent="這幾個字值得再看一次：";
+    mistakes.forEach(m=>{
+      const li=document.createElement("li");
+      li.innerHTML=`<b>${m.w}</b>　${m.zh}<em>${m.s.replace("___","<u>"+m.w+"</u>")}</em>`;
+      list.appendChild(li);
+    });
+  }
+  $("sentence").textContent="這一輪結束。";$("src").textContent="—";$("hint").textContent="";
+  $("endOv").hidden=false;
+}
+
+$("startBtn").onclick=startRound;
+$("againBtn").onclick=startRound;
+$("menuBtn").onclick=()=>{$("endOv").hidden=true;$("startOv").hidden=false;balloons.forEach(b=>b.el.remove());balloons=[];};
+
+// ---- motion
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function tick(t){
+  const dt=Math.min(.05,(t-lastT)/1000||0);lastT=t;
+  W=arena.clientWidth;H=arena.clientHeight;
+  const speed=reduce?.35:1;
+  for(const b of balloons){
+    if(!b.alive)continue;
+    b.x+=b.vx*dt*speed;b.y+=b.vy*dt*speed;
+    if(b.x<4){b.x=4;b.vx=Math.abs(b.vx);}
+    if(b.x+b.w>W-4){b.x=Math.max(4,W-4-b.w);b.vx=-Math.abs(b.vx);}
+    if(b.y<4){b.y=4;b.vy=Math.abs(b.vy);}
+    if(b.y+b.h>floorY()){b.y=Math.max(4,floorY()-b.h);b.vy=-Math.abs(b.vy);}
+  }
+  // gentle separation so words stay readable
+  for(let i=0;i<balloons.length;i++){const a=balloons[i];if(!a.alive)continue;
+    for(let j=i+1;j<balloons.length;j++){const c=balloons[j];if(!c.alive)continue;
+      const dx=(a.x+a.w/2)-(c.x+c.w/2), dy=(a.y+a.h/2)-(c.y+c.h/2);
+      const ox=(a.w+c.w)/2-Math.abs(dx), oy=(a.h+c.h)/2*0.8-Math.abs(dy);
+      if(ox>0&&oy>0){
+        if(ox<oy){const p=Math.sign(dx||1)*ox*0.08;a.x+=p;c.x-=p;}
+        else{const p=Math.sign(dy||1)*oy*0.08;a.y+=p;c.y-=p;}
+      }
+    }
+  }
+  for(const b of balloons){
+    const bob=reduce?0:Math.sin(t*0.0016+b.ph)*4;
+    b.el.style.transform=`translate(${b.x}px,${b.y+bob}px)`;
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>
