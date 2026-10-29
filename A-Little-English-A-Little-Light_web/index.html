@@ -1,0 +1,404 @@
+<title>讀一點英文，留一點光</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Iansui&family=LXGW+WenKai+TC:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: one narrow reading column — deck fan on top, today's card + reading below, 22-slot journey at the end. Single paper theme, like the printed book. */
+@font-face{font-family:'WeiFix';src:url(data:font/ttf;base64,AAEAAAANAIAAAwBQT1MvMsqS2eMAAAMoAAAAYGNtYXAADHDtAAADiAAAACxnYXNwAAAAEAAABgQAAAAIZ2x5Zo47g+wAAADcAAABwGhlYWQ6KnSJAAACxAAAADZoaGVhB3wC3AAAAwQAAAAkaG10eAQQAGQAAAL8AAAABmxvY2EA4AAAAAACvAAAAAZtYXhwABQBhwAAApwAAAAgbmFtZTBKRIgAAAO0AAACLnBvc3T/IgAyAAAF5AAAACB2aGVhDc4NxwAABhQAAAAkdm10eAQeAAAAAAYMAAAABgAIACj/mgOfAzoADgAcACkANwA8AEEATgCbAAAFBiInJjU0PgIzMhYUBhcUBwYjIicmJjQ2MzIWNgYjIicmJyY0NjMyFjYWFAYiJicmJyY0NjIWNwUGByUDBwYHNyQWFAYiJyYnJjQ2MhYHFjM3NjY0JjU0MhcWFAc3NjMzMhYUBgcHNzYzMzIWFAYHBzczMhYUBgcGBiMiJyYmNDIWFzMyNzY3BQYHBiI0NzY3NjcHBiMjIicmNAEXCA0KHBkeDAwOGRuwGAwIDQUNGhgKEjGLIQgNBxMgBhgKEUN1Fx0SBwUaIwgdDB8V/qUcKAF5IbsTJsv++hwbFw0hJwoWFCPAGRj7EyQEEhAqNq0GBQgWGgsCKj4FBAkLIw0CJWkPHBYIARo6KiRCGyUQO00DAgMtGP27X1UkEg2AdzkrygUFCSMSBw8OBQwPByhONQwSZRsNBwMcRUINDZYMDRU6NAsMEIJCKhIRCQk4LgsSDCPnFS86FAEKDipGDusoDR0VNyUKDBohkQUSJncZDAMIBhArhw0BGxAMB2UEARIaDgViBh0NDQbAsDcXKA0jFgRYzx58Rh0RDojCXV0PASEMDgAAAQAAAAIBhgARAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAAEAAAABT56PovPCXw889QkrA+gAAAAA5wjuZgAAAADnCPLS//L/UAPnA34AAAAIAAIAAAAAAAAD6ABkACgAAAABAAADoP8AAAAD6P/y//ID5wABAAAAAAAAAAAAAAAAAAAAAQAEA9oBkAAFAAACigJYAAAASwKKAlgAAAFeADIBLAAAAgIFAAAAAAAAAAAAAAAIAAAAAAAAAAAAAABMWEdXAUBwunC6A3D/iAAABAgBHQAAAAEAAAAAAdQCtwAAACAACAAAAAEAAwABAAAADAAEACAAAAAEAAQAAQAAcLr//wAAcLr//49HAAEAAAAAAAAABwBaAAMAAQQJAAABIAAAAAMAAQQJAAEAFgEgAAMAAQQJAAIADgE2AAMAAQQJAAMAMgFEAAMAAQQJAAQAFgEgAAMAAQQJAAUAOgF2AAMAAQQJAAYAJAGwAEMAbwBwAHkAcgBpAGcAaAB0ACAAMgAwADIAMQAtADIAMAAyADMAIABMAFgARwBXACAAKABoAHQAdABwAHMAOgAvAC8AZwBpAHQAaAB1AGIALgBjAG8AbQAvAGwAeABnAHcALwBMAHgAZwB3AFcAZQBuAEsAYQBpACkADQAKAEMAbwBwAHkAcgBpAGcAaAB0ACAAMgAwADIAMAAgAFQAaABlACAASwBsAGUAZQAgAFAAcgBvAGoAZQBjAHQAIABBAHUAdABoAG8AcgBzACAAKABoAHQAdABwAHMAOgAvAC8AZwBpAHQAaAB1AGIALgBjAG8AbQAvAGYAbwBuAHQAdwBvAHIAawBzAC0AZgBvAG4AdABzAC8ASwBsAGUAZQApAEwAWABHAFcAIABXAGUAbgBLAGEAaQBSAGUAZwB1AGwAYQByAEwAWABHAFcAIABXAGUAbgBLAGEAaQA6AFYAZQByAHMAaQBvAG4AIAAxAC4AMwAxADEAVgBlAHIAcwBpAG8AbgAgADEALgAzADEAMQA7AE8AYwB0AG8AYgBlAHIAIAA2ACwAIAAyADAAMgAzAEwAWABHAFcAVwBlAG4ASwBhAGkALQBSAGUAZwB1AGwAYQByAAAAAwAAAAAAAP8fADIAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAH//wAPA+gAAAA2AAAAARAACbj6FgAAA+j/8v/IBCAAAAABAAAAAAAAAAAAAAAAAAE=) format('truetype');unicode-range:U+70BA;font-weight:400 700}
+:root{
+  --bg:#f3f1ea; --sheet:#fffdf8; --ink:#1f2a24; --sage:#55644f; --gold:#a1804b; --mist:#7d97b5; --line:#ddd8cb; --wash:#f5f5ef;
+  --serif:'Noto Serif','WeiFix','LXGW WenKai TC',Georgia,serif;
+  --kai:'WeiFix','LXGW WenKai TC','Noto Serif',serif;
+  --title:'Iansui','LXGW WenKai TC',serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px}
+.wrap{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+button{font:inherit;cursor:pointer}
+button:focus-visible,.slot:focus-visible,.fan .c:focus-visible,summary:focus-visible,textarea:focus-visible{outline:2px solid var(--mist);outline-offset:3px}
+
+header{text-align:center;display:flex;flex-direction:column;gap:2px}
+.eyebrow{font-size:11px;letter-spacing:.18em;color:var(--sage);text-transform:uppercase}
+h1{margin:4px 0 0;font:400 clamp(34px,8vw,46px)/1.15 var(--title);color:var(--sage);text-wrap:balance}
+.sub{font:16px var(--kai);color:var(--sage);margin-top:4px}
+.en{font-style:italic;font-size:18px;color:var(--sage)}
+h1 .nb{display:inline-block}
+.eyebrow{letter-spacing:.3em}
+.today{margin-top:10px;font:15px var(--kai);color:var(--gold)}
+
+/* ---- deck ---- */
+.stage{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+.prompt{font:16px/1.8 var(--kai);color:var(--sage);max-width:30em;margin:0}
+.fan{position:relative;width:100%;height:clamp(150px,30vw,210px);margin-top:6px}
+.fan .c{position:absolute;bottom:0;left:50%;width:clamp(58px,13vw,88px);aspect-ratio:600/957;margin-left:calc(clamp(58px,13vw,88px) / -2);
+  transform-origin:50% 320%;border:0;padding:0;border-radius:6px;transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .4s}
+.fan .c:hover{z-index:50}
+.fan .c:hover .back,.fan .c:focus-visible .back{transform:translateY(-18px) scale(1.04)}
+.fan .c.deal{transform:translateY(60px) rotate(0deg)!important;opacity:0}
+.fan .c.gone{opacity:0;transition:opacity .25s}
+.meta,.reading{transition:opacity .5s .55s}
+.fly .meta,.fly~.reading{opacity:0}
+.fan.gather .c{transform:rotate(0deg)!important}
+.back{display:block;width:100%;height:100%;border-radius:6px;transition:transform .25s;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,253,248,.0) 0 22%, transparent 23%),
+    radial-gradient(ellipse at 20% 15%, rgba(125,151,181,.55), transparent 55%),
+    radial-gradient(ellipse at 85% 80%, rgba(125,151,181,.5), transparent 55%),
+    #f6efe2;
+  box-shadow:0 2px 8px rgba(40,50,45,.18), inset 0 0 0 4px #f6efe2, inset 0 0 0 5px var(--gold);
+  position:relative}
+.back::after{content:"";position:absolute;inset:0;margin:auto;width:42%;aspect-ratio:1;
+  background:conic-gradient(from 45deg,transparent 0 0);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 2 L23 17 L38 20 L23 23 L20 38 L17 23 L2 20 L17 17Z' fill='black'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 2 L23 17 L38 20 L23 23 L20 38 L17 23 L2 20 L17 17Z' fill='black'/%3E%3C/svg%3E") center/contain no-repeat;
+  background:var(--gold)}
+.btn{border:1px solid var(--sage);background:transparent;color:var(--sage);padding:8px 22px;border-radius:999px;font:15px var(--kai);letter-spacing:.06em}
+.btn:hover{background:var(--sage);color:var(--sheet)}
+.hint{font:13px var(--kai);color:var(--sage);margin:0}
+
+/* ---- reveal ---- */
+.reveal{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;text-align:left;width:100%}
+.flip{width:clamp(150px,34vw,210px);aspect-ratio:600/957;perspective:1200px}
+.flip-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.3,.7,.2,1)}
+.flip.open .flip-in{transform:rotateY(180deg)}
+.flip .back,.flip .front{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flip .back{border-radius:10px}
+.front{transform:rotateY(180deg);border-radius:10px;overflow:hidden;box-shadow:0 6px 22px rgba(40,50,45,.22);background:var(--sheet)}
+.front img{width:100%;height:100%;object-fit:cover;display:block}
+.meta{display:flex;flex-direction:column;gap:8px;min-width:0}
+.kicker{font-size:12px;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.day-title{margin:0;font:400 clamp(24px,5.4vw,32px)/1.25 var(--serif);text-wrap:balance}
+.label{font:14px var(--kai);color:var(--sage);display:flex;gap:12px;align-items:baseline}
+.label small{font:12px var(--serif)}
+blockquote{margin:0;font:italic clamp(18px,4vw,21px)/1.55 var(--serif);color:#34412f}
+.after{font:13px var(--kai);color:var(--gold)}
+@media (max-width:520px){.reveal{grid-template-columns:1fr;justify-items:center;text-align:center}.meta{align-items:center}.label{justify-content:center}}
+
+/* ---- reading ---- */
+.reading{background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:28px clamp(18px,5vw,40px) 32px;display:flex;flex-direction:column;gap:24px}
+.story{display:flex;flex-direction:column;gap:10px}
+.story p{margin:0;font-size:17px;line-height:1.75}
+.story b{font-weight:700}
+details{border-top:1px solid var(--line);padding-top:14px}
+summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:baseline;font:14px var(--kai);color:var(--sage)}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"＋";color:var(--gold)}
+details[open] summary::before{content:"－"}
+.tr{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.tr p{margin:0;font:700 16px/1.8 var(--kai);color:#1f2a24}
+.words{position:relative;background:var(--wash);border-radius:7px;padding:16px 18px 18px;display:flex;flex-direction:column;gap:12px}
+.words::before,.words::after{content:"";position:absolute;width:38px;height:38px;pointer-events:none;
+  background:linear-gradient(var(--mist),var(--mist)) no-repeat,linear-gradient(var(--mist),var(--mist)) no-repeat}
+.words::before{top:-6px;left:-6px;background-size:38px 1px,1px 38px;background-position:0 6px,6px 0}
+.words::after{bottom:-6px;right:-6px;background-size:38px 1px,1px 38px;background-position:0 calc(100% - 6px),calc(100% - 6px) 0}
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px 24px}
+.term{margin:0;color:#3f4d3b;font-size:15.5px}
+.meaning{margin:0;font:700 14.5px/1.6 var(--kai)}
+.phrases{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:4px 24px;border-top:1px dashed var(--line);padding-top:10px}
+.phrases p{margin:0;font-size:15px}
+.note{display:flex;flex-direction:column;gap:8px}
+.note .p{margin:0;font-style:italic;color:#34412f}
+textarea{width:100%;min-height:84px;resize:vertical;border:0;border-bottom:1px solid var(--line);background:
+  repeating-linear-gradient(transparent 0 31px,var(--line) 31px 32px);line-height:32px;font:16px/32px var(--serif);color:var(--ink);padding:0 2px}
+textarea:focus{outline:none;border-bottom-color:var(--mist)}
+.saved{font:12px var(--kai);color:var(--sage);min-height:1em}
+
+/* ---- journey ---- */
+.journey{display:flex;flex-direction:column;gap:14px}
+.jhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.jhead h2{margin:0;font:400 20px var(--kai);color:var(--sage)}
+.count{font:14px var(--serif);color:var(--gold);font-variant-numeric:tabular-nums}
+.slots{display:grid;grid-template-columns:repeat(11,1fr);gap:8px}
+@media (max-width:560px){.slots{grid-template-columns:repeat(6,1fr)}}
+.slot{aspect-ratio:600/957;border-radius:4px;border:1px dashed #c9c3b3;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;
+  font:11px var(--serif);color:#9a9483;overflow:hidden}
+.slot.got{border:0;box-shadow:0 1px 4px rgba(40,50,45,.18)}
+.slot.got img{width:100%;height:100%;object-fit:cover;display:block}
+.slot.cur{outline:2px solid var(--gold);outline-offset:2px}
+.slot:disabled{cursor:default}
+footer{text-align:center;font:13px/1.8 var(--kai);color:var(--sage);display:flex;flex-direction:column;gap:6px;align-items:center}
+.linkish{border:0;background:none;color:var(--sage);text-decoration:underline;text-underline-offset:3px;font:13px var(--kai);padding:2px}
+.music{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));z-index:20;
+  display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:rgba(255,253,248,.92);color:var(--sage);
+  border-radius:999px;padding:6px 14px 6px 10px;font:13px var(--kai);box-shadow:0 2px 10px rgba(40,50,45,.08)}
+.music .bars{display:inline-flex;gap:2px;align-items:flex-end;height:12px}
+.music .bars i{display:block;width:2px;height:4px;background:var(--gold);border-radius:1px}
+.music.on .bars i{animation:eq 1.6s ease-in-out infinite}
+.music.on .bars i:nth-child(2){animation-delay:.3s}.music.on .bars i:nth-child(3){animation-delay:.6s}
+@keyframes eq{0%,100%{height:4px}50%{height:12px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.back{background:#f6efe2 url(back.jpg) center/cover no-repeat}
+.back::after{display:none}
+</style>
+
+<button class="music" id="music" type="button" aria-pressed="false"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span id="musicLabel">音樂</span></button>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">暖心英文讀本</span>
+    <h1><span class="nb">讀一點英文，</span><span class="nb">留一點光</span></h1>
+    <span class="en">A Little English, A Little Light</span>
+    <span class="sub">22 篇暖心英文，陪你練習理解自己</span>
+    <span class="today" id="today"></span>
+  </header>
+
+  <section class="stage" id="drawStage" hidden>
+    <p class="prompt">深呼吸，想一件今天放在心上的事。<br>準備好了，就從牌堆裡選一張。</p>
+    <div class="fan" id="fan"></div>
+    <button class="btn" id="shuffle" type="button">洗牌</button>
+    <p class="hint" id="drawHint"></p>
+  </section>
+
+  <section class="stage" id="revealStage" hidden>
+    <div class="reveal">
+      <div class="flip" id="flip"><div class="flip-in"><span class="back"></span><div class="front"><img id="cardImg" alt=""></div></div></div>
+      <div class="meta">
+        <span class="kicker" id="kicker"></span>
+        <h2 class="day-title" id="dayTitle"></h2>
+        <div class="label">今日一句<small>Sentence of the Day</small></div>
+        <blockquote id="quote"></blockquote>
+        <span class="after" id="after"></span>
+      </div>
+    </div>
+  </section>
+
+  <article class="reading" id="reading" hidden>
+    <div class="story" id="story"></div>
+    <details id="trBox"><summary>中文對照<small>Read gently</small></summary><div class="tr" id="tr"></div></details>
+    <section class="words">
+      <div class="label">隨手記幾個字<small>Vocabulary &amp; Phrases</small></div>
+      <div class="vocab" id="vocab"></div>
+      <div class="phrases" id="phrases"></div>
+    </section>
+    <section class="note">
+      <div class="label">留一句給自己<small>A moment for you</small></div>
+      <p class="p" id="notePrompt"></p>
+      <textarea id="note" aria-label="留一句給自己" placeholder="英文、中文都可以。"></textarea>
+      <span class="saved" id="saved"></span>
+    </section>
+  </article>
+
+  <section class="journey">
+    <div class="jhead"><h2>二十二段小旅程</h2><span class="count" id="count"></span></div>
+    <div class="slots" id="slots"></div>
+  </section>
+
+  <footer>
+    <span>每天抽一張，抽過的牌不會再出現；二十二天走完一輪。</span>
+    <button class="linkish" id="previewAll" type="button">老師預覽：打開全部 22 張</button>
+    <button class="linkish" id="redraw" type="button">老師測試：今天重抽一次</button>
+  </footer>
+</div>
+
+<script>
+const DAYS = [{"title": "Day 0 | The Fool", "img": "cards/00.jpg", "quote": "Every story starts on a blank page. Yours is still waiting for its first line.", "story": ["On the first day of school, your notebook is always clean. You write your name on the cover and hesitate. The first page looks too perfect to touch.", "Everyone else seems to <b>have it all figured out</b>. Their plans are already outlined in neat colors. You are still holding the pen.", "But a <b>blank</b> page does not ask you to be ready. It only asks you to <b>venture</b> a first line. Take your time.", "Some days you will cross it out and start over. Even then, you catch a <b>glimpse</b> of what you want to say. That still counts as writing."], "tr": ["開學第一天，筆記本總是乾淨的。你在封面寫上名字，然後猶豫了。第一頁完美得讓人不敢碰。", "別人好像什麼都想清楚了，計畫早就用整齊的顏色列好大綱。你還握著筆。", "可是空白頁不要求你準備好，它只要你試著寫下第一行。慢慢來。", "有些日子你會劃掉重來。就算這樣，你也會瞥見自己想說的是什麼。那也算是在寫。"], "vocab": [["blank adj. Lv.2", "空白的（牌義核心：尚未書寫的開端）"], ["★venture v. Lv.5", "冒險的事 → 冒著風險去做 → 鼓起勇氣嘗試"], ["★outline v. Lv.3", "大綱 → 把大綱列出來 → 列出大綱"], ["glimpse n. Lv.4", "一瞥"]], "phrases": ["have it all figured out 一切都想清楚了", "cross out 劃掉", "take one&#x27;s time 慢慢來"], "prompt": "My first line today:"}, {"title": "Day I | The Magician", "img": "cards/01.jpg", "quote": "You already hold the tools you need. Pick one with purpose, and begin.", "story": ["Before a big test, it is easy to believe you need one more book, one more app, one more class. Your desk is already covered with notes you have not opened, each page highlighted in three colors.", "The truth is less exciting. Your tools are probably <b>sufficient</b>. What is missing is a clear purpose for the next hour.", "Pick one thing and <b>stick to</b> it. Small results <b>fuel</b> the next step, and that step may <b>spark</b> a little confidence.", "The magic is not in having more. It is in making use of what is already on the table, even when the table looks messy."], "tr": ["大考前，很容易覺得自己還差一本書、一個 app、一堂課。可是桌上早就堆滿還沒打開的筆記，每一頁都用三種顏色畫了重點。", "真相沒那麼刺激：你的工具大概已經夠了，缺的是「接下來這一小時要做什麼」。", "挑一樣，專心做完。小小的成果會推動下一步，而下一步也許會點燃一點自信。", "魔法不在於擁有更多，而在於好好用上桌上已經有的東西——就算桌面亂七八糟。"], "vocab": [["★highlight v. Lv.5", "最亮眼的部分 → 讓它亮起來 → 用螢光筆標出"], ["★fuel v. Lv.3", "燃料 → 添燃料 → 推動；助長"], ["sufficient adj. Lv.3", "足夠的"], ["★spark v. Lv.4", "火花 → 擦出火花 → 引發"]], "phrases": ["be covered with 被……覆蓋", "make use of 利用", "stick to 堅持做（某事）"], "prompt": "The one tool I will use today:"}, {"title": "Day II | The High Priestess", "img": "cards/02.jpg", "quote": "Your inner wisdom speaks softly. A quiet moment is enough to hear it.", "story": ["The classroom is never really quiet. Chairs move, phones buzz, and someone&#x27;s voice is always echoing down the hall about the next quiz.", "<b>In the middle of</b> all that noise, your own thoughts get drowned out. Other people&#x27;s opinions arrive first and stay the longest.", "Before you ask a friend or search online, give yourself one minute to <b>settle down</b>. Ask the question again, slowly.", "The answer may still be <b>vague</b>. But your <b>instinct</b> will quietly <b>lean</b> one way.", "It will not always be right. It will still be yours."], "tr": ["教室從來不會真的安靜。椅子在動、手機在震，走廊上總有人的聲音在迴盪，聊著下一次小考。", "在這些聲音中間，自己的想法被蓋過去了。別人的意見總是先到，也待得最久。", "在問朋友、上網查之前，給自己一分鐘靜下來，把問題再慢慢問一次。", "答案也許還很模糊，但你的直覺會悄悄往某一邊偏。", "它不一定每次都對，但它是你的。"], "vocab": [["★echo v. Lv.3", "回音 → 聲音來回反彈 → 迴盪"], ["instinct n. Lv.4", "直覺；本能"], ["vague adj. Lv.5", "模糊的"], ["★lean v. Lv.4", "倚靠 → 身體往一邊倒 → （想法）傾向"]], "phrases": ["in the middle of 在……之中", "settle down 靜下來", "drown out （聲音）蓋過"], "prompt": "What I really think is:"}, {"title": "Day III | The Empress", "img": "cards/03.jpg", "quote": "Growth takes time. What you water a little each day will bloom in its own season.", "story": ["Some people <b>sow</b> a seed and dig it up a week later to check if it is growing.", "Learning English can feel like that. You study for a week, check your score, and hope for a <b>miracle</b>. When the number does not move, you want to <b>give up</b>.", "But roots grow in the dark first. For a long time, the soil yields nothing you can see.", "Keep watering, <b>little by little</b>. It is not impressive, and no one will clap for it.", "Then one day, a sentence that used to <b>confuse</b> you suddenly makes sense. You will not remember the day it started. It started anyway."], "tr": ["有些人播下種子，一個禮拜後就把它挖出來，看看有沒有在長。", "學英文有時候也是這樣。讀了一週就去看分數，期待奇蹟。數字沒動，就想放棄。", "可是根會先在黑暗裡長。很長一段時間，土壤什麼看得見的東西都長不出來。", "繼續澆水，一點一點來。這不厲害，也不會有人為它鼓掌。", "直到某一天，一個曾經讓你困惑的句子，突然看懂了。你不會記得它是哪一天開始的。但它確實開始了。"], "vocab": [["sow v. Lv.5", "播種"], ["★yield v. Lv.5", "交出 → 土地交出作物 → 產出；交出位置→ 讓步"], ["miracle n. Lv.3", "奇蹟"], ["confuse v. Lv.3", "使困惑"]], "phrases": ["give up 放棄", "make sense 說得通；看得懂", "little by little 一點一點地"], "prompt": "One small thing I watered today:"}, {"title": "Day IV | The Emperor", "img": "cards/04.jpg", "quote": "Calm is a kind of strength. Steady steps build a place where you can stand.", "story": ["When everything feels <b>out of control</b>, it helps to build something small and solid.", "It might be a schedule on the wall, or a rule you keep for yourself: phone away after nine, one page of review before bed. These choices are not exciting. Nobody will notice them.", "But a <b>routine</b> works like a floor under your feet. On the days you feel like breaking down, it cushions the fall and shelters you from your own moods. You do not have to feel strong to follow it.", "Calm is not always a feeling. Sometimes it is a <b>structure</b> you <b>set up</b> on a better day, so that a harder day still has somewhere to stand."], "tr": ["當一切都失控的時候，先蓋一個小小的、穩固的東西會有幫助。", "可能是牆上的一張時間表，或是給自己的一條規則：九點後手機收起來，睡前複習一頁。這些選擇不刺激，也不會有人注意。", "但固定的習慣像腳下的地板。在你快要崩潰的日子裡，它替你緩衝跌落，也替你擋住自己的情緒起伏。你不必覺得自己很強，也能照著做。", "平靜不一定是一種感覺。有時候，它是你在狀態好的日子裡搭起來的結構，讓難熬的日子還有地方站。"], "vocab": [["routine n. Lv.3", "固定習慣"], ["★shelter v. Lv.4", "避難所 → 提供遮蔽 → 保護"], ["★cushion v. Lv.4", "坐墊 → 墊在下面 → 緩衝"], ["structure n. Lv.3", "結構"]], "phrases": ["out of control 失控", "set up 建立；設立", "break down 崩潰"], "prompt": "One small rule I can keep:"}, {"title": "Day V | The Hierophant", "img": "cards/05.jpg", "quote": "Good guidance never rushes you. It walks beside you until you understand.", "story": ["Everyone has a teacher they <b>look up to</b>. Often it is not the one whose name graces the school&#x27;s honor list.", "It is the one who spared you five minutes after class and explained the same idea a third time without sighing. The one who said, &quot;Try it again,&quot; and meant it.", "Good <b>guidance</b> does not <b>show off</b>. It stays a little behind you, ready to point, never pulling.", "Someday you may <b>mentor</b> someone yourself. Explain a math problem to a friend, and be patient while they think.", "Teaching something slowly may be the quickest way to understand it yourself."], "tr": ["每個人都有一位敬重的老師。通常不是名字登上學校榮譽榜的那一位。", "而是那個下課後撥出五分鐘給你、解釋同一件事第三次也沒有嘆氣的人。那個說「再試一次」，而且是真心的人。", "好的指引不炫耀。它站在你身後一點點的地方，隨時可以指路，但從不硬拉。", "有一天，你也可能成為某個人的引路人。教朋友一題數學，在他想的時候耐心等。", "慢慢把一件事教給別人，可能是自己最快弄懂它的方法。"], "vocab": [["★grace v. Lv.4", "優雅 → 為某處增添光彩 → 為……增光"], ["guidance n. Lv.3", "指引"], ["★spare v. Lv.3", "多餘的 → 把多出來的給人 → 撥出（時間）"], ["★mentor v. Lv.5", "導師 → 當導師 → 指導"]], "phrases": ["look up to 敬重", "show off 炫耀", "mean it 是認真的"], "prompt": "Someone who guided me:"}, {"title": "Day VI | The Lovers", "img": "cards/06.jpg", "quote": "Real connection begins when you can simply be yourself.", "story": ["In a new class, many students <b>wear a mask</b> for the first few weeks. They laugh at jokes they do not find funny and <b>disguise</b> their real taste in music.", "It works, for a while. You <b>figure</b> it is safer to <b>blend in</b>. But it is tiring to be someone else all day.", "The friends who matter often appear at an <b>awkward</b> moment: when you say something strange, or admit you did not understand the lesson either. Instead of leaving, they stay.", "That is when you start to <b>open up</b>, and a <b>genuine</b> connection begins. Not when you are impressive, but when you are a little bit real.", "It feels risky. It is also the only way someone can <b>get to know</b> you."], "tr": ["在新班級裡，很多人前幾週都戴著面具。對不覺得好笑的笑話笑，把自己真正喜歡的音樂藏起來。", "這樣有用，一陣子。你覺得融入大家比較安全。但整天當別人，很累。", "真正重要的朋友，常常在尷尬的時刻出現：你說了一句怪話，或承認自己也沒聽懂那堂課。他們沒有走開，而是留下來。", "就在那時，你開始敞開自己，真正的連結也開始了。不是在你很厲害的時候，而是在你有一點點真實的時候。", "這感覺有點冒險。但這也是別人真正認識你的唯一方法。"], "vocab": [["★disguise v. Lv.4", "偽裝 → 把真面目包起來 → 掩飾"], ["awkward adj. Lv.3", "尷尬的"], ["★figure v. Lv.2", "數字 → 算一算 → 認為"], ["genuine adj. Lv.4", "真誠的；真正的"]], "phrases": ["wear a mask 隱藏真實的自己", "open up 敞開心胸", "blend in 融入", "get to know 認識；了解"], "prompt": "Something real about me:"}, {"title": "Day VII | The Chariot", "img": "cards/07.jpg", "quote": "Keep your direction. The reward is waiting a little farther down the road.", "story": ["In the 800-meter run, the hardest part is not the start. It is the third lap, when your legs feel heavy and the finish line still looks far away.", "Some runners speed up too early and <b>burn out</b>. Others <b>fall behind</b> because they keep watching everyone else and lose their <b>rhythm</b>.", "The ones who finish well usually <b>pace</b> themselves. They keep their eyes on the next corner, not the last one.", "You may <b>stumble</b> on the way. That is fine. <b>Steer</b> back into your own lane and keep going.", "Nobody cheers for the third lap. It is still where the race is decided."], "tr": ["八百公尺跑步，最難的不是起跑，而是第三圈。腿越來越重，終點線看起來還是很遠。", "有些人太早加速，結果沒力了。也有人一直看別人，亂了自己的節奏，就落後了。", "跑得好的人，通常會控制自己的步調。他們看著下一個彎道，而不是剛跑過的那一個。", "路上也許會踉蹌一下。沒關係，把方向拉回自己的跑道，繼續跑。", "沒有人會為第三圈歡呼。但比賽，往往就是在那裡決定的。"], "vocab": [["rhythm n. Lv.4", "節奏"], ["stumble v. Lv.5", "絆倒；踉蹌"], ["★pace v. Lv.4", "步伐 → 控制步伐 → 調整步調"], ["steer v. Lv.5", "操控方向"]], "phrases": ["burn out 精疲力竭", "keep one&#x27;s eyes on 緊盯著", "fall behind 落後"], "prompt": "My next corner is:"}, {"title": "Day VIII | Strength", "img": "cards/08.jpg", "quote": "Staying calm in a hard moment takes more courage than shouting.", "story": ["During a group project, someone insults your idea in front of everyone. The room goes quiet. All eyes turn to you.", "Your face gets hot. A sharp answer is already on the tip of your tongue. It would feel good for about five seconds.", "Strength is not never feeling angry. It is being able to <b>tame</b> the anger before it speaks for you. Take one breath. Then say what you mean, quietly.", "People who <b>provoke</b> others often expect a fight. When you do not lose your cool, a calm voice can catch them off guard. The room feels less <b>hostile</b>, too.", "It may not feel brave. It usually is."], "tr": ["小組報告時，有人當著大家的面羞辱你的點子。全場安靜下來，所有人都看著你。", "你的臉發燙，一句很衝的話已經到了嘴邊。說出口大概會爽五秒鐘。", "力量不是從來不生氣，而是在怒氣替你開口之前，先把它馴服。吸一口氣，再安靜地說出你真正的意思。", "愛挑釁的人通常在等一場架。你沒有失控，平靜的聲音反而會讓他措手不及。整個空間的敵意，也跟著少了一點。", "這感覺可能不像勇敢。但通常就是。"], "vocab": [["insult v. Lv.4", "侮辱"], ["provoke v. Lv.5", "挑釁；激怒"], ["★tame v. Lv.3", "溫馴的 → 使變溫馴 → 馴服；控制"], ["hostile adj. Lv.5", "有敵意的"]], "phrases": ["on the tip of one&#x27;s tongue 話到嘴邊", "catch sb off guard 使某人措手不及", "lose one&#x27;s cool 失去冷靜"], "prompt": "What helps me stay calm:"}, {"title": "Day IX | The Hermit", "img": "cards/09.jpg", "quote": "Step away from the noise for a while. Your own voice will become clearer.", "story": ["It is ten at night. You have been scrolling for an hour, and you cannot remember a single thing you saw.", "Everyone online has something to say: what to wear, what to study, who to be. When you are absorbed in their voices long enough, they start to sound like your own.", "Try to <b>switch off</b> for a while. <b>Withdraw</b> from the group chat for one evening. Leave your phone in another room, where it cannot <b>distract</b> you.", "Being alone is not the same as being lonely. It is more like turning down the music so you can hear what you were humming.", "At first, the silence feels strange. Then a thought comes to mind that is clearly yours."], "tr": ["晚上十點，你已經滑了一個小時，卻想不起來看過任何一樣東西。", "網路上每個人都有話要說：該穿什麼、該讀什麼、該成為誰。聽得太投入，那些聲音就開始像是你自己的。", "試著關機一下。今晚先離開群組，把手機放到另一個房間，讓它沒辦法讓你分心。", "一個人不等於孤單。比較像是把音樂關小聲，才聽得見自己一直在哼的那首歌。", "一開始，安靜會讓人不習慣。接著，會有一個念頭浮上來，很明顯是你自己的。"], "vocab": [["★absorb v. Lv.4", "吸收 → 注意力被吸進去 → 使專注（be absorbed in）"], ["distract v. Lv.5", "使分心"], ["withdraw v. Lv.4", "退出"], ["hum v. Lv.3", "哼歌"]], "phrases": ["switch off 關掉；放空", "come to mind 浮現在腦海", "turn down 調低（音量）"], "prompt": "A thought that is clearly mine:"}, {"title": "Day X | Wheel of Fortune", "img": "cards/10.jpg", "quote": "Things change, and you can change with them. Being flexible is not the same as giving up.", "story": ["You planned the whole weekend: study on Saturday, the class trip on Sunday. Then a typhoon came, and the trip was called off.", "Plans change all the time. Your score goes up, then down. A friend moves to another class. The subject you loved becomes the one you <b>dread</b>.", "It is easy to <b>hold on to</b> the old plan as if it were the only one. But a plan is a tool, not a promise.", "When things <b>shift</b>, you can <b>revise</b>. Keep what still works, and let the rest go.", "Being <b>flexible</b> is how you <b>stay on track</b> when the track itself keeps moving."], "tr": ["你把整個週末都排好了：星期六讀書，星期日校外教學。結果颱風來了，活動取消。", "計畫本來就一直在變。分數上去又下來，朋友轉到別班，曾經最喜歡的科目，變成最害怕的那一科。", "人很容易緊抓著原本的計畫，好像那是唯一的一個。可是計畫是工具，不是承諾。", "當事情轉向，你可以修改。留下還有用的，其餘的放手。", "保持彈性，是在軌道本身一直移動的時候，讓自己不脫軌的方法。"], "vocab": [["dread v. Lv.4", "懼怕"], ["revise v. Lv.4", "修改"], ["★shift v. Lv.4", "移動位置 → 情況移動 → 轉變；輪流換位置 → 輪班"], ["flexible adj. Lv.4", "有彈性的"]], "phrases": ["call off 取消", "stay on track 保持在正軌上", "hold on to 緊抓住"], "prompt": "One plan I can revise:"}, {"title": "Day XI | Justice", "img": "cards/11.jpg", "quote": "Be fair to others, and remember to be fair to yourself too.", "story": ["When a friend fails a test, you know what to say. &quot;It&#x27;s just one test. You were sick that week. You&#x27;ll <b>bounce back</b>.&quot;", "When it happens to you, a different, <b>harsh</b> voice appears. &quot;You&#x27;re lazy. You&#x27;re not smart enough.&quot;", "Notice the <b>double standard</b>. You give others reasons. You give yourself a <b>verdict</b>.", "Being fair means weighing the whole story: the late nights, the cold, the chapter you did understand. It does not mean making excuses. It means using the same <b>scale</b> for everyone, including you.", "Next time, try not to judge yourself in words you would never say to a friend. It will feel strange. Fairness often does at first."], "tr": ["朋友考壞了，你知道該說什麼：「只是一次考試而已。你那週生病了，會再站起來的。」", "輪到自己，卻冒出另一個嚴厲的聲音：「你就是懶，你就是不夠聰明。」", "注意這個雙重標準：你給別人理由，卻給自己判決。", "公平是把整個故事放上秤衡量：熬過的夜、那場感冒、那一章你其實懂了。這不是找藉口，而是對每個人用同一把秤，包括你自己。", "下次，試著不要用你絕對不會對朋友說的話來評斷自己。這會有點彆扭。公平，一開始常常就是這種感覺。"], "vocab": [["harsh adj. Lv.4", "嚴厲的"], ["★weigh v. Lv.2", "秤重 → 放在心裡秤 → 衡量（呼應正義牌的天秤）"], ["verdict n. Lv.5", "判決；定論"], ["◇scale n. Lv.3", "秤；天平（另有「規模」，兩字不同源）"]], "phrases": ["bounce back 重新振作", "make excuses 找藉口", "double standard 雙重標準"], "prompt": "What I would tell a friend:"}, {"title": "Day XII | The Hanged Man", "img": "cards/12.jpg", "quote": "Waiting is not always wasting time. A new view often needs a pause first.", "story": ["You have been staring at the same math problem for twenty minutes. Every method ends up at the same dead end.", "So you <b>suspend</b> work on the problem and get some water. You look out the window. It feels like giving up.", "But when you <b>take a step back</b> and return, you see it from a different <b>perspective</b>. The answer was there the whole time. You could not see it while you were pushing so hard.", "Some pauses are not breaks from the work. They are part of it. Your mind keeps working <b>in the background</b>, quietly sorting what you already know.", "Sitting still can look <b>idle</b> from the outside. From the inside, it is often where the turn happens."], "tr": ["同一題數學，你已經盯了二十分鐘。每一種解法，最後都走進同一條死路。", "於是你先把題目擱著，去倒杯水，看看窗外。感覺像是放棄。", "可是當你退後一步再回來，就換了一個角度看它。答案其實一直都在，只是你太用力的時候看不見。", "有些停頓不是離開工作，而是工作的一部分。大腦會在背景裡繼續運轉，悄悄整理你已經知道的東西。", "從外面看，靜止像是在發呆。從裡面看，轉折常常就發生在那裡。"], "vocab": [["stare v. Lv.3", "盯著看"], ["perspective n. Lv.5", "觀點；角度"], ["★suspend v. Lv.5", "懸掛 → 掛在半空不落地 → 暫停；擱置"], ["idle adj. Lv.4", "閒置的；無所事事的"]], "phrases": ["end up 最後落得", "in the background 在背後；在背景中", "take a step back 退一步"], "prompt": "Something I can step back from:"}, {"title": "Day XIII | Death", "img": "cards/13.jpg", "quote": "An ending makes room for something new to grow.", "story": ["At the end of the semester, you finally clean out your desk: old tests, broken pens, notes from a class you no longer take.", "Some things are easy to <b>throw away</b>. Others make you stop: a card from a friend who moved, a drawing from a boring afternoon. The ink has started to <b>fade</b>, but the memory has not.", "Endings are rarely clean. Even good ones <b>leave a mark</b>. A snake has to <b>shed</b> its old skin to grow.", "You do not have to throw out every memory. Keep what is still <b>precious</b>. <b>Let go of</b> the rest, slowly if you need to.", "A <b>vacant</b> desk can look a little sad. It is also the only kind of desk that has room for something new."], "tr": ["學期末，你終於把抽屜清空：舊考卷、壞掉的筆、一門已經不上的課的筆記。", "有些東西很容易丟。有些會讓你停下來：搬走的朋友寫的卡片、某個無聊下午畫的塗鴉。墨水開始褪色了，記憶卻沒有。", "結束很少是乾淨俐落的，就算是好的結束，也會留下痕跡。蛇要長大，也得先蛻掉舊皮。", "你不必丟掉每一段回憶。留下仍然珍貴的，其餘的，慢慢放手也可以。", "空空的抽屜看起來有點寂寞。但也只有這樣的抽屜，才放得進新的東西。"], "vocab": [["fade v. Lv.3", "褪色"], ["precious adj. Lv.3", "珍貴的"], ["◇shed v. Lv.5", "蛻去；脫落（另有名詞「小屋」，兩字不同源）"], ["vacant adj. Lv.3", "空的"]], "phrases": ["throw away 丟掉", "let go of 放手", "leave a mark 留下痕跡"], "prompt": "Something I am ready to let go of:"}, {"title": "Day XIV | Temperance", "img": "cards/14.jpg", "quote": "In the middle of a storm, one calm breath is enough for now.", "story": ["The night before a big exam, everything piles up at once. Three subjects, one evening, and a head full of <b>panic</b>.", "You try to do it all, jumping from English to math to history. Nothing stays in your head. Every minute, you feel more overwhelmed.", "Stop for one breath. In, slowly. Out, slower.", "That breath will not finish your review. It will only bring you back to the desk you are actually sitting at. From there, choose one thing.", "<b>Temper</b> your rush. Not everything at full speed, and not nothing either. Somewhere in between, the <b>anxiety</b> gets small enough to <b>work with</b>.", "Calm is not the end of the storm. It is a small space inside it, just big enough to <b>think straight</b>."], "tr": ["大考前一晚，所有事情一次堆上來：三個科目、一個晚上，還有滿腦子的慌亂。", "你想全部都做，從英文跳到數學再跳到歷史。什麼都沒記進去，每一分鐘都更喘不過氣。", "停下來，呼吸一次。慢慢吸，再更慢地吐。", "這一口氣不會幫你複習完，它只會把你帶回你真正坐著的這張書桌。從這裡，挑一件事。", "把急躁調和一下。不是全速衝刺，也不是什麼都不做，而是介於兩者之間。在那裡，焦慮會小到你應付得來。", "平靜不是暴風雨結束，而是暴風雨裡的一小塊空間，剛好夠你把事情想清楚。"], "vocab": [["panic n. Lv.3", "恐慌"], ["★temper v. Lv.3", "原義「調和比例」→ 調出來的性情 → 脾氣；動詞保留原義 → 調和；緩和"], ["overwhelm v. Lv.5", "使不知所措"], ["anxiety n. Lv.4", "焦慮"]], "phrases": ["pile up 堆積", "think straight 頭腦清楚地思考", "work with 處理；應付"], "prompt": "The one thing I will do first:"}, {"title": "Day XV | The Devil", "img": "cards/15.jpg", "quote": "Notice what keeps pulling at you. Seeing it clearly is the first step to being free.", "story": ["It is one in the morning. You promised yourself &quot;just one more video&quot; an hour ago.", "The app is designed to keep you hooked. Every swipe rewards you a little, and every <b>reward</b> tempts you to keep going. It does not feel like a trap. It feels like a choice.", "Try noticing the pull instead of fighting it. What time does it start? What are you avoiding when you <b>reach for</b> the phone? Tiredness? A hard chapter?", "Seeing the pattern will not <b>break the habit</b> overnight. You may still <b>give in</b>. But something has changed: the pull is now <b>visible</b>.", "You may pick up the phone again tomorrow. This time, you will know why."], "tr": ["凌晨一點。一個小時前，你答應自己「再看一部就好」。", "這個 app 本來就設計成讓你上癮。每滑一次，就給你一點點甜頭；每一點甜頭，又引誘你繼續滑。它感覺不像陷阱，感覺像是自己的選擇。", "試著先注意那股拉力，而不是跟它硬碰硬。它通常幾點開始？你伸手拿手機的時候，是在逃避什麼？疲累？還是一個很難的章節？", "看清這個模式，不會讓習慣一夜之間戒掉。你可能還是會屈服。但有件事已經不一樣了：那股拉力，現在看得見了。", "明天你也許還是會拿起手機。但這一次，你會知道為什麼。"], "vocab": [["★hook v. Lv.4", "鉤子 → 被鉤住 → 使上癮（be hooked）"], ["tempt v. Lv.5", "引誘"], ["★reward v. Lv.4", "報酬 → 給報酬 → 獎賞"], ["visible adj. Lv.3", "看得見的"]], "phrases": ["reach for 伸手去拿", "give in 屈服；讓步", "break the habit 戒掉習慣"], "prompt": "What I reach for when I am tired:"}, {"title": "Day XVI | The Tower", "img": "cards/16.jpg", "quote": "When an old wall falls, you can finally see more sky.", "story": ["For years, you told yourself one story: &quot;I&#x27;m a math person. I&#x27;m just bad at English.&quot;", "Then one day, your teacher reads your paragraph aloud to the class. The old story cracks. By the end of the semester, it has completely fallen apart.", "It is strange when something you believed for so long collapses. Even a wall that kept you small felt safe. You might feel lost for a while, standing among the ruins of who you thought you were.", "But look closely. There is more sky now. In the space where the wall stood, the things you never gave yourself credit for can finally grow.", "Not every fall is a <b>disaster</b>. Some walls were only ever in the way."], "tr": ["好幾年來，你一直對自己說同一個故事：「我是數學腦，英文就是不行。」", "直到某一天，老師在全班面前唸了你寫的一段英文。那個舊故事裂開了。到了學期末，它已經整個瓦解。", "相信了那麼久的東西突然倒塌，感覺很奇怪。就算是一道把你困得很小的牆，也曾讓你覺得安全。你可能會迷惘一陣子，站在「原以為的自己」的廢墟裡。", "可是仔細看，天空變大了。牆原本立著的地方，那些你從來不肯承認自己做得到的事，終於有地方生長。", "不是每一次倒塌都是災難。有些牆，本來就只是擋路而已。"], "vocab": [["★crack v. Lv.4", "裂縫 → 出現裂縫 → 裂開"], ["★ruin n. Lv.4", "毀掉 → 毀掉後剩下的 → 廢墟（常用ruins）"], ["collapse v. Lv.4", "倒塌；瓦解"], ["disaster n. Lv.4", "災難"]], "phrases": ["read aloud 大聲唸出", "give oneself credit for 肯定自己的……", "fall apart 瓦解；崩潰"], "prompt": "An old story about me that might be wrong:"}, {"title": "Day XVII | The Star", "img": "cards/17.jpg", "quote": "Hope does not have to be loud. A small light is enough to find your way.", "story": ["After the mock exam results come out, the walk home feels longer than usual. The streets are <b>dim</b>, and so is your mood.", "You do not need a big breakthrough tonight. You do not need to <b>work out</b> your whole future. Even on a night like this, you can still <b>harbor</b> a small hope.", "Look up. Maybe there is one star, <b>faint</b> but steady. Maybe it is only the light in a convenience store window.", "Hope rarely arrives as fireworks. More often, it glows quietly, just bright enough to show the next step.", "Tomorrow, you will <b>pick up</b> your pen again. Not because you feel confident, but because a small light was enough to find your way home.", "Small lights are easy to ignore. They are also the ones that last."], "tr": ["模擬考成績出來後，回家的路好像比平常長。街道很暗，心情也是。", "今晚你不需要什麼重大突破，也不需要把整個未來都想清楚。就算是這樣的夜晚，你還是可以懷著一點小小的希望。", "抬頭看看。也許有一顆星，微弱但穩定。也許只是便利商店窗口透出的燈光。", "希望很少像煙火一樣出現。更多時候，它只是安靜地發著光，剛好亮到照見下一步。", "明天，你會再拿起筆。不是因為有信心了，而是因為一點點光，就夠你找到回家的路。", "小小的光很容易被忽略。但留得最久的，也是它們。"], "vocab": [["dim adj. Lv.3", "昏暗的"], ["faint adj. Lv.3", "微弱的"], ["★harbor v. Lv.3", "港口 → 讓念頭停泊 → 懷有（希望）"], ["glow v. Lv.3", "發出微光"]], "phrases": ["work out 想出；解決", "find one&#x27;s way home 找到回家的路", "pick up 拿起"], "prompt": "A small light in my day:"}, {"title": "Day XVIII | The Moon", "img": "cards/18.jpg", "quote": "Not everything you fear is real. Wait for more light before you decide.", "story": ["You sent a message three hours ago. Your friend has read it, but there is no reply.", "Your mind starts filling in the silence. Maybe she is angry. Maybe you said something wrong. You <b>assume</b> the worst, and by midnight you have imagined a whole fight that never happened.", "At night, small worries <b>cast</b> big shadows. Fear exaggerates. It takes a few facts and frames your friend for a crime she never committed.", "Before you decide what it means, wait for more light. Try not to <b>read into</b> it. You can <b>jump to conclusions</b> tomorrow, if you still need to.", "The next morning, she says, &quot;Sorry, my phone died.&quot;", "Not every fear is wrong. But many fears are only guesses that look like facts in the dark."], "tr": ["三個小時前，你傳了一則訊息。朋友已讀，卻沒有回。", "你的腦袋開始替這段沉默補上劇情：她是不是生氣了？我是不是說錯話了？你把事情往最壞的方向想，到了半夜，已經想像完一整場根本沒發生的爭吵。", "夜裡，小小的擔心會投下很大的影子。恐懼會誇大，它拿幾個事實，就讓朋友背上她根本沒犯的罪名。", "在決定這代表什麼之前，等光亮一點。先別過度解讀。真的需要的話，明天再下結論也不遲。", "隔天早上，她說：「抱歉，我手機沒電了。」", "不是每個恐懼都是錯的。但很多恐懼，只是在黑暗裡看起來像事實的猜測。"], "vocab": [["assume v. Lv.3", "假定；以為"], ["★frame v. Lv.4", "框架 → 把人框進罪名裡 → 陷害；栽贓"], ["★cast v. Lv.3", "投擲 → 把影子投出去 → 投下（影子）"], ["exaggerate v. Lv.4", "誇大"]], "phrases": ["fill in 填補", "jump to conclusions 妄下結論", "read into 過度解讀"], "prompt": "Something I might be reading into:"}, {"title": "Day XIX | The Sun", "img": "cards/19.jpg", "quote": "Dawn always comes back. Let yourself enjoy the new day.", "story": ["For months, every day has looked <b>identical</b>: wake up, school, cram school, homework, sleep. You almost forgot what a morning feels like.", "Then one Saturday, you wake up early <b>for no reason</b>. Sunlight floods the room.", "It suddenly dawns on you: you are allowed to enjoy this. Not after the exam. Not after the results. Now.", "You do not have to <b>deserve</b> joy every time. Sometimes it simply shows up, like the light, and asks nothing of you.", "Eat breakfast slowly. Open the window. Enjoy the morning without <b>guilt</b>.", "The exam is still coming. The sun came first."], "tr": ["好幾個月來，每一天都長得一模一樣：起床、上學、補習、寫作業、睡覺。你幾乎忘了早晨是什麼感覺。", "然後某個星期六，你莫名其妙很早就醒了。陽光灑滿整個房間。", "你突然意識到：你可以好好享受這一刻。不是考完以後，不是放榜以後，是現在。", "快樂不必每次都是掙來的。有時候它就這樣出現，像陽光一樣，什麼都不要求你。", "慢慢吃早餐，打開窗戶，不帶罪惡感地享受這個早晨。", "考試還是會來。但陽光先到了。"], "vocab": [["identical adj. Lv.4", "完全相同的"], ["deserve v. Lv.4", "應得"], ["★flood v. Lv.3", "洪水 → 像洪水般湧入 → 充滿"], ["guilt n. Lv.4", "罪惡感"]], "phrases": ["for no reason 沒來由地", "show up 出現", "dawn on （某人）突然明白"], "prompt": "Something I can enjoy today:"}, {"title": "Day XX | Judgement", "img": "cards/20.jpg", "quote": "Looking back is not about blame. It is a chance to do a little better.", "story": ["Most students hate looking at old tests. The red marks feel like a judge saying, &quot;Guilty.&quot;", "But a wrong answer is not a <b>sentence</b>. It is information. Mistakes are <b>inevitable</b>.", "When you <b>go over</b> a mistake, ask a different question. Not &quot;Why am I so stupid?&quot; but &quot;What happened here?&quot; Did you misread the question? Forget a rule? <b>Run out of</b> time?", "Once you can name the problem, you can <b>deal with</b> it. That is what <b>reflection</b> is for.", "Keep a small notebook of mistakes. It takes courage to <b>confront</b> them on paper. Later, it may become the most useful book you own, written entirely by your errors.", "Looking back hurts a little. It is also how you learn which way is forward."], "tr": ["大部分學生都討厭看舊考卷。紅色的叉叉，像法官在說：「有罪。」", "可是一題寫錯，不是判刑，而是資訊。錯誤免不了。", "檢討錯題時，換一個問題問自己。不是「我怎麼這麼笨？」，而是「這裡發生了什麼？」是看錯題目？忘了規則？還是時間不夠？", "一旦說得出問題是什麼，就有辦法處理。反思，就是為了這個。", "準備一本小小的錯題本。要把錯誤寫在紙上面對，需要一點勇氣。之後，它可能會變成你最有用的一本書，一本完全由你的錯誤寫成的書。", "回頭看會有一點痛。但這也是你知道哪個方向是前方的方法。"], "vocab": [["★sentence n. Lv.1", "原義「判斷、意見」→ 法官的判斷 → 判決；說出一個完整的意思 → 句子"], ["reflection n. Lv.4", "反思"], ["inevitable adj. Lv.5", "不可避免的"], ["confront v. Lv.5", "面對"]], "phrases": ["go over 檢查；複習", "deal with 處理", "run out of 用完"], "prompt": "One mistake I can learn from:"}, {"title": "Day XXI | The World", "img": "cards/21.jpg", "quote": "One journey ends, and another quietly begins.", "story": ["After the <b>graduation</b> ceremony, you stand in the empty classroom. Someone says, &quot;This is the end of a chapter.&quot;", "Every <b>farewell</b> is a little strange. You feel proud and a little lost <b>at the same time</b>.", "You think about the first page you were afraid to write on. Look how much you filled. Every test, every mistake, every small light was a <b>milestone</b> you did not notice while you were passing it.", "You have <b>come a long way</b>. You still have a long way to go. <b>Embrace</b> both.", "Someday you will <b>look back on</b> this year and smile. For now, close the book gently. The next one is already waiting, its first page blank."], "tr": ["畢業典禮結束後，你站在空蕩蕩的教室裡。有人說：「這是一個章節的結束。」", "每一次道別都有點奇怪。你同時覺得驕傲，又有點失落。", "你想起那一頁你曾經不敢下筆的空白頁。看看你寫滿了多少。每一次考試、每一個錯誤、每一點小小的光，都是你經過時沒有察覺的里程碑。", "你已經走了很遠，也還有很長的路要走。兩種感覺都好好收下。", "總有一天，你會回頭看這一年，然後微笑。現在，輕輕闔上這本書吧。下一本已經在等你了，第一頁還是空白的。"], "vocab": [["graduation n. Lv.4", "畢業"], ["★milestone n. Lv.5", "路邊里程石 → 路上的標記 → 重要階段"], ["farewell n. Lv.4", "道別"], ["★embrace v. Lv.5", "擁抱 → 把事情抱進懷裡 → 欣然接受"]], "phrases": ["at the same time 同時", "look back on 回顧", "come a long way 進步很多；走了很遠"], "prompt": "My next first line:"}];
+const ROMAN=['0','I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX','XXI'];
+const KEY='gentle-reader-v1';
+let mem={draws:{},collected:[],notes:{},cycle:1};
+function load(){try{const r=localStorage.getItem(KEY);if(r)mem=Object.assign(mem,JSON.parse(r));}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(mem));}catch(e){}}
+load();
+const d=new Date();
+const today=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const wk='日一二三四五六'[d.getDay()];
+document.getElementById('today').textContent=`${d.getMonth()+1} 月 ${d.getDate()} 日（${wk}）· 今天的牌`;
+let viewing=null, preview=false;
+const $=id=>document.getElementById(id);
+
+function remaining(){return DAYS.map((_,i)=>i).filter(i=>!mem.collected.includes(i));}
+function shuffleArr(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function buildFan(order){
+  const fan=$('fan');fan.innerHTML='';
+  const n=order.length, spread=Math.min(64,n*3.6);
+  order.forEach((idx,k)=>{
+    const b=document.createElement('button');b.type='button';b.className='c';
+    b.setAttribute('aria-label',`第 ${k+1} 張牌`);
+    const ang=n>1?(-spread/2+spread*k/(n-1)):0;
+    b.style.transform=`rotate(${ang}deg)`;b.dataset.ang=ang;b.style.zIndex=k;
+    b.innerHTML='<span class="back"></span>';
+    b.addEventListener('click',()=>pick(idx,b));
+    b.classList.add('deal');b.style.transitionDelay=(k*28)+'ms';
+    fan.appendChild(b);
+  });
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{fan.querySelectorAll('.c').forEach(c=>c.classList.remove('deal'));
+    setTimeout(()=>fan.querySelectorAll('.c').forEach(c=>c.style.transitionDelay=''),n*28+600);}));
+}
+function doShuffle(){
+  const fan=$('fan');fan.classList.add('gather');Music.riffle(12);
+  setTimeout(()=>{buildFan(shuffleArr(remaining()));fan.classList.add('gather');requestAnimationFrame(()=>requestAnimationFrame(()=>fan.classList.remove('gather')));},500);
+}
+function pick(idx,el){
+  if(document.body.dataset.picking)return;document.body.dataset.picking='1';
+  mem.draws[today]=idx; if(!mem.collected.includes(idx))mem.collected.push(idx); save();
+  const r0=el.getBoundingClientRect(),ang=+el.dataset.ang||0;
+  $('fan').querySelectorAll('.c').forEach(c=>{if(c!==el)c.classList.add('gone');});
+  el.querySelector('.back').style.transform='translateY(-34px) scale(1.06)';
+  Music.whoosh(.28,.08,1800);
+  setTimeout(()=>{
+    showCard(idx,false,true);
+    const flip=$('flip'),r1=flip.getBoundingClientRect(),stage=$('revealStage');
+    stage.classList.add('fly');
+    flip.style.transformOrigin='0 0';flip.style.transition='none';
+    flip.style.transform=`translate(${r0.left-r1.left}px,${r0.top-r1.top}px) scale(${r0.width/r1.width}) rotate(${ang}deg)`;
+    flip.offsetWidth;
+    flip.style.transition='transform .8s cubic-bezier(.2,.85,.25,1)';flip.style.transform='';
+    Music.whoosh(.6,.18,3000);
+    setTimeout(()=>{stage.classList.remove('fly');flip.classList.add('open');Music.chime();delete document.body.dataset.picking;
+      setTimeout(()=>stage.scrollIntoView({behavior:'smooth',block:'start'}),900);},820);
+  },320);
+}
+function showCard(idx,animate,flying){
+  viewing=idx;const day=DAYS[idx];
+  $('drawStage').hidden=true;$('revealStage').hidden=false;$('reading').hidden=false;
+  const flip=$('flip');flip.classList.remove('open');if(!flying){flip.style.transform='';flip.style.transition='';}
+  $('cardImg').src=day.img;$('cardImg').alt=`${day.title} 塔羅插畫`;
+  $('kicker').textContent=`Gentle English / ${String(idx+1).padStart(2,'0')}`;
+  $('dayTitle').textContent=day.title;
+  $('quote').textContent=day.quote;
+  const isToday=mem.draws[today]===idx;
+  $('after').textContent=isToday?'這是你今天的牌。明天再來抽下一張。':'回顧：之前抽到的牌。';
+  $('story').innerHTML=day.story.map(p=>`<p>${p}</p>`).join('');
+  $('tr').innerHTML=day.tr.map(p=>`<p>${p}</p>`).join('');
+  $('trBox').open=false;
+  $('vocab').innerHTML=day.vocab.map(([t,m])=>`<div><p class="term">${t}</p><p class="meaning">${m}</p></div>`).join('');
+  $('phrases').innerHTML=day.phrases.map(p=>`<p>${p}</p>`).join('');
+  $('notePrompt').innerHTML=day.prompt;
+  $('note').value=mem.notes[idx]||'';$('saved').textContent='';
+  if(animate){setTimeout(()=>{flip.classList.add('open');Music.chime();},120);$('revealStage').scrollIntoView({behavior:'smooth',block:'start'});}
+  else if(!flying)flip.classList.add('open');
+  renderSlots();
+}
+function renderSlots(){
+  const s=$('slots');s.innerHTML='';
+  DAYS.forEach((day,i)=>{
+    const got=mem.collected.includes(i)||preview;
+    const b=document.createElement('button');b.type='button';
+    b.className='slot'+(got?' got':'')+(viewing===i?' cur':'');
+    b.setAttribute('aria-label',got?day.title:`Day ${ROMAN[i]}，尚未抽到`);
+    if(got){b.innerHTML=`<img src="${day.img}" alt="">`;b.addEventListener('click',()=>showCard(i,false));}
+    else{b.textContent=ROMAN[i];b.disabled=true;}
+    s.appendChild(b);
+  });
+  $('count').textContent=`已抽 ${mem.collected.length} / 22`;
+}
+let t;
+$('note').addEventListener('input',e=>{if(viewing===null)return;mem.notes[viewing]=e.target.value;clearTimeout(t);t=setTimeout(()=>{save();$('saved').textContent='已存在這台裝置的瀏覽器裡';},400);});
+$('shuffle').addEventListener('click',doShuffle);
+$('redraw').addEventListener('click',()=>{const i=mem.draws[today];if(i!==undefined){delete mem.draws[today];mem.collected=mem.collected.filter(x=>x!==i);save();}
+  viewing=null;$('revealStage').hidden=true;$('reading').hidden=true;window.scrollTo({top:0,behavior:'smooth'});start();});
+$('previewAll').addEventListener('click',()=>{preview=!preview;$('previewAll').textContent=preview?'關閉預覽':'老師預覽：打開全部 22 張';renderSlots();});
+
+
+/* ---- 背景音樂：柔和和弦 + 稀疏的音樂盒點綴，偶爾出現 so fa mi re 動機 ---- */
+const Music=(()=>{
+  /* 水晶音樂版卡農（玻璃鈴聲分解和弦＋玻璃琴旋律）：第一輪只有吉他，之後鋼琴依序彈三種變奏 */
+  let ctx,master,bus,wet,timer,next=0,bar=0,on=false;
+  const BPM=62,E=60/BPM/2,hz=m=>440*Math.pow(2,(m-69)/12),cache={};
+  // F  C/E  Dm7  B♭(add9) —— [低音, 交替低音, 三個高音]
+  const CH=[[53,60,[65,69,72]],[52,55,[64,67,72]],[50,57,[65,69,72]],[46,53,[62,65,72]]];
+  const PAT=['b',0,1,2,1,'a',1,2];
+  function setup(){
+    ctx=new (window.AudioContext||window.webkitAudioContext)();
+    master=ctx.createGain();master.gain.value=0;
+    const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=7500;const hp=ctx.createBiquadFilter();hp.type='highpass';hp.frequency.value=170;
+    const comp=ctx.createDynamicsCompressor();comp.threshold.value=-20;comp.ratio.value=2.5;
+    bus=ctx.createGain();bus.connect(hp);hp.connect(lp);lp.connect(comp);comp.connect(master);master.connect(ctx.destination);
+    const conv=ctx.createConvolver(),n=ctx.sampleRate*4.2,ir=ctx.createBuffer(2,n,ctx.sampleRate);
+    for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,3.2)*(i<200?i/200:1);}
+    conv.buffer=ir;wet=ctx.createGain();wet.gain.value=.4;wet.connect(conv);conv.connect(lp);
+  }
+  function out(node,g,rv){const a=ctx.createGain();a.gain.value=g;node.connect(a);a.connect(bus);const r=ctx.createGain();r.gain.value=g*rv;node.connect(r);r.connect(wet);}
+  function string(m){ // Karplus-Strong 尼龍弦
+    if(cache[m])return cache[m];
+    const sr=ctx.sampleRate,len=Math.floor(sr*3.2),buf=ctx.createBuffer(1,len,sr),y=buf.getChannelData(0);
+    const N=Math.round(sr/hz(m));let prev=0;
+    for(let i=0;i<N;i++){const r=Math.random()*2-1;prev=prev*.55+r*.45;y[i]=prev;}
+    const damp=.9945;
+    for(let i=N+1;i<len;i++)y[i]=damp*.5*(y[i-N]+y[i-N-1]);
+    let mx=0;for(let i=0;i<len;i++)mx=Math.max(mx,Math.abs(y[i]));for(let i=0;i<len;i++)y[i]/=mx;
+    return cache[m]=buf;
+  }
+  function pluck(m,t,g,dur){const s=ctx.createBufferSource();s.buffer=string(m);const f=ctx.createBiquadFilter();f.type='lowpass';f.frequency.value=m<56?2200:4200;
+    const e=ctx.createGain();const gg=g*(.85+Math.random()*.3);e.gain.setValueAtTime(gg,t);if(dur){e.gain.setTargetAtTime(0,t+dur,.03);}s.connect(f);f.connect(e);out(e,1,.35);s.start(t);if(dur)s.stop(t+dur+.3);}
+  let nbuf;function rim(t,g){if(!nbuf){nbuf=ctx.createBuffer(1,4410,ctx.sampleRate);const d=nbuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}
+    const s=ctx.createBufferSource();s.buffer=nbuf;const f=ctx.createBiquadFilter();f.type='bandpass';f.frequency.value=2600;f.Q.value=1.4;const e=ctx.createGain();
+    e.gain.setValueAtTime(g,t);e.gain.exponentialRampToValueAtTime(.001,t+.06);s.connect(f);f.connect(e);out(e,1,.5);s.start(t);}
+  function piano(m,t,dur,g){ // 悶音鋼琴：柔軟的起音、很快變暗
+    const f=hz(m),flt=ctx.createBiquadFilter(),e=ctx.createGain();flt.type='lowpass';
+    flt.frequency.setValueAtTime(2400,t);flt.frequency.exponentialRampToValueAtTime(700,t+1.2);
+    e.gain.setValueAtTime(0,t);e.gain.linearRampToValueAtTime(g,t+.012);e.gain.setTargetAtTime(g*.3,t+.02,.7);e.gain.setTargetAtTime(0,t+dur,.35);
+    [[1,1],[2,.35],[3,.12],[4.01,.05]].forEach(([k,a])=>{const o=ctx.createOscillator();o.frequency.value=f*k;o.detune.value=(Math.random()-.5)*4;
+      const og=ctx.createGain();og.gain.value=a;o.connect(og);og.connect(flt);o.start(t);o.stop(t+dur+2);});
+    flt.connect(e);out(e,1,.75);
+  }
+  /* ---- 水晶音色（後宣告，取代上面的吉他與鋼琴）---- */
+  function pluck(m,t,g){ // 低音：柔軟的圓音；其餘：玻璃鈴聲，高一個八度
+    if(m<56){const o=ctx.createOscillator(),e=ctx.createGain();o.frequency.value=hz(m);
+      e.gain.setValueAtTime(0,t);e.gain.linearRampToValueAtTime(g*.55,t+.08);e.gain.setTargetAtTime(0,t+.3,.9);o.connect(e);out(e,1,.5);o.start(t);o.stop(t+5);return;}
+    const f=hz(m+12),e=ctx.createGain();
+    e.gain.setValueAtTime(0,t);e.gain.linearRampToValueAtTime(g*.9,t+.004);e.gain.setTargetAtTime(0,t+.01,.9);
+    [[1,1,1],[2.76,.22,.35],[5.4,.08,.18],[8.93,.03,.1]].forEach(([k,a,d])=>{const o=ctx.createOscillator(),og=ctx.createGain();
+      o.frequency.value=f*k;og.gain.setValueAtTime(a,t);og.gain.setTargetAtTime(0,t,d);o.connect(og);og.connect(e);o.start(t);o.stop(t+4);});
+    out(e,1,.9);
+  }
+  function piano(m,t,dur,g){ // 旋律：玻璃琴般的長音，輕微顫音
+    const f=hz(m),e=ctx.createGain(),lfo=ctx.createOscillator(),lg=ctx.createGain();lfo.frequency.value=5;lg.gain.value=f*.003;lfo.connect(lg);
+    e.gain.setValueAtTime(0,t);e.gain.linearRampToValueAtTime(g*.75,t+.06);e.gain.setTargetAtTime(g*.45,t+.08,.4);e.gain.setTargetAtTime(0,t+dur,.5);
+    [[1,1],[2,.28],[3,.07]].forEach(([k,a])=>{const o=ctx.createOscillator(),og=ctx.createGain();o.frequency.value=f*k;lg.connect(o.frequency);
+      og.gain.value=a;o.connect(og);og.connect(e);o.start(t);o.stop(t+dur+3);});
+    lfo.start(t);lfo.stop(t+dur+3);
+    // 一點閃光：高八度的極輕鈴聲
+    const s=ctx.createOscillator(),sg=ctx.createGain();s.frequency.value=f*4;sg.gain.setValueAtTime(g*.12,t);sg.gain.setTargetAtTime(0,t,.25);s.connect(sg);sg.connect(e);s.start(t);s.stop(t+2);
+    out(e,1,1.1);
+  }
+  function playBar(t,k){
+    /* 卡農（Pachelbel, Canon in D）：每個和弦 2 拍，8 個和弦一輪 */
+    const pos=k%8,cyc=Math.floor(k/8),v=cyc===0?0:[1,2,3,0][(cyc-1)%4];
+    const [b,hi]=CANON[pos];
+    pluck(b,t,.17);hi.forEach((m,j)=>pluck(m,t+(j+1)*E+(j%2?0:.012),.1+(j===2?.015:0)));
+    if(v===1)piano(MEL1[pos],t,4*E*.95,.1);
+    else if(v===2)MEL2[pos].forEach((m,j)=>piano(m,t+j*2*E,2*E*.9,.09));
+    else if(v===3)MEL3.slice(pos*4,pos*4+4).forEach((m,j)=>piano(m,t+j*E,E*.95,.08));
+  }
+  const CANON=[[50,[62,66,69]],[45,[61,64,69]],[47,[62,66,71]],[54,[61,66,69]],[55,[62,67,71]],[50,[62,66,69]],[55,[62,67,71]],[57,[61,64,69]]];
+  const MEL1=[78,76,74,73,71,69,71,73];
+  const MEL2=[[78,74],[76,73],[74,71],[73,69],[71,67],[69,66],[71,67],[73,69]];
+  const MEL3=[74,78,81,79,78,74,78,76,74,71,74,69,67,71,69,67,79,78,76,78,74,73,71,73,71,69,67,69,69,71,73,74];
+  function schedule(){while(next<ctx.currentTime+1.5){playBar(next,bar);next+=4*E;bar++;}}
+  function start(){if(!ctx)setup();ctx.resume();on=true;if(next<ctx.currentTime)next=ctx.currentTime+.15;
+    master.gain.cancelScheduledValues(ctx.currentTime);master.gain.setTargetAtTime(1.2,ctx.currentTime,.9);schedule();clearInterval(timer);timer=setInterval(schedule,300);}
+  function stop(){if(!ctx)return;on=false;master.gain.cancelScheduledValues(ctx.currentTime);master.gain.setTargetAtTime(0,ctx.currentTime,.4);
+    setTimeout(()=>{if(!on){clearInterval(timer);ctx.suspend();}},1600);}
+  function chime(){if(!on)return;const t=ctx.currentTime+.05;[81,85,86].forEach((m,i)=>piano(m,t+i*.11,.8,.13));}
+  function whoosh(len=.42,g=.16,hi=2600){if(!on)return;const t=ctx.currentTime+.01;
+    if(!nbuf){nbuf=ctx.createBuffer(1,4410,ctx.sampleRate);const d=nbuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}
+    const s=ctx.createBufferSource();s.buffer=nbuf;s.loop=true;const f=ctx.createBiquadFilter();f.type='bandpass';f.Q.value=1.1;
+    f.frequency.setValueAtTime(380,t);f.frequency.exponentialRampToValueAtTime(hi,t+len*.45);f.frequency.exponentialRampToValueAtTime(500,t+len);
+    const e=ctx.createGain();e.gain.setValueAtTime(.0001,t);e.gain.exponentialRampToValueAtTime(g,t+len*.4);e.gain.exponentialRampToValueAtTime(.0001,t+len);
+    let node=e;if(ctx.createStereoPanner){const p=ctx.createStereoPanner();p.pan.setValueAtTime(-.6,t);p.pan.linearRampToValueAtTime(.6,t+len);e.connect(p);node=p;}
+    s.connect(f);f.connect(e);out(node,1,.25);s.start(t);s.stop(t+len+.05);}
+  function riffle(n=10){if(!on)return;for(let i=0;i<n;i++)setTimeout(()=>whoosh(.09,.05,4200+Math.random()*1500),i*38);}
+  return {start,stop,chime,whoosh,riffle,get on(){return on}};
+})();
+const mBtn=$('music');
+let musicPref='on';try{musicPref=localStorage.getItem('gentle-music-canon')||'on';}catch(e){}
+function setMusic(v){v?Music.start():Music.stop();mBtn.classList.toggle('on',v);mBtn.setAttribute('aria-pressed',v);$('musicLabel').textContent=v?'音樂 開':'音樂 關';
+  try{localStorage.setItem('gentle-music-canon',v?'on':'off');}catch(e){}}
+$('musicLabel').textContent=musicPref==='on'?'點一下開始音樂':'音樂 關';
+mBtn.addEventListener('click',e=>{e.stopPropagation();setMusic(!Music.on);});
+// 瀏覽器規定要先點一下才能出聲：第一次點畫面任何地方就開始
+document.addEventListener('pointerdown',function first(e){if(mBtn.contains(e.target))return;document.removeEventListener('pointerdown',first,true);if(musicPref==='on'&&!Music.on)setMusic(true);},true);
+
+function start(){
+  if(mem.draws[today]!==undefined){showCard(mem.draws[today],false);return;}
+  if(remaining().length===0){mem.collected=[];mem.cycle=(mem.cycle||1)+1;save();}
+  $('drawStage').hidden=false;
+  const left=remaining().length;
+  $('drawHint').textContent=left===22?'第一天。牌堆裡有 22 張牌。':`牌堆裡還有 ${left} 張牌。`;
+  buildFan(shuffleArr(remaining()));renderSlots();
+}
+start();
+</script>
