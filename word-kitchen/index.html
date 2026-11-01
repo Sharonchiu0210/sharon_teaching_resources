@@ -259,14 +259,70 @@ body.in-intro{overflow:hidden}
 .left-note{margin:12px 0 0;font-size:14px;color:#8a7564}
 #toEnd{background:var(--terra)!important;box-shadow:0 4px 0 var(--terra-d)!important}
 @media(max-width:800px){.certificate{padding:34px 18px 24px}.cert-zh{font-size:15px}.end-stats strong{font-size:32px}}
+.pickbar{display:none}
+@media(hover:none),(max-width:800px){
+.pickbar:not([hidden]){position:fixed;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));z-index:120;display:flex;align-items:center;gap:8px;padding:10px 10px 10px 16px;background:var(--cream);border:2px solid var(--line);border-radius:22px;box-shadow:0 6px 0 var(--line),0 16px 34px #4a3b3333;animation:rise .25s ease-out}
+body.picking{padding-bottom:96px}
+.pick-word{flex:1;min-width:0;font:600 18px 'Fredoka',sans-serif;color:var(--brown);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pickbar button{border:0;border-radius:999px;padding:11px 14px;font-size:15px;font-weight:700;white-space:nowrap}
+.pickbar button[hidden]{display:none}
+.to-pot{background:var(--sage-d);color:#fff;box-shadow:0 3px 0 #57724f}
+.to-bin{background:#b4a99a;color:#fff;box-shadow:0 3px 0 #978b7b}
+.to-tray{background:#fbe0c4;color:var(--brown);box-shadow:0 3px 0 #e6bd92}
+.pick-x{position:relative;width:38px;height:38px;padding:0!important;background:#efe4d1;flex:none}
+.pick-x:before,.pick-x:after{content:'';position:absolute;left:11px;top:18px;width:16px;height:2.5px;border-radius:2px;background:#8a7564;transform:rotate(45deg)}
+.pick-x:after{transform:rotate(-45deg)}
+}
+@media(max-width:800px){.note .mobilehint{display:block;color:#b0603d;font-weight:500;margin-top:2px}}
+/* tighter layout */
+header{padding-top:12px;padding-bottom:8px}
+.order{margin-top:12px}
+.order h1{margin:8px 0 6px}
+.kitchen{margin-top:0;padding-top:6px}
+.tray{min-height:250px}
+.stove{min-height:0}
+.feedback{margin-top:10px}
+@media(max-width:800px){
+header{padding:10px 14px 6px;gap:8px}
+.hat{width:40px;height:40px}.brand{font-size:20px}.sub{font-size:11px;margin-top:1px}
+.topright .sound{padding:6px 10px}.topright select{padding:6px 12px;font-size:13px}
+.progress{height:9px}
+.hpbar{margin-top:7px}.hp-label{font-size:12px}.hp-track{height:12px}#hpNum{font-size:14px}
+.order{margin:10px auto 0;padding:0 14px}
+.eyebrow{font-size:11px;padding:4px 12px}
+.order h1{font-size:23px;margin:6px 0 6px}
+.order p{font-size:14px;line-height:1.6;padding:6px 12px}
+.kitchen{padding:4px 12px 0;gap:8px 10px}
+.zone-title{font-size:13px}.zone-title span{width:20px;height:20px;font-size:10px}
+.note{font-size:11px;line-height:1.5;margin-top:3px}
+.tray{min-height:0;padding:12px 8px 14px;gap:12px;margin-top:8px;border-radius:20px}
+.tray .food{font-size:15px;padding:9px 6px}
+.stove{padding-top:4px}
+.steam{height:20px;gap:22px}.steam span{height:22px}
+.pot{min-height:180px;margin-top:12px}
+.pot-content{min-height:160px;padding:14px 6px 48px;gap:8px}
+.pot .food{padding:8px 6px}
+.face{bottom:10px}
+.flames{margin-top:8px;height:22px}.flames i{width:16px;height:16px}.flames i:nth-child(2){width:20px;height:20px}
+.serve{margin-top:8px;padding:10px 26px;font-size:17px}
+.serve-hint{margin-top:6px;font-size:11.5px}
+.kitchen>.bin-area{margin-top:2px}
+.bin-wrap{margin:30px 6px 0}
+.bin{min-height:84px;padding:10px 10px 42px}
+.bin-wrap .face{bottom:6px}
+.bin-label{margin-top:6px;font-size:11px}
+.feedback{margin-top:10px;padding:0 12px;min-height:0}
+.foot{margin:10px 16px;padding:10px 0 16px;font-size:12px}
+}
+@media(max-width:800px){.feedback .box{font-size:14px;line-height:1.7}.feedback strong{font-size:16px}.feedback .english{font-size:17px}.feedback .box.chefbox{padding:14px}.chef{width:56px;height:56px}.hp-note{font-size:13px;padding:6px 10px}}
 </style></head><body>
 <header><div class="logo" id="logoHome" title="回到開店首頁" role="button" tabindex="0"><img class="hat avatar" src="assets/chef-avatar.jpg" alt="水豚主廚"><div><div class="brand">Word Kitchen<span> ˙</span></div><div class="sub">學測單字地獄廚房</div></div></div><div class="topright"><span id="score">尚未出餐</span><button class="sound" id="introBtn" title="再看一次開場動畫"><b class="tri" aria-hidden="true"></b><span>開場</span></button><button class="sound" id="musicBtn" aria-pressed="true"><b>♪</b><span>音樂</span></button><button class="sound" id="sfxBtn" aria-pressed="true"><b>♫</b><span>音效</span></button><select id="levels" aria-label="選擇關卡"></select></div></header><div class="progress"><i id="progress"></i></div><div class="hpbar" id="hpbar"><span class="hp-label"><i class="heart" aria-hidden="true"></i>主廚體力</span><div class="hp-track" role="progressbar" aria-label="主廚體力" aria-valuemin="0" aria-valuemax="500"><i id="hpFill"></i></div><b id="hpNum">350</b><span class="hp-pop" id="hpPop" aria-hidden="true"></span></div>
 <section class="home" id="home"><div class="home-shade"></div><div class="entry-layout"><div class="entry-brand"><p class="eyebrow">SHARON'S LAB · 學測單字</p><h1 class="wordmark">Word Kitchen<i></i></h1><p class="chapter-zh">學測單字地獄廚房</p><p class="chapter-en">36 ORDERS · FROM WARM-UP TO HELL'S KITCHEN</p></div><button class="entry-hat" id="start" aria-label="開始做菜，播放開場動畫"><svg class="hat-mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M17 39c-7 0-11-6-9-12 2-6 9-8 13-5 1-7 6-12 11-12s10 5 11 12c4-3 11-1 13 5 2 6-2 12-9 12z" stroke-width="3" stroke-linejoin="round"/><rect x="17" y="38" width="30" height="16" rx="4" stroke-width="3"/><path d="M24 44v6M32 44v6M40 44v6" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg><span><b>開始做菜</b><small>輕觸廚師帽，揭開序幕</small></span></button></div><button class="home-music on" id="homeMusic" aria-label="切換音樂"><b>♪</b><span>音樂</span></button><button class="direct-entry" id="direct">略過開場，直接開店</button></section><section class="cinema" id="cinema" hidden><video id="introVideo" playsinline webkit-playsinline preload="none" poster="assets/poster.jpg"></video><button class="skip" id="skip">Skip · 略過開場</button><button class="tap-play" id="tapPlay" hidden><svg class="hat-mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M17 39c-7 0-11-6-9-12 2-6 9-8 13-5 1-7 6-12 11-12s10 5 11 12c4-3 11-1 13 5 2 6-2 12-9 12z" stroke-width="3" stroke-linejoin="round"/><rect x="17" y="38" width="30" height="16" rx="4" stroke-width="3"/><path d="M24 44v6M32 44v6M40 44v6" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg><span>點一下播放</span></button></section><section class="ending" id="ending" hidden><div class="end-card"><img class="end-img" src="assets/pot-finale.jpg" alt="主廚和笑臉鍋子"><div class="certificate"><p class="cert-series">WORD KITCHEN · 學測單字地獄廚房</p><p class="cert-eyebrow">CERTIFICATE OF COMPLETION</p><h2>Congratulations, Chef!</h2><p class="cert-zh">36 道料理全部出餐。<br>從小火暖身一路到地獄廚房，每一鍋的字義、詞性與拼字，都經過你的手。</p><div class="end-stats"><div><strong id="endSelf">0</strong><span>自己完成</span></div><div><strong id="endShown">0</strong><span>主廚示範</span></div><div><strong id="endHP">0</strong><span>剩餘體力</span></div></div><p class="cert-sign">Sharon’s Lab · Word Kitchen</p></div><div class="end-actions"><a class="end-more" href="https://shop-teachmart.com/u/u_0MTJK43VTGVXRFKP0C8Z899KF?tab=materials" target="_blank" rel="noopener noreferrer"><svg class="hat-mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M17 39c-7 0-11-6-9-12 2-6 9-8 13-5 1-7 6-12 11-12s10 5 11 12c4-3 11-1 13 5 2 6-2 12-9 12z" stroke-width="3" stroke-linejoin="round"/><rect x="17" y="38" width="30" height="16" rx="4" stroke-width="3"/><path d="M24 44v6M32 44v6M40 44v6" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg><span><b>探索更多英文教材</b><small>Sharon’s Lab · TeachMart</small></span></a><button class="end-btn" id="endClose">回到廚房，複習任何一道</button><button class="end-btn end-ghost" id="endIntro">再看一次開場動畫</button><button class="end-btn end-ghost" id="endRestart">從第 1 道重新挑戰</button></div></div></section><main><section class="order"><div class="eyebrow" id="stage"></div><h1 id="title"></h1><p id="order"></p></section>
-<section class="kitchen"><section><div class="zone-title"><span>01</span> 挑選食材</div><div class="note">合適的入鍋，其他留在這裡。</div><div id="tray" class="tray" data-zone="tray" tabindex="0" role="group" aria-label="食材盤"></div></section>
-<section class="stove"><div class="steam" aria-hidden="true"><span></span><span></span><span></span></div><div class="pot" id="pot" data-zone="pot" tabindex="0" role="group" aria-label="鍋子"><i class="h l" aria-hidden="true"></i><i class="h r" aria-hidden="true"></i><div class="pot-content" id="pot-content"></div><div class="face" aria-hidden="true"><i class="eye l"></i><i class="eye r"></i><i class="cheek l"></i><i class="cheek r"></i><i class="mouth"></i><i class="sweat"></i></div></div><div class="flames" aria-hidden="true"><i></i><i></i><i></i></div><button class="serve" id="serve">出餐</button><p class="serve-hint">送出訂單後往下滑<br>看主廚回饋、接下一張訂單</p></section>
+<section class="kitchen"><section><div class="zone-title"><span>01</span> 挑選食材</div><div class="note">合適的入鍋，其他留在這裡。<span class="mobilehint">點單字，下方會跳出按鈕。</span></div><div id="tray" class="tray" data-zone="tray" tabindex="0" role="group" aria-label="食材盤"></div></section>
+<section class="stove"><div class="steam" aria-hidden="true"><span></span><span></span><span></span></div><div class="pot" id="pot" data-zone="pot" tabindex="0" role="group" aria-label="鍋子"><i class="h l" aria-hidden="true"></i><i class="h r" aria-hidden="true"></i><div class="pot-content" id="pot-content"></div><div class="face" aria-hidden="true"><i class="eye l"></i><i class="eye r"></i><i class="cheek l"></i><i class="cheek r"></i><i class="mouth"></i><i class="sweat"></i></div></div><div class="flames" aria-hidden="true"><i></i><i></i><i></i></div><button class="serve" id="serve">出餐</button><p class="serve-hint">出餐後會自動帶到<br>主廚回饋和下一張訂單</p></section>
 <section class="bin-area"><div class="zone-title"><span>02</span> 廚餘回收</div><div class="note">只收拼錯的字。</div><div class="bin-wrap" id="binwrap"><div id="bin" class="bin" data-zone="bin" tabindex="0" role="group" aria-label="廚餘桶"></div><div class="face" aria-hidden="true"><i class="eye l"></i><i class="eye r"></i><i class="cheek l"></i><i class="cheek r"></i><i class="mouth"></i></div></div><div class="bin-label">丟錯了？隨時拖回來。</div></section></section>
 <section id="feedback" class="feedback" aria-live="polite"></section></main>
-<footer class="foot"><span>拖進去，也能拖出來。<span class="mobilehint"> 或點食材，再點目的地。</span><br>出餐前，都能改變心意。</span><span>113 學測主題延伸 · 36 道料理<br><button id="reset" class="reset">這一鍋重新來過</button></span></footer>
+<div class="pickbar" id="pickbar" hidden role="toolbar" aria-label="把選到的單字放到"><span class="pick-word" id="pickWord"></span><button data-to="pot" class="to-pot">入鍋</button><button data-to="bin" class="to-bin">丟廚餘</button><button data-to="tray" class="to-tray">放回食材盤</button><button id="pickCancel" class="pick-x" aria-label="取消選擇"></button></div><footer class="foot"><span>拖進去，也能拖出來。<span class="mobilehint"> 或點一下單字，用下方按鈕放進去。</span><br>出餐前，都能改變心意。</span><span>113 學測主題延伸 · 36 道料理<br><button id="reset" class="reset">這一鍋重新來過</button></span></footer>
 <script>const raw = `
 買東西的是誰|挑出指「購買或消費商品的人」的名詞。|customer,shopper,consumer|consume,custom||The customer bought a gift. Consumers use goods and services.|consume 是動詞；custom 是習俗。customer、shopper、consumer 都指人。
 想念與悲傷|挑出表示「悲傷、失落、哀痛」的名詞。|sorrow,grief|grieve,relief|greif|She felt deep grief after losing her friend.|grieve 是動詞；relief 是寬慰。greif 的正確拼法是 grief。
@@ -310,14 +366,14 @@ const QUESTIONS=raw.split('\n').map(row=>{const [title,order,yes,no,bad,hint,exp
 let lastMoved=null,level=0,positions={},cards=[],selected=null,attempts=0,solved=false,finished={};try{finished=JSON.parse(localStorage.getItem('wordKitchenFinished')||'{}');}catch{}const $=s=>document.querySelector(s);const escapeHtml=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 QUESTIONS.forEach((q,i)=>{const o=document.createElement('option');o.value=i;o.textContent=String(i+1).padStart(2,'0')+' · '+q.title;$('#levels').append(o)});
 function start(i){level=i;Sound.setTheme(Math.floor(i/10));const q=QUESTIONS[i];cards=[...q.yes,...q.no,...q.bad].sort(()=>Math.random()-.5);positions=Object.fromEntries(cards.map(w=>[w,'tray']));attempts=0;solved=false;selected=null;$('#levels').value=i;$('#title').textContent=q.title;$('#order').textContent=q.order;$('#stage').textContent=['小火暖身','掌握火候','詞性調味','語氣慢燉','近義字試煉','地獄廚房'][Math.floor(i/6)]+'  /  ORDER '+String(i+1).padStart(2,'0');$('#feedback').innerHTML='';$('#serve').disabled=false;$('#pot').classList.remove('happy','sad');$('#binwrap').classList.remove('happy');render();}
-function render(){for(const z of ['tray','pot','bin']){const el=z==='pot'?$('#pot-content'):$('#'+z);el.replaceChildren();const items=cards.filter(w=>positions[w]===z);items.forEach(w=>{let b=document.createElement('button');b.className='food'+(selected===w?' selected':'')+(lastMoved===w?' pop':'');b.textContent=w;b.dataset.word=w;b.setAttribute('aria-label',w+'，位於'+({tray:'食材盤',pot:'鍋子',bin:'廚餘桶'}[z]));b.setAttribute('aria-pressed',selected===w);el.append(b)});if(!items.length){let d=document.createElement('div');d.className='empty';d.innerHTML=z==='pot'?'<b>＋</b>把合適的食材放進來':z==='bin'?'<b>×</b>拼字壞掉才丟這裡':'食材都被移走了';el.append(d)}}$('#score').textContent='已完成 '+Object.keys(finished).length+' / 36';$('#progress').style.width=(Object.keys(finished).length/36*100)+'%';$('#pot').classList.toggle('hungry',cards.some(w=>positions[w]==='pot'));lastMoved=null;}
+function render(){for(const z of ['tray','pot','bin']){const el=z==='pot'?$('#pot-content'):$('#'+z);el.replaceChildren();const items=cards.filter(w=>positions[w]===z);items.forEach(w=>{let b=document.createElement('button');b.className='food'+(selected===w?' selected':'')+(lastMoved===w?' pop':'');b.textContent=w;b.dataset.word=w;b.setAttribute('aria-label',w+'，位於'+({tray:'食材盤',pot:'鍋子',bin:'廚餘桶'}[z]));b.setAttribute('aria-pressed',selected===w);el.append(b)});if(!items.length){let d=document.createElement('div');d.className='empty';d.innerHTML=z==='pot'?'<b>＋</b>把合適的食材放進來':z==='bin'?'<b>×</b>拼字壞掉才丟這裡':'食材都被移走了';el.append(d)}}$('#score').textContent='已完成 '+Object.keys(finished).length+' / 36';$('#progress').style.width=(Object.keys(finished).length/36*100)+'%';$('#pot').classList.toggle('hungry',cards.some(w=>positions[w]==='pot'));updatePick();lastMoved=null;}
 function move(w,z){if(solved)return;positions[w]=z;selected=null;lastMoved=w;Sound.sfx(z);render()}
 document.addEventListener('click',e=>{if(dragged){dragged=false;return}const b=e.target.closest('[data-word]');if(b&&!solved){if(selected&&selected!==b.dataset.word&&positions[selected]!==positions[b.dataset.word]){move(selected,positions[b.dataset.word]);return}selected=selected===b.dataset.word?null:b.dataset.word;render();return}const z=e.target.closest('[data-zone]');if(z&&selected)move(selected,z.dataset.zone)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){selected=null;render()}if((e.key==='Enter'||e.key===' ')&&e.target.dataset.zone&&selected){e.preventDefault();move(selected,e.target.dataset.zone)}});
-let drag=null,ghost=null,dragged=false;
-document.addEventListener('pointerdown',e=>{const b=e.target.closest('[data-word]');if(!b||solved||e.button!==0)return;drag={w:b.dataset.word,x:e.clientX,y:e.clientY,b};});
-document.addEventListener('pointermove',e=>{if(!drag)return;if(!ghost&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>7){ghost=drag.b.cloneNode(true);ghost.classList.add('ghost');ghost.style.width=drag.b.offsetWidth+'px';document.body.append(ghost)}if(ghost){e.preventDefault();ghost.style.left=e.clientX-ghost.offsetWidth/2+'px';ghost.style.top=e.clientY-25+'px';document.querySelectorAll('.over').forEach(n=>n.classList.remove('over'));const z=document.elementFromPoint(e.clientX,e.clientY)?.closest('[data-zone]');if(z)z.classList.add('over')}},{passive:false});
-function cancel(){ghost?.remove();ghost=null;drag=null;document.querySelectorAll('.over').forEach(n=>n.classList.remove('over'))}
+let drag=null,ghost=null,dragged=false,lastY=0,scrollT=null;document.addEventListener('touchmove',e=>{if(drag)e.preventDefault()},{passive:false});
+document.addEventListener('pointerdown',e=>{const b=e.target.closest('[data-word]');if(!b||solved||e.button!==0)return;drag={w:b.dataset.word,x:e.clientX,y:e.clientY,b};try{b.setPointerCapture(e.pointerId)}catch{}});
+document.addEventListener('pointermove',e=>{if(!drag)return;if(!ghost&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>7){ghost=drag.b.cloneNode(true);ghost.classList.add('ghost');ghost.style.width=drag.b.offsetWidth+'px';document.body.append(ghost)}if(ghost){e.preventDefault();lastY=e.clientY;if(!scrollT)scrollT=setInterval(()=>{if(!ghost)return;const m=90;if(lastY>innerHeight-m)scrollBy(0,16);else if(lastY<m)scrollBy(0,-16)},16);ghost.style.left=e.clientX-ghost.offsetWidth/2+'px';ghost.style.top=e.clientY-25+'px';document.querySelectorAll('.over').forEach(n=>n.classList.remove('over'));const z=document.elementFromPoint(e.clientX,e.clientY)?.closest('[data-zone]');if(z)z.classList.add('over')}},{passive:false});
+function cancel(){clearInterval(scrollT);scrollT=null;ghost?.remove();ghost=null;drag=null;document.querySelectorAll('.over').forEach(n=>n.classList.remove('over'))}
 document.addEventListener('pointerup',e=>{if(ghost&&drag){const z=document.elementFromPoint(e.clientX,e.clientY)?.closest('[data-zone]');if(z)move(drag.w,z.dataset.zone);dragged=true;setTimeout(()=>dragged=false,100)}cancel()});document.addEventListener('pointercancel',cancel);
 $('#serve').onclick=()=>{const q=QUESTIONS[level];attempts++;const pass=cards.every(w=>positions[w]===(q.yes.includes(w)?'pot':q.bad.includes(w)?'bin':'tray'));if(pass){solved=true;const pot=$('#pot');pot.classList.remove('sad');pot.classList.add('happy');$('#binwrap').classList.add('happy');confetti();Sound.sfx('good');const wasDone=!!finished[level];finished[level]=true;HP.onWin(wasDone);try{localStorage.setItem('wordKitchenFinished',JSON.stringify(finished))}catch{}$('#serve').disabled=true;$('#feedback').innerHTML='<div class="box success chefbox"><img class="chef" alt="開心的主廚" src="'+CHEF.happy+'"><div class="msg"><strong>'+(attempts>1?'✦ 救菜成功！':'✦ 完美出餐！')+'</strong>'+(level===35?'最後一道完成了！可以從右上角回到任何一關。':'這一鍋，語意與火候都剛剛好。')+HP.note+'<details class="solution"><summary>看看這道菜的解析</summary><p><b>入鍋：</b>'+escapeHtml(q.yes.join('、'))+'</p><p><b>廚餘：</b>'+escapeHtml(q.bad.join('、')||'沒有錯字')+'</p><p>'+escapeHtml(q.explain)+'</p></details>'+(level===35?'<img class="finale" alt="主廚和笑臉鍋子" src="'+CHEF.pot+'">':'')+(level<35?'<button id="next">下一張訂單</button>':'')+'</div></div>';if($('#next'))$('#next').onclick=()=>start(level+1);render();checkEnding(wasDone)}else{if(attempts>=5){revealAnswer(q);return}const pot=$('#pot');pot.classList.remove('sad');void pot.offsetWidth;pot.classList.add('sad');Sound.sfx('bad');HP.onLose();clearTimeout(window.sadT);window.sadT=setTimeout(()=>pot.classList.remove('sad'),1800);$('#feedback').innerHTML='<div class="box chefbox"><img class="chef" alt="'+(attempts>=2?'戴眼鏡查書的主廚':'看不懂菜單的主廚')+'" src="'+(attempts>=2?CHEF.reading:CHEF.confused)+'"><div class="msg"><strong>主廚退貨 · 讀讀這個例句，再調整看看</strong><div class="english">“'+escapeHtml(q.hint)+'”</div>'+HP.note+(attempts>=2?'<div class="note">再檢查訂單要求的意思、詞性，以及廚餘桶裡的拼字。合適的食材也可能還留在盤子上。</div>':'')+'</div></div>'}};
 const Sound=(()=>{let ctx,master,musicGain,timer=null,step=0,next=0,started=false;
@@ -390,6 +446,9 @@ function showEnding(){const vals=Object.values(finished);const self=vals.filter(
 $('#endClose').onclick=close;
 $('#endRestart').onclick=function(){if(!this.dataset.sure){this.dataset.sure='1';this.textContent='再按一次，確定從第 1 道重新開始';return}finished={};try{localStorage.removeItem('wordKitchenFinished');localStorage.setItem('wkHP500','350')}catch{}location.reload()};
 $('#endIntro').onclick=()=>{close();$('#introBtn').click()};})();
+function updatePick(){const pb=$('#pickbar');if(!pb)return;if(!selected||solved){pb.hidden=true;document.body.classList.remove('picking');return}pb.hidden=false;document.body.classList.add('picking');$('#pickWord').textContent=selected;pb.querySelectorAll('[data-to]').forEach(x=>{x.hidden=positions[selected]===x.dataset.to})}
+$('#pickbar').addEventListener('click',e=>{e.stopPropagation();const x=e.target.closest('[data-to]');if(x&&selected){move(selected,x.dataset.to);return}if(e.target.closest('#pickCancel')){selected=null;render()}});
+$('#serve').addEventListener('click',()=>{if(innerWidth<800)setTimeout(()=>{const f=$('#feedback');if(f&&f.firstChild)f.scrollIntoView({behavior:'smooth',block:'nearest'})},280)});
 $('#levels').onchange=e=>start(Number(e.target.value));$('#reset').onclick=()=>start(level);start(0);
 </script></body></html>
 
