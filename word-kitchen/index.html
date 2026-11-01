@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f7f3e8"><title>Word Kitchen · 學測單字地獄廚房</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+:root{--ink:#4a3b33;--brown:#6b4f3f;--paper:#fbf6ec;--cream:#fffaf2;--terra:#d07a52;--terra-d:#b0603d;--sage:#8fa98a;--sage-d:#6c8a68;--blush:#f2b8a8;--line:#eadfcd;--eye:#3e302a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper) radial-gradient(#ecdcc6 1.2px,transparent 1.5px) 0 0/22px 22px;color:var(--ink);font-family:'Noto Sans TC',sans-serif;overflow-x:hidden}
+button,select{font:inherit;color:inherit}button{cursor:pointer}
+header{max-width:1080px;margin:auto;padding:16px 30px 12px;display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:center;gap:12px}
+.hat{width:56px;height:56px;flex:none;animation:bob 3.6s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes bob{50%{transform:translateY(-4px) rotate(-5deg)}}
+.brand{font-family:'Fredoka',sans-serif;font-size:31px;font-weight:700;color:var(--brown);letter-spacing:.3px;line-height:1.1}
+.brand span{color:var(--terra)}
+.sub{font-size:13px;letter-spacing:3px;margin-top:3px;color:#a58f7b;font-weight:500}
+.topright{display:flex;align-items:center;gap:14px;font-size:13px}
+#score{font-size:14px;background:var(--cream);border:2px solid var(--line);border-radius:999px;padding:7px 15px;color:var(--brown);font-weight:500;box-shadow:0 3px 0 var(--line)}
+select{background:var(--cream);border:2px solid var(--line);border-radius:999px;padding:8px 16px;max-width:240px;font-size:14px;box-shadow:0 3px 0 var(--line);color:var(--brown)}
+.progress{height:12px;background:#efe4d1;width:calc(100% - 60px);max-width:1020px;margin:0 auto;border-radius:999px;overflow:hidden;box-shadow:inset 0 2px 0 #0000000d}
+.progress i{display:block;height:100%;min-width:12px;background:repeating-linear-gradient(-45deg,#a3bd96 0 9px,#93b087 9px 18px);border-radius:999px;transition:width .6s cubic-bezier(.3,1.4,.6,1)}
+.order{text-align:center;margin:18px auto 4px;padding:0 20px}
+.eyebrow{display:inline-block;font-size:14px;letter-spacing:2px;color:#fff;background:var(--terra);font-weight:700;padding:5px 15px;border-radius:999px;box-shadow:0 3px 0 var(--terra-d)}
+.order h1{font-size:36px;font-weight:900;margin:10px 0 8px;color:var(--brown);letter-spacing:1px}
+.order p{display:inline-block;font-size:18px;margin:0;color:#7a6658;line-height:1.8;background:var(--cream);border:2px dashed #e2d0b6;border-radius:18px;padding:10px 22px;max-width:660px}
+.kitchen{display:grid;grid-template-columns:1fr 1.25fr .8fr;gap:22px;max-width:1080px;margin:8px auto 0;padding:10px 30px 0;align-items:start}
+.zone-title{font-size:17px;font-weight:700;letter-spacing:1px;display:flex;gap:10px;align-items:center;color:var(--brown)}
+.zone-title span{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:50%;background:var(--sage);color:#fff;font:600 15px 'Fredoka',sans-serif;box-shadow:0 3px 0 var(--sage-d)}
+.bin-area .zone-title span{background:#b4a99a;box-shadow:0 3px 0 #978b7b}
+.note{color:#9a8574;font-size:14px;line-height:1.6;margin-top:5px}
+.tray{min-height:280px;border-radius:28px;padding:22px 14px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:18px 12px;margin-top:10px;background:#fffaf1;border:2px solid var(--line);box-shadow:0 6px 0 var(--line)}
+.food{position:relative;border:2px solid #b5c99c;background:#e7f0d1;box-shadow:0 4px 0 #b5c99c;padding:13px 18px;font:500 19px 'Fredoka',sans-serif;color:var(--ink);min-width:110px;max-width:100%;border-radius:999px;touch-action:none;user-select:none;transition:transform .2s cubic-bezier(.3,1.6,.6,1),box-shadow .2s;overflow-wrap:anywhere}
+.food:before{content:'';position:absolute;width:15px;height:9px;background:#87a771;border-radius:90% 0 90% 0;top:-8px;left:46%;transform:rotate(-22deg)}
+.food:after{content:'';position:absolute;width:3px;height:7px;background:#87a771;border-radius:2px;top:-6px;left:calc(46% - 2px)}
+.food:nth-child(3n+2){background:#fbe0c4;border-color:#e6bd92;box-shadow:0 4px 0 #e6bd92}
+.food:nth-child(3n+2):before{background:#8fae78;transform:rotate(18deg) scaleX(-1)}
+.food:nth-child(3n){background:#f7dfda;border-color:#deb4ac;box-shadow:0 4px 0 #deb4ac}
+.food:nth-child(3n):before{background:#9cae7e;width:11px;height:11px;border-radius:0 80% 0 80%}
+.food:nth-child(3n):after{background:#a9876b}
+.food:hover{transform:translateY(-3px) rotate(-2deg)}
+.food:active{transform:scale(.95)}
+.food.selected{outline:3px dashed var(--terra);outline-offset:4px;animation:wiggle .7s ease-in-out infinite}
+@keyframes wiggle{25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+.food.pop{animation:pop .4s cubic-bezier(.3,1.7,.6,1)}
+@keyframes pop{0%{transform:scale(.55)}100%{transform:scale(1)}}
+.food:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #c27e3c;outline-offset:4px}
+.stove{text-align:center;min-height:340px;padding-top:0;position:relative}
+.steam{height:38px;display:flex;justify-content:center;gap:30px;opacity:.75}
+.steam span{display:block;width:12px;height:40px;border-left:4px solid #e3d6c3;border-radius:50%;transform:rotate(12deg);animation:steam 3s infinite ease-in-out}
+.steam span:nth-child(2){animation-delay:-1s;height:31px}.steam span:nth-child(3){animation-delay:-2s}
+@keyframes steam{50%{transform:translateY(-9px) rotate(-12deg);opacity:.4}}
+.pot{position:relative;background:#86a281;border-radius:20px 20px 130px 130px;min-height:240px;margin:16px 30px 0;box-shadow:inset 0 -16px 0 #74916f,inset 14px 0 0 #ffffff1a,0 12px 0 -3px #e6d8c1}
+.pot:before{content:'';position:absolute;top:-14px;left:-14px;right:-14px;height:22px;background:#6c8a68;border-radius:999px;box-shadow:inset 0 -5px 0 #5d7a59}
+.pot .h{position:absolute;top:22px;width:30px;height:38px;border:8px solid #6c8a68;z-index:-1}
+.pot .h.l{left:-30px;border-radius:16px 0 0 16px;border-right:none}
+.pot .h.r{right:-30px;border-radius:0 16px 16px 0;border-left:none}
+.pot-content{position:relative;z-index:1;padding:26px 14px 70px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;min-height:220px;align-content:center}
+.pot .food{font-size:17px;min-width:96px;padding:10px 14px}
+.face{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);width:96px;height:34px;pointer-events:none}
+.face .eye{position:absolute;top:4px;width:9px;height:12px;background:var(--eye);border-radius:50%;transition:all .2s}
+.face .eye:after{content:'';position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;top:2px;left:2px}
+.face .eye.l{left:24px}.face .eye.r{right:24px}
+.face .cheek{position:absolute;top:16px;width:15px;height:8px;background:var(--blush);border-radius:50%;opacity:.85}
+.face .cheek.l{left:6px}.face .cheek.r{right:6px}
+.face .mouth{position:absolute;left:50%;top:15px;width:14px;height:8px;margin-left:-7px;border:3px solid var(--eye);border-top:none;border-radius:0 0 14px 14px;transition:all .2s}
+.pot.hungry .mouth{width:13px;height:13px;margin-left:-6.5px;top:13px;border:none;background:var(--eye);border-radius:50% 50% 45% 45%;box-shadow:inset 0 -4px 0 #e59a8e}
+.pot.happy .eye,.bin-wrap.happy .eye{height:8px;width:13px;background:none;border:3px solid var(--eye);border-bottom:none;border-radius:13px 13px 0 0;top:6px}
+.pot.happy .eye:after,.bin-wrap.happy .eye:after{display:none}
+.pot.happy .mouth{width:20px;height:11px;margin-left:-10px;border:none;background:var(--eye);border-radius:0 0 20px 20px;box-shadow:inset 0 -4px 0 #e59a8e}
+.pot.sad{animation:shake .5s}
+.pot.sad .eye{height:4px;top:9px;border-radius:3px}.pot.sad .eye:after{display:none}
+.pot.sad .mouth{top:19px;border:3px solid var(--eye);border-bottom:none;border-radius:14px 14px 0 0;background:none;box-shadow:none;width:14px;height:7px;margin-left:-7px}
+.pot.sad .sweat{opacity:1;transform:translateY(0)}
+.sweat{position:absolute;right:-6px;top:-10px;width:9px;height:13px;background:#b9d3e0;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;opacity:0;transform:translateY(-6px);transition:all .25s}
+@keyframes shake{20%{transform:translateX(-7px) rotate(-2deg)}40%{transform:translateX(6px) rotate(2deg)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.empty{font-size:14px;color:#eef3e9;line-height:2;letter-spacing:1px;pointer-events:none}
+.empty b{font:400 32px 'Fredoka',sans-serif;display:block;color:#c4d6bd}
+.flames{display:flex;justify-content:center;align-items:flex-end;gap:14px;margin-top:12px;height:30px}
+.flames i{display:block;width:20px;height:20px;background:#f0a66c;border-radius:50% 0 50% 50%;transform:rotate(-45deg);animation:flick .9s ease-in-out infinite alternate;box-shadow:inset -5px 5px 0 #f7c995}
+.flames i:nth-child(2){width:25px;height:25px;background:#e58a5c;animation-delay:-.45s}
+.flames i:nth-child(3){animation-delay:-.2s}
+@keyframes flick{to{transform:rotate(-40deg) scale(.82) translate(2px,-2px)}}
+.serve{margin-top:12px;border:0;border-radius:999px;background:var(--terra);color:#fff;padding:14px 46px;font-weight:700;box-shadow:0 5px 0 var(--terra-d);font-size:19px;letter-spacing:2px;transition:transform .1s,box-shadow .1s,background .2s}
+.serve:hover{background:#c86e46;transform:translateY(-2px);box-shadow:0 7px 0 var(--terra-d)}
+.serve:active{transform:translateY(3px);box-shadow:0 2px 0 var(--terra-d)}
+.serve:disabled{opacity:.55;cursor:default;transform:none;box-shadow:0 5px 0 var(--terra-d)}
+.bin-area{padding-top:0}
+.bin-wrap{position:relative;margin:48px 10px 0}
+.bin{min-height:200px;background:repeating-linear-gradient(90deg,#e3e4d6 0 20px,#d9dccb 20px 25px);border-radius:12px 12px 34px 34px;position:relative;padding:22px 8px 60px;text-align:center;box-shadow:inset 0 -12px 0 #cdd1bc,0 8px 0 -2px #e6d8c1}
+.bin-wrap:before{content:'';position:absolute;top:-17px;left:-10px;right:-10px;height:19px;background:#bfc4ab;border-radius:999px;box-shadow:inset 0 -5px 0 #aab093;z-index:1}
+.bin-wrap:after{content:'';position:absolute;top:-30px;left:50%;width:32px;height:16px;margin-left:-16px;border:5px solid #bfc4ab;border-bottom:none;border-radius:16px 16px 0 0}
+.bin-wrap .face{bottom:20px;width:76px;transform:translateX(-50%) scale(.9)}
+.bin-wrap .face .eye.l{left:17px}.bin-wrap .face .eye.r{right:17px}
+.bin-wrap .face .cheek.l{left:0}.bin-wrap .face .cheek.r{right:0}
+.bin .empty{color:#958e7e;padding:20px 0}
+.bin .empty b{color:#b9bca7}
+.bin .food{min-width:0;font-size:15px;padding:9px 10px;margin:6px 0}
+.bin-label{text-align:center;font-size:14px;color:#9c917f;margin-top:18px}
+.over{outline:3px dashed #d9954b;outline-offset:8px}
+.feedback{max-width:760px;margin:14px auto 0;padding:0 24px;text-align:center;min-height:88px}
+.feedback .box{position:relative;border-radius:26px;background:var(--cream);border:2px solid var(--line);box-shadow:0 5px 0 var(--line);padding:20px 26px;font-size:16px;line-height:1.9;animation:pop .4s cubic-bezier(.3,1.6,.6,1)}
+.feedback .box:before{content:'';position:absolute;top:-12px;left:50%;width:20px;height:20px;margin-left:-10px;background:inherit;border-left:2px solid var(--line);border-top:2px solid var(--line);transform:rotate(45deg)}
+.feedback strong{display:block;color:#b0603d;margin-bottom:6px;font-size:19px}
+.feedback .english{font-family:'Fredoka',Georgia,serif;font-size:22px;color:#5b6e57}
+.feedback .success{background:#f2f7ea;border-color:#d3e3c5;box-shadow:0 5px 0 #d3e3c5}
+.feedback .success:before{border-color:#d3e3c5}
+.feedback .success strong{color:#557a52}
+.feedback button{background:var(--sage-d);color:#fff;border:0;border-radius:999px;padding:10px 26px;margin-top:14px;font-weight:700;font-size:16px;box-shadow:0 4px 0 #57724f}
+.feedback button:active{transform:translateY(3px);box-shadow:0 1px 0 #57724f}
+.solution{text-align:left;border-top:2px dashed #dbe6cf;margin-top:15px;padding-top:12px}
+.solution summary{cursor:pointer;color:#6c8a68;font-weight:700}
+.solution b{color:#4f7550}
+.foot{max-width:1020px;margin:16px auto;padding:14px 0 22px;border-top:2px dashed #e5d7c1;display:flex;justify-content:space-between;gap:15px;font-size:14px;color:#9a8b7c}
+.reset{border:0;background:none;color:#a0684a;font-size:14px;text-decoration:underline}
+.ghost{position:fixed;pointer-events:none;z-index:99;opacity:.95;transform:rotate(-7deg) scale(1.06);box-shadow:0 18px 30px #4a3b3330}
+.confetti{position:fixed;z-index:120;pointer-events:none;width:10px;height:10px;border-radius:3px;animation:fly 1.1s cubic-bezier(.2,.7,.4,1) forwards}
+@keyframes fly{to{transform:translate(var(--x),var(--y)) rotate(var(--r));opacity:0}}
+.mobilehint{display:none}
+.hat.avatar{border-radius:50%;object-fit:cover;border:3px solid var(--cream);box-shadow:0 0 0 2px var(--line),0 4px 0 2px var(--line)}
+.intro{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px;background:#4a3b33a8;backdrop-filter:blur(4px);animation:fadein .3s}
+.intro[hidden]{display:none}
+@keyframes fadein{from{opacity:0}}
+.intro-card{width:min(920px,100%);background:var(--cream);border-radius:28px;padding:16px;box-shadow:0 8px 0 var(--line),0 30px 60px #0004;text-align:center;animation:pop .45s cubic-bezier(.3,1.5,.6,1)}
+.intro video{display:block;width:100%;aspect-ratio:16/9;border-radius:18px;background:#fbf6ec;object-fit:cover}
+.intro-actions{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;padding:16px 0 4px}
+.intro-actions .serve{margin:0}
+.intro-skip{background:none;border:0;color:#9a8574;font-size:15px;text-decoration:underline;padding:10px}
+.feedback .box.chefbox{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;text-align:left}
+.feedback .box.chefbox .msg{min-width:0}
+.feedback .box.chefbox .msg>button{display:block;margin-left:0}
+.chef{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 0 0 2px var(--line),0 5px 0 2px var(--line);animation:pop .45s cubic-bezier(.3,1.6,.6,1)}
+.success .chef{box-shadow:0 0 0 2px #d3e3c5,0 5px 0 2px #d3e3c5}
+.finale{display:block;width:100%;border-radius:18px;margin-top:14px}
+.sound{display:flex;align-items:center;gap:6px;background:var(--cream);border:2px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14px;color:var(--brown);box-shadow:0 3px 0 var(--line);transition:transform .1s}
+.sound:active{transform:translateY(2px);box-shadow:0 1px 0 var(--line)}
+.sound b{font:600 16px 'Fredoka',sans-serif;color:var(--terra)}
+.sound.off{opacity:.55}.sound.off b{color:#a99a8a;text-decoration:line-through}
+.sound.on b{display:inline-block;animation:note 1.2s ease-in-out infinite}
+@keyframes note{50%{transform:translateY(-3px) rotate(-10deg)}}
+@media(max-width:800px){header{padding:14px 16px 10px;flex-wrap:wrap;gap:10px}.topright{width:100%;justify-content:flex-end}.topright select{flex:1;max-width:none}.hat{width:44px;height:44px}.brand{font-size:21px;white-space:nowrap}.topright{gap:8px}#score{display:none}.sound span{display:none}.sound{padding:7px 10px}select{max-width:150px}.progress{width:calc(100% - 40px)}.order{margin-top:22px}.order h1{font-size:27px}.order p{font-size:16px;padding:9px 14px}.kitchen{grid-template-columns:1fr 1.3fr .75fr;padding:6px 12px;gap:10px}.zone-title{font-size:14px;letter-spacing:0;gap:6px}.zone-title span{width:22px;height:22px;font-size:11px}.tray{padding:16px 8px;gap:16px;min-height:300px;border-radius:22px}.food{min-width:0;width:100%;font-size:15px;padding:11px 6px}.stove{padding-top:22px}.pot{margin:16px 10px 0;min-height:225px;border-radius:12px 12px 70px 70px}.pot:before{left:-8px;right:-8px;height:16px;top:-10px}.pot .h{width:14px;border-width:5px;height:26px;top:18px}.pot .h.l{left:-14px}.pot .h.r{right:-14px}.pot-content{padding:18px 6px 58px;min-height:205px}.pot .food{min-width:0;font-size:14px}.face{transform:translateX(-50%) scale(.8);bottom:16px}.bin-wrap{margin:56px 0 0}.bin-wrap .face{transform:translateX(-50%) scale(.65);bottom:12px}.bin{min-height:165px;padding:12px 3px 46px}.bin .food{font-size:12px}.bin-label{font-size:12px}.serve{padding:12px 26px}.foot{margin:14px 20px;line-height:1.8}.note{font-size:12px}.empty{font-size:12px;letter-spacing:0}.mobilehint{display:inline}.chef{width:64px;height:64px}.feedback .box.chefbox{gap:12px;padding:16px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.sound b.tri{display:inline-block;width:0;height:0;border-left:10px solid var(--terra);border-top:6px solid transparent;border-bottom:6px solid transparent;animation:none}
+.intro-skip{background:var(--cream);border:2px solid var(--line);border-radius:999px;color:#8a7564;font-size:16px;text-decoration:none;padding:11px 24px;box-shadow:0 3px 0 var(--line)}
+.intro-msg{margin:12px 0 0;color:#a0684a;font-size:15px}
+@media(max-width:800px){.intro-card{padding:12px;border-radius:22px}.intro-actions{flex-direction:column;gap:10px}.intro-actions .serve,.intro-skip{width:100%;max-width:320px}}
+body.in-intro{overflow:hidden}
+.logo[role=button]{cursor:pointer}
+.home{position:fixed;inset:0;z-index:150;display:flex;align-items:center;background:#fbf6ec url('assets/home.jpg') 62% center/cover no-repeat;overflow:hidden}
+.home[hidden],.cinema[hidden]{display:none}
+.home-shade{position:absolute;inset:0;background:linear-gradient(90deg,#fbf6ecf5 0%,#fbf6ecdd 36%,#fbf6ec55 62%,#fbf6ec00 78%),linear-gradient(0deg,#fbf6ec99,transparent 28%)}
+.entry-layout{position:relative;z-index:1;margin-left:clamp(24px,8vw,140px);max-width:600px;padding:40px 0 90px;animation:rise .7s cubic-bezier(.3,1.3,.6,1)}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+.entry-brand .eyebrow{font:600 13px 'Fredoka','Noto Sans TC',sans-serif;letter-spacing:4px;color:#a0684a;margin:0 0 10px}
+.wordmark{font:700 clamp(58px,8.4vw,118px)/1 'Fredoka','Noto Sans TC',sans-serif;color:var(--brown);margin:0;letter-spacing:.5px;text-shadow:0 4px 0 #eadfcd}
+.wordmark i{display:inline-block;width:.16em;height:.16em;border-radius:50%;background:var(--terra);margin-left:.08em;vertical-align:.62em}
+.chapter-zh{font-weight:900;font-size:clamp(22px,2.6vw,32px);letter-spacing:.32em;color:#a0684a;margin:18px 0 8px}
+.chapter-en{font:500 12px 'Fredoka',sans-serif;letter-spacing:3px;color:#9a8574;margin:0}
+.entry-hat{display:inline-flex;align-items:center;gap:18px;margin-top:38px;padding:14px 32px 14px 18px;border:2px solid var(--line);border-radius:999px;background:var(--cream);box-shadow:0 6px 0 var(--line),0 18px 40px #6b4f3f22;color:var(--brown);text-align:left;transition:transform .15s,box-shadow .15s}
+.entry-hat:hover{transform:translateY(-3px);box-shadow:0 9px 0 var(--line),0 22px 44px #6b4f3f2a}
+.entry-hat:active{transform:translateY(3px);box-shadow:0 2px 0 var(--line)}
+.entry-hat b{display:block;font-size:26px;font-weight:900;letter-spacing:4px}
+.entry-hat small{display:block;font-size:13px;color:#9a8574;margin-top:4px;letter-spacing:1px}
+.hat-mark{width:84px;height:84px;flex:none;fill:#fffaf2;stroke:#b0603d;animation:hatglow 1.8s ease-in-out infinite;filter:drop-shadow(0 0 10px #d07a5244)}
+@keyframes hatglow{0%,100%{transform:scale(.92) rotate(-4deg);filter:drop-shadow(0 0 4px #d07a5222)}50%{transform:scale(1.04) rotate(3deg);filter:drop-shadow(0 0 14px #d07a5577)}}
+.direct-entry{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:1;white-space:nowrap;background:#fffaf2cc;border:0;border-radius:999px;padding:9px 18px;color:#8a7564;font-size:14px;text-decoration:underline;text-underline-offset:3px}
+.cinema{position:fixed;inset:0;z-index:160;background:#241c17;display:flex;align-items:center;justify-content:center}
+.cinema video{width:100%;height:100%;object-fit:contain;background:#241c17}
+.skip{position:absolute;top:max(18px,env(safe-area-inset-top));right:4%;border:1px solid #fff7;border-radius:999px;padding:11px 20px;background:#241c17aa;color:#fffaf2;font-size:14px;letter-spacing:1px}
+.tap-play{position:absolute;display:flex;align-items:center;gap:16px;padding:16px 30px 16px 18px;border:2px solid var(--line);border-radius:999px;background:var(--cream);color:var(--brown);font-size:22px;font-weight:900;letter-spacing:3px;box-shadow:0 6px 0 var(--line)}
+.tap-play[hidden]{display:none}
+.tap-play .hat-mark{width:58px;height:58px}
+@media(max-width:800px){
+.home{align-items:flex-start;background-position:70% center}
+.home-shade{background:linear-gradient(180deg,#fbf6ecf7 0%,#fbf6ece6 42%,#fbf6ec55 66%,#fbf6ec00 80%)}
+.entry-layout{margin:0 auto;padding:12vh 22px 0;text-align:center;max-width:100%}
+.wordmark{font-size:clamp(50px,15vw,72px)}
+.chapter-zh{font-size:21px;letter-spacing:.25em}
+.chapter-en{font-size:10px;letter-spacing:1.5px}
+.entry-hat{margin-top:26px;padding:10px 24px 10px 12px;gap:12px}
+.entry-hat b{font-size:21px}.entry-hat small{font-size:11px}
+.hat-mark{width:62px;height:62px}
+.direct-entry{bottom:max(20px,env(safe-area-inset-bottom))}
+.tap-play{font-size:18px}
+}
+@media(prefers-reduced-motion:reduce){.hat-mark,.entry-layout{animation:none}}
+.entry-brand .eyebrow{display:block;background:none;box-shadow:none;padding:0;border-radius:0}
+.cinema.vertical,.cinema.vertical video{background:#fbf6ec}
+.cinema.vertical video{object-fit:cover}
+.cinema.vertical .skip{background:#fffaf2e6;border:2px solid var(--line);color:var(--brown)}
+.home-music{position:absolute;top:max(18px,env(safe-area-inset-top));right:4%;z-index:2;display:flex;align-items:center;gap:8px;background:var(--cream);border:2px solid var(--line);border-radius:999px;padding:9px 18px;font-size:15px;color:var(--brown);box-shadow:0 3px 0 var(--line)}
+.home-music b{font:600 18px 'Fredoka',sans-serif;color:var(--terra);display:inline-block}
+.home-music.on b{animation:note 1.2s ease-in-out infinite}
+.home-music.off{animation:nudge 2.4s ease-in-out infinite}
+.home-music.off b{color:#a99a8a}
+@keyframes nudge{0%,80%,100%{transform:none}86%{transform:rotate(-4deg) scale(1.05)}93%{transform:rotate(4deg) scale(1.05)}}
+@media(max-width:800px){
+.kitchen{grid-template-columns:1fr 1.15fr;grid-template-areas:"tray stove" "bin bin";gap:14px 12px}
+.kitchen>section:first-child{grid-area:tray}
+.kitchen>.stove{grid-area:stove}
+.kitchen>.bin-area{grid-area:bin;margin-top:6px}
+.bin-area .zone-title,.bin-area .note{text-align:left}
+.bin-area .note{display:inline}
+.bin-wrap{margin:44px 6px 0}
+.bin{min-height:120px;padding:16px 14px 54px;display:flex;flex-wrap:wrap;justify-content:center;align-content:flex-start;gap:10px 10px;border-radius:12px 12px 28px 28px}
+.bin .food{width:auto;min-width:96px;font-size:15px;padding:10px 16px;margin:0}
+.bin .empty{width:100%;padding:6px 0}
+.bin .empty b{display:inline;font-size:20px;margin-right:6px}
+.bin-wrap .face{transform:translateX(-50%) scale(.75);bottom:10px}
+.bin-label{margin-top:12px}
+.tray .food{font-size:16px}
+.pot .food{font-size:15px}
+}
+.serve-hint{display:none;margin:12px auto 0;white-space:nowrap;font-size:13px;line-height:1.6;color:#9a8574}
+.serve-hint:before{content:'';display:inline-block;width:0;height:0;margin-right:6px;vertical-align:2px;border-top:7px solid var(--terra);border-left:5px solid transparent;border-right:5px solid transparent}
+@media(max-width:800px){.serve-hint{display:block}}
+.hpbar{position:relative;display:flex;align-items:center;gap:12px;width:calc(100% - 60px);max-width:1020px;margin:12px auto 0}
+.hp-label{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--brown);white-space:nowrap}
+.heart{position:relative;display:inline-block;width:16px;height:14px}
+.heart:before,.heart:after{content:'';position:absolute;top:0;width:9px;height:14px;background:#d9705a;border-radius:9px 9px 0 0}
+.heart:before{left:7px;transform:rotate(-45deg);transform-origin:0 100%}
+.heart:after{left:0;transform:rotate(45deg);transform-origin:100% 100%}
+.hpbar.heal .heart,.hpbar.big .heart{animation:beat .5s 2}
+@keyframes beat{50%{transform:scale(1.35)}}
+.hp-track{flex:1;height:16px;background:#efe4d1;border:2px solid #fffaf2;border-radius:999px;overflow:hidden;box-shadow:0 0 0 2px var(--line)}
+.hp-track i{display:block;height:100%;width:70%;background:linear-gradient(90deg,#efa58f,#d9705a);border-radius:999px;transition:width .7s cubic-bezier(.3,1.3,.6,1)}
+.hpbar.low .hp-track i{background:repeating-linear-gradient(-45deg,#d9705a 0 8px,#c65d48 8px 16px);animation:lowpulse 1s ease-in-out infinite}
+@keyframes lowpulse{50%{opacity:.6}}
+#hpNum{font:600 16px 'Fredoka',sans-serif;color:var(--brown);min-width:2.4em;text-align:right}
+.hp-pop{position:absolute;right:0;top:-24px;font:700 17px 'Fredoka','Noto Sans TC',sans-serif;opacity:0;pointer-events:none;white-space:nowrap}
+.hp-pop.show{animation:hpfloat 1.4s ease-out forwards}
+.hp-pop.heal{color:#5f8a5a}.hp-pop.big{color:#c98a2e;font-size:19px}.hp-pop.hit{color:#c65d48}
+@keyframes hpfloat{0%{opacity:0;transform:translateY(8px)}20%{opacity:1;transform:none}75%{opacity:1}100%{opacity:0;transform:translateY(-12px)}}
+.hpbar.hit .hp-track{animation:shake .45s}
+.hpbar.big .hp-track{box-shadow:0 0 0 2px #f0d48a,0 0 16px #f0d48a}
+.hp-note{margin:10px 0 4px;padding:8px 14px;border-radius:14px;font-weight:700;font-size:15px;line-height:1.6}
+.hp-note.big{background:#fff4d6;color:#a0684a;border:2px dashed #f0d48a}
+.hp-note.ko{background:#fbe6e0;color:#b0603d}
+@media(max-width:800px){.hpbar{width:calc(100% - 40px);gap:8px}.hp-label{font-size:13px}.hp-track{height:14px}}
+.ending{position:fixed;inset:0;z-index:170;overflow-y:auto;background:#fbf6ec radial-gradient(#ecdcc6 1.2px,transparent 1.5px) 0 0/22px 22px;padding:30px 16px 50px}
+.ending[hidden]{display:none}
+.end-card{max-width:720px;margin:0 auto;text-align:center;animation:rise .7s cubic-bezier(.3,1.3,.6,1)}
+.end-img{width:100%;max-width:560px;border-radius:26px;box-shadow:0 8px 0 var(--line);display:block;margin:0 auto}
+.certificate{position:relative;margin:-40px auto 0;max-width:640px;padding:42px 34px 30px;background:var(--cream);border:2px solid #e2c89c;outline:1px dashed #e2c89c;outline-offset:-12px;border-radius:24px;box-shadow:0 8px 0 var(--line),0 24px 50px #6b4f3f1f}
+.cert-series{font:600 12px 'Fredoka',sans-serif;letter-spacing:3px;color:#a0684a;margin:0}
+.cert-eyebrow{font:500 12px 'Fredoka',sans-serif;letter-spacing:4px;color:#8fa98a;margin:14px 0 8px}
+.certificate h2{font:700 clamp(30px,5vw,44px) 'Fredoka',sans-serif;color:var(--brown);margin:0 0 14px}
+.cert-zh{font-size:17px;line-height:1.9;color:#6b5a4c;margin:0 auto;max-width:30em}
+.end-stats{display:flex;justify-content:center;gap:clamp(18px,6vw,56px);margin:26px 0 18px}
+.end-stats strong{display:block;font:700 40px 'Fredoka',sans-serif;color:var(--terra)}
+.end-stats span{font-size:14px;color:#8a7564}
+.cert-sign{font:500 italic 18px Georgia,serif;color:#8a6a4f;margin:6px 0 0}
+.end-actions{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:28px}
+.end-more{display:flex;align-items:center;gap:14px;padding:12px 28px 12px 14px;border-radius:999px;background:var(--terra);color:#fff;text-decoration:none;box-shadow:0 5px 0 var(--terra-d);text-align:left}
+.end-more .hat-mark{width:52px;height:52px;fill:#fffaf2;stroke:#fffaf2;stroke-opacity:.0;animation:none;filter:none}
+.end-more b{display:block;font-size:19px;letter-spacing:1px}.end-more small{display:block;font-size:12px;opacity:.85;margin-top:2px}
+.end-btn{border:0;border-radius:999px;background:var(--sage-d);color:#fff;padding:12px 26px;font-size:16px;font-weight:700;box-shadow:0 4px 0 #57724f}
+.end-btn.end-ghost{background:var(--cream);color:#8a7564;border:2px solid var(--line);box-shadow:0 3px 0 var(--line);font-weight:500}
+.feedback .box.reveal{background:#fdf6e3;border-color:#ecd9a8;box-shadow:0 5px 0 #ecd9a8}
+.feedback .box.reveal strong{color:#a0684a}
+.left-note{margin:12px 0 0;font-size:14px;color:#8a7564}
+#toEnd{background:var(--terra)!important;box-shadow:0 4px 0 var(--terra-d)!important}
+@media(max-width:800px){.certificate{padding:34px 18px 24px}.cert-zh{font-size:15px}.end-stats strong{font-size:32px}}
+</style></head><body>
+<header><div class="logo" id="logoHome" title="回到開店首頁" role="button" tabindex="0"><img class="hat avatar" src="assets/chef-avatar.jpg" alt="水豚主廚"><div><div class="brand">Word Kitchen<span> ˙</span></div><div class="sub">學測單字地獄廚房</div></div></div><div class="topright"><span id="score">尚未出餐</span><button class="sound" id="introBtn" title="再看一次開場動畫"><b class="tri" aria-hidden="true"></b><span>開場</span></button><button class="sound" id="musicBtn" aria-pressed="true"><b>♪</b><span>音樂</span></button><button class="sound" id="sfxBtn" aria-pressed="true"><b>♫</b><span>音效</span></button><select id="levels" aria-label="選擇關卡"></select></div></header><div class="progress"><i id="progress"></i></div><div class="hpbar" id="hpbar"><span class="hp-label"><i class="heart" aria-hidden="true"></i>主廚體力</span><div class="hp-track" role="progressbar" aria-label="主廚體力" aria-valuemin="0" aria-valuemax="500"><i id="hpFill"></i></div><b id="hpNum">350</b><span class="hp-pop" id="hpPop" aria-hidden="true"></span></div>
+<section class="home" id="home"><div class="home-shade"></div><div class="entry-layout"><div class="entry-brand"><p class="eyebrow">SHARON'S LAB · 學測單字</p><h1 class="wordmark">Word Kitchen<i></i></h1><p class="chapter-zh">學測單字地獄廚房</p><p class="chapter-en">36 ORDERS · FROM WARM-UP TO HELL'S KITCHEN</p></div><button class="entry-hat" id="start" aria-label="開始做菜，播放開場動畫"><svg class="hat-mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M17 39c-7 0-11-6-9-12 2-6 9-8 13-5 1-7 6-12 11-12s10 5 11 12c4-3 11-1 13 5 2 6-2 12-9 12z" stroke-width="3" stroke-linejoin="round"/><rect x="17" y="38" width="30" height="16" rx="4" stroke-width="3"/><path d="M24 44v6M32 44v6M40 44v6" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg><span><b>開始做菜</b><small>輕觸廚師帽，揭開序幕</small></span></button></div><button class="home-music on" id="homeMusic" aria-label="切換音樂"><b>♪</b><span>音樂</span></button><button class="direct-entry" id="direct">略過開場，直接開店</button></section><section class="cinema" id="cinema" hidden><video id="introVideo" playsinline webkit-playsinline preload="none" poster="assets/poster.jpg"></video><button class="skip" id="skip">Skip · 略過開場</button><button class="tap-play" id="tapPlay" hidden><svg class="hat-mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M17 39c-7 0-11-6-9-12 2-6 9-8 13-5 1-7 6-12 11-12s10 5 11 12c4-3 11-1 13 5 2 6-2 12-9 12z" stroke-width="3" stroke-linejoin="round"/><rect x="17" y="38" width="30" height="16" rx="4" stroke-width="3"/><path d="M24 44v6M32 44v6M40 44v6" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg><span>點一下播放</span></button></section><section class="ending" id="ending" hidden><div class="end-card"><img class="end-img" src="assets/pot-finale.jpg" alt="主廚和笑臉鍋子"><div class="certificate"><p class="cert-series">WORD KITCHEN · 學測單字地獄廚房</p><p class="cert-eyebrow">CERTIFICATE OF COMPLETION</p><h2>Congratulations, Chef!</h2><p class="cert-zh">36 道料理全部出餐。<br>從小火暖身一路到地獄廚房，每一鍋的字義、詞性與拼字，都經過你的手。</p><div class="end-stats"><div><strong id="endSelf">0</strong><span>自己完成</span></div><div><strong id="endShown">0</strong><span>主廚示範</span></div><div><strong id="endHP">0</strong><span>剩餘體力</span></div></div><p class="cert-sign">Sharon’s Lab · Word Kitchen</p></div><div class="end-actions"><a class="end-more" href="https://shop-teachmart.com/u/u_0MTJK43VTGVXRFKP0C8Z899KF?tab=materials" target="_blank" rel="noopener noreferrer"><svg class="hat-mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M17 39c-7 0-11-6-9-12 2-6 9-8 13-5 1-7 6-12 11-12s10 5 11 12c4-3 11-1 13 5 2 6-2 12-9 12z" stroke-width="3" stroke-linejoin="round"/><rect x="17" y="38" width="30" height="16" rx="4" stroke-width="3"/><path d="M24 44v6M32 44v6M40 44v6" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg><span><b>探索更多英文教材</b><small>Sharon’s Lab · TeachMart</small></span></a><button class="end-btn" id="endClose">回到廚房，複習任何一道</button><button class="end-btn end-ghost" id="endIntro">再看一次開場動畫</button><button class="end-btn end-ghost" id="endRestart">從第 1 道重新挑戰</button></div></div></section><main><section class="order"><div class="eyebrow" id="stage"></div><h1 id="title"></h1><p id="order"></p></section>
+<section class="kitchen"><section><div class="zone-title"><span>01</span> 挑選食材</div><div class="note">合適的入鍋，其他留在這裡。</div><div id="tray" class="tray" data-zone="tray" tabindex="0" role="group" aria-label="食材盤"></div></section>
+<section class="stove"><div class="steam" aria-hidden="true"><span></span><span></span><span></span></div><div class="pot" id="pot" data-zone="pot" tabindex="0" role="group" aria-label="鍋子"><i class="h l" aria-hidden="true"></i><i class="h r" aria-hidden="true"></i><div class="pot-content" id="pot-content"></div><div class="face" aria-hidden="true"><i class="eye l"></i><i class="eye r"></i><i class="cheek l"></i><i class="cheek r"></i><i class="mouth"></i><i class="sweat"></i></div></div><div class="flames" aria-hidden="true"><i></i><i></i><i></i></div><button class="serve" id="serve">出餐</button><p class="serve-hint">送出訂單後往下滑<br>看主廚回饋、接下一張訂單</p></section>
+<section class="bin-area"><div class="zone-title"><span>02</span> 廚餘回收</div><div class="note">只收拼錯的字。</div><div class="bin-wrap" id="binwrap"><div id="bin" class="bin" data-zone="bin" tabindex="0" role="group" aria-label="廚餘桶"></div><div class="face" aria-hidden="true"><i class="eye l"></i><i class="eye r"></i><i class="cheek l"></i><i class="cheek r"></i><i class="mouth"></i></div></div><div class="bin-label">丟錯了？隨時拖回來。</div></section></section>
+<section id="feedback" class="feedback" aria-live="polite"></section></main>
+<footer class="foot"><span>拖進去，也能拖出來。<span class="mobilehint"> 或點食材，再點目的地。</span><br>出餐前，都能改變心意。</span><span>113 學測主題延伸 · 36 道料理<br><button id="reset" class="reset">這一鍋重新來過</button></span></footer>
+<script>const raw = `
+買東西的是誰|挑出指「購買或消費商品的人」的名詞。|customer,shopper,consumer|consume,custom||The customer bought a gift. Consumers use goods and services.|consume 是動詞；custom 是習俗。customer、shopper、consumer 都指人。
+想念與悲傷|挑出表示「悲傷、失落、哀痛」的名詞。|sorrow,grief|grieve,relief|greif|She felt deep grief after losing her friend.|grieve 是動詞；relief 是寬慰。greif 的正確拼法是 grief。
+一起做，不是互相搶|挑出表示「合作」的名詞。|collaboration,cooperation|compete,competition|collaberation|Cooperation helped the teams share their knowledge.|compete 是競爭的動詞；competition 是競爭。collaberation 應為 collaboration。
+這不是自願加班|挑出表示「規定必須做」的形容詞。|compulsory,mandatory,obligatory|optional,voluntary||Attendance is mandatory. Everyone must attend.|optional 是可選擇的；voluntary 是自願的。三個入鍋字都帶有義務或規定的意思。
+熱到黏答答|挑出形容天氣「潮濕或濕熱」的形容詞。|humid,muggy|humidity,arid|humidd|It was a muggy day, with warm and sticky air.|humidity 是名詞；arid 是乾燥的。humidd 應為 humid。
+風景美到想畫下來|挑出形容風景「優美、壯麗、令人驚豔」的形容詞。|picturesque,stunning,magnificent|splendor|picturesqe|The picturesque village stood beneath magnificent mountains.|splendor 是名詞。picturesqe 應為 picturesque。stunning 強調令人驚豔。
+太陽終於露臉|挑出表示「原本看不見的東西開始出現」的動詞原形或片語。|emerge,appear,come into view|disappear,appearance,immerse||An island emerged from the fog and came into view.|disappear 是消失；appearance 是名詞；immerse 是使浸入。
+服務升級|挑出表示「使品質或表現變好」的動詞原形。|enhance,upgrade,improve|improvement,worsen,enlarge||Training improved the service. A bigger shop did not guarantee better service.|enlarge 只表示變大；worsen 是惡化；improvement 是名詞。
+人工鬧鐘生意衰退|挑出能表示「數量或程度下降」的動詞原形。|decline,decrease,fall|increase,reduction|declinne|Demand declined, and customer numbers fell.|increase 方向相反；reduction 是名詞；declinne 應為 decline。
+把兩片布扣在一起|挑出表示「把物件連接或固定在一起」的動詞原形。|fasten,attach,bind|detach,attachment,loosen||Fasten the straps together so they stay attached.|detach 是拆離；loosen 是鬆開；attachment 是名詞。
+神秘客的觀察工作|挑出表示「觀察、檢查或評估」的動詞原形。|observe,inspect,evaluate|ignore,inspection|obserrve|She observed the service, inspected the room, and evaluated the experience.|ignore 是忽略；inspection 是名詞；obserrve 應為 observe。
+命運幫你分組|挑出表示「隨機、由機會決定」的副詞或副詞片語。|randomly,at random,by chance|random,deliberately|randomley|Names were drawn at random. Nobody chose a partner.|random 是形容詞；deliberately 是刻意地；randomley 應為 randomly。
+功勞不是復仇|挑出表示「成果受到認可或稱讚」的名詞。|credit,recognition,praise|revenge,recognize|creddit|The team deserves credit and recognition for its work.|revenge 是報復；recognize 是動詞；creddit 應為 credit。
+每次標準都一樣|挑出形容評分標準「一致、統一或標準化」的形容詞。|consistent,uniform,standardized|consistently,consistency|standerdized|A standardized checklist keeps ratings consistent.|consistently 是副詞；consistency 是名詞；standerdized 應為 standardized。
+鬧鐘靠得住嗎|挑出形容設備「值得信賴」的形容詞。|reliable,dependable|dependent,reliability,unreliable|relyable|The dependable alarm has never failed to wake me.|dependent 是依賴別人的；reliability 是名詞；unreliable 是不可靠。relyable 應為 reliable。
+拉開一百次也不壞|挑出形容材料「耐用、結實或持久」的形容詞。|durable,sturdy,long-lasting|fragile,durably|durabel|The sturdy fabric remained intact after years of use.|fragile 是脆弱的；durably 是副詞；durabel 應為 durable。
+醫生先確認狀況|挑出「辨識或判定病況」相關的名詞，不收治療或復原階段。|assessment,diagnosis,examination|diagnose,treatment,recovery||After an examination, the doctor made a diagnosis and discussed treatment.|diagnose 是動詞；treatment 是治療；recovery 是復原。
+一開始沒人買|挑出表示「最初、起初」的副詞或副詞片語。|initially,at first,originally|initial,eventually|initialy|Initially, sales were poor, but the product eventually became popular.|initial 是形容詞；eventually 是後來終於。initialy 應為 initially。
+這位客人很難服務|挑出形容客人「難以取悅、要求多或不合理」的形容詞。|difficult,demanding,unreasonable|potential,anonymous,difficulty|dificult|The demanding customer expected immediate service and refused to wait.|potential 是潛在的；anonymous 是匿名的；difficulty 是名詞。dificult 應為 difficult。
+評分不能看心情|挑出形容評估「公平、不偏袒、客觀」的形容詞。|objective,impartial,fair,neutral|biased,subjective,fairness||An impartial judge considers the evidence without favoring either side.|biased 是有偏見的；subjective 是主觀的；fairness 是名詞。neutral 強調不選邊站。
+事情還處理得來|挑出表示困難「仍可處理或控制」的形容詞。|manageable,controllable|management,managerial,overwhelming,manageably|controlable|The problem is manageable; we can handle it with our resources.|managerial 是管理職務相關的；overwhelming 是難以招架的。management 是名詞；manageably 是副詞。controlable 應為 controllable。
+痛到受不了|挑出形容疼痛「極強、難以承受」的形容詞。|agonizing,excruciating,unbearable|mild,slight,painfully,agony||The pain was excruciating, not just a mild ache.|mild、slight 強度太低；painfully 是副詞；agony 是名詞。
+這個方法已經過時|挑出形容方法「不合時宜或被新做法取代」的形容詞。|outdated,obsolete,old-fashioned|ancient,current,outdate|outdatted|The machine is obsolete because newer models do the job much better.|ancient 只強調年代久遠；current 是現行的；outdate 是動詞。outdatted 應為 outdated。
+本來想幫忙，結果更糟|挑出形容做法「有害或妨礙目標」的形容詞。|counterproductive,harmful,detrimental|productive,harmless,harm,counterproductively||Constant interruptions were counterproductive: they slowed the work.|counterproductive 特別指適得其反；productive 是有成效的；harmless 是無害的；harm 是名詞或動詞。
+人還沒完全醒|挑出形容人「醒著、不眠或保持警覺」的形容詞。|awake,alert,wakeful|wake,awaken,asleep|awakness|She was awake but not yet alert enough to notice the phone.|awake 是醒著；alert 是警覺；wakeful 是不眠。wake、awaken 是動詞；asleep 是睡著。awakness 不是標準拼字。
+纖細，不是虛弱|挑出通常不帶「瘦得不健康」意味，形容人體苗條的形容詞。|slender,slim|skinny,weak,slenderness,slimly|slendder|The jacket suits her slim figure. He looked skinny and underfed.|skinny 常帶過瘦意味；weak 是虛弱；slenderness 是名詞；slimly 是副詞。slendder 應為 slender。
+溫柔談論離世|挑出悼念語境中能委婉或正式表示「已故」的形容詞或分詞形式。|late,departed,deceased|deadly,lately,deadly-looking|departted|She often speaks fondly of her late grandfather.|late 在親屬稱謂前可指已故；deadly 是致命的；lately 是最近。departted 應為 departed。
+不是普通的新包裝|挑出形容技術「創新、有開創性」的形容詞。|innovative,groundbreaking,pioneering|innovation,conventional,traditional|inovative|The pioneering technique opened up entirely new possibilities.|innovation 是名詞；conventional、traditional 是常規或傳統的。inovative 應為 innovative。
+靈感突然亮了|挑出表示「突然想到點子或理解」的名詞片語。|a flash of inspiration,an aha moment,a lightbulb moment|reflection,confusion,inspiring,inspire||She had an aha moment and suddenly understood the solution.|reflection 是反思，未必突然領悟；confusion 是困惑；inspiring 是形容詞；inspire 是動詞。
+把話傳出去|挑出能表示「傳遞」並直接搭配 the message 的動詞原形或片語。|relay,transmit,pass on,convey|conceal,transmission,receive||Please relay the message to anyone who missed the meeting.|conceal 是隱藏；receive 是接收而非傳出；transmission 是名詞。四個入鍋字均能傳遞訊息。
+一條魚別浪費|挑出表示「減少浪費、善用既有資源」的動詞片語，不收增加捕獲量。|reduce waste,maximize resource use,make full use of resources,minimize waste|catch more fish,discard usable parts,waste reduction,resource efficiency||They used parts once discarded and gained more value from each fish.|多捕魚不等於提高利用率；discard usable parts 是浪費。waste reduction、resource efficiency 是名詞片語。
+不只是很有興趣|挑出形容「觀賞者已被景象吸引、沉浸其中」的形容詞或分詞形式。|captivated,fascinated,absorbed|captivating,fascinating,bored,captivation,absorb||The captivating landscape left the visitors fascinated.|captivating、fascinating 指引起興趣的特質；-ed 形式描述感受。captivation 是名詞；absorb 是動詞。
+銷量往上衝|挑出能直接搭配 sales，表示「使銷量增加」的動詞原形。|boost,increase,raise|rise,growth,reduce,boosting|increse|The campaign raised sales. As a result, sales rose.|raise 接受詞；rise 表示自己上升，不能直接接 sales。growth 是名詞；boosting 不是原形；reduce 方向相反。increse 應為 increase。
+環境變了，路也重找|挑出表示「調整自身以適應新情況」的動詞原形或動詞片語。|adapt,adjust,acclimate,adapt to new conditions|adopt,adaptation,remain unchanged,adept||The ants adjusted their routes and adapted to the changed environment.|adopt 是採用或收養；adept 是熟練的；adaptation 是名詞；remain unchanged 是不改變。
+終於買得起|挑出形容商品「價格低或在負擔能力內」的形容詞，不收只說使用時省錢的字。|affordable,inexpensive,cheap|economical,pricey,afford,affordably|affortable|The car is economical to run, but its purchase price is too high for me.|economical 強調節省，不保證售價低；pricey 是昂貴的；afford 是動詞；affordably 是副詞。affortable 應為 affordable。
+有效，還是有效率|挑出明確強調「少耗時間、能源或資源」的形容詞，不收只說能達成目標。|efficient,economical,energy-efficient|effective,efficiency,wasteful,efficiently|efficent|Both methods worked, but the efficient one used half the time and energy.|effective 是有效；efficient 才強調效率。efficiency 是名詞；efficiently 是副詞；wasteful 是浪費的。efficent 應為 efficient。
+`.trim();
+const QUESTIONS=raw.split('\n').map(row=>{const [title,order,yes,no,bad,hint,explain]=row.split('|');return {title,order,yes:yes.split(','),no:no?no.split(','):[],bad:bad?bad.split(','):[],hint,explain};});
+</script><script>
+let lastMoved=null,level=0,positions={},cards=[],selected=null,attempts=0,solved=false,finished={};try{finished=JSON.parse(localStorage.getItem('wordKitchenFinished')||'{}');}catch{}const $=s=>document.querySelector(s);const escapeHtml=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+QUESTIONS.forEach((q,i)=>{const o=document.createElement('option');o.value=i;o.textContent=String(i+1).padStart(2,'0')+' · '+q.title;$('#levels').append(o)});
+function start(i){level=i;Sound.setTheme(Math.floor(i/10));const q=QUESTIONS[i];cards=[...q.yes,...q.no,...q.bad].sort(()=>Math.random()-.5);positions=Object.fromEntries(cards.map(w=>[w,'tray']));attempts=0;solved=false;selected=null;$('#levels').value=i;$('#title').textContent=q.title;$('#order').textContent=q.order;$('#stage').textContent=['小火暖身','掌握火候','詞性調味','語氣慢燉','近義字試煉','地獄廚房'][Math.floor(i/6)]+'  /  ORDER '+String(i+1).padStart(2,'0');$('#feedback').innerHTML='';$('#serve').disabled=false;$('#pot').classList.remove('happy','sad');$('#binwrap').classList.remove('happy');render();}
+function render(){for(const z of ['tray','pot','bin']){const el=z==='pot'?$('#pot-content'):$('#'+z);el.replaceChildren();const items=cards.filter(w=>positions[w]===z);items.forEach(w=>{let b=document.createElement('button');b.className='food'+(selected===w?' selected':'')+(lastMoved===w?' pop':'');b.textContent=w;b.dataset.word=w;b.setAttribute('aria-label',w+'，位於'+({tray:'食材盤',pot:'鍋子',bin:'廚餘桶'}[z]));b.setAttribute('aria-pressed',selected===w);el.append(b)});if(!items.length){let d=document.createElement('div');d.className='empty';d.innerHTML=z==='pot'?'<b>＋</b>把合適的食材放進來':z==='bin'?'<b>×</b>拼字壞掉才丟這裡':'食材都被移走了';el.append(d)}}$('#score').textContent='已完成 '+Object.keys(finished).length+' / 36';$('#progress').style.width=(Object.keys(finished).length/36*100)+'%';$('#pot').classList.toggle('hungry',cards.some(w=>positions[w]==='pot'));lastMoved=null;}
+function move(w,z){if(solved)return;positions[w]=z;selected=null;lastMoved=w;Sound.sfx(z);render()}
+document.addEventListener('click',e=>{if(dragged){dragged=false;return}const b=e.target.closest('[data-word]');if(b&&!solved){if(selected&&selected!==b.dataset.word&&positions[selected]!==positions[b.dataset.word]){move(selected,positions[b.dataset.word]);return}selected=selected===b.dataset.word?null:b.dataset.word;render();return}const z=e.target.closest('[data-zone]');if(z&&selected)move(selected,z.dataset.zone)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){selected=null;render()}if((e.key==='Enter'||e.key===' ')&&e.target.dataset.zone&&selected){e.preventDefault();move(selected,e.target.dataset.zone)}});
+let drag=null,ghost=null,dragged=false;
+document.addEventListener('pointerdown',e=>{const b=e.target.closest('[data-word]');if(!b||solved||e.button!==0)return;drag={w:b.dataset.word,x:e.clientX,y:e.clientY,b};});
+document.addEventListener('pointermove',e=>{if(!drag)return;if(!ghost&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>7){ghost=drag.b.cloneNode(true);ghost.classList.add('ghost');ghost.style.width=drag.b.offsetWidth+'px';document.body.append(ghost)}if(ghost){e.preventDefault();ghost.style.left=e.clientX-ghost.offsetWidth/2+'px';ghost.style.top=e.clientY-25+'px';document.querySelectorAll('.over').forEach(n=>n.classList.remove('over'));const z=document.elementFromPoint(e.clientX,e.clientY)?.closest('[data-zone]');if(z)z.classList.add('over')}},{passive:false});
+function cancel(){ghost?.remove();ghost=null;drag=null;document.querySelectorAll('.over').forEach(n=>n.classList.remove('over'))}
+document.addEventListener('pointerup',e=>{if(ghost&&drag){const z=document.elementFromPoint(e.clientX,e.clientY)?.closest('[data-zone]');if(z)move(drag.w,z.dataset.zone);dragged=true;setTimeout(()=>dragged=false,100)}cancel()});document.addEventListener('pointercancel',cancel);
+$('#serve').onclick=()=>{const q=QUESTIONS[level];attempts++;const pass=cards.every(w=>positions[w]===(q.yes.includes(w)?'pot':q.bad.includes(w)?'bin':'tray'));if(pass){solved=true;const pot=$('#pot');pot.classList.remove('sad');pot.classList.add('happy');$('#binwrap').classList.add('happy');confetti();Sound.sfx('good');const wasDone=!!finished[level];finished[level]=true;HP.onWin(wasDone);try{localStorage.setItem('wordKitchenFinished',JSON.stringify(finished))}catch{}$('#serve').disabled=true;$('#feedback').innerHTML='<div class="box success chefbox"><img class="chef" alt="開心的主廚" src="'+CHEF.happy+'"><div class="msg"><strong>'+(attempts>1?'✦ 救菜成功！':'✦ 完美出餐！')+'</strong>'+(level===35?'最後一道完成了！可以從右上角回到任何一關。':'這一鍋，語意與火候都剛剛好。')+HP.note+'<details class="solution"><summary>看看這道菜的解析</summary><p><b>入鍋：</b>'+escapeHtml(q.yes.join('、'))+'</p><p><b>廚餘：</b>'+escapeHtml(q.bad.join('、')||'沒有錯字')+'</p><p>'+escapeHtml(q.explain)+'</p></details>'+(level===35?'<img class="finale" alt="主廚和笑臉鍋子" src="'+CHEF.pot+'">':'')+(level<35?'<button id="next">下一張訂單</button>':'')+'</div></div>';if($('#next'))$('#next').onclick=()=>start(level+1);render();checkEnding(wasDone)}else{if(attempts>=5){revealAnswer(q);return}const pot=$('#pot');pot.classList.remove('sad');void pot.offsetWidth;pot.classList.add('sad');Sound.sfx('bad');HP.onLose();clearTimeout(window.sadT);window.sadT=setTimeout(()=>pot.classList.remove('sad'),1800);$('#feedback').innerHTML='<div class="box chefbox"><img class="chef" alt="'+(attempts>=2?'戴眼鏡查書的主廚':'看不懂菜單的主廚')+'" src="'+(attempts>=2?CHEF.reading:CHEF.confused)+'"><div class="msg"><strong>主廚退貨 · 讀讀這個例句，再調整看看</strong><div class="english">“'+escapeHtml(q.hint)+'”</div>'+HP.note+(attempts>=2?'<div class="note">再檢查訂單要求的意思、詞性，以及廚餘桶裡的拼字。合適的食材也可能還留在盤子上。</div>':'')+'</div></div>'}};
+const Sound=(()=>{let ctx,master,musicGain,timer=null,step=0,next=0,started=false;
+let musicOn=true,sfxOn=true;try{musicOn=localStorage.getItem('wkMusic')!=='0';sfxOn=localStorage.getItem('wkSfx')!=='0'}catch{}
+const mtof=m=>440*Math.pow(2,(m-69)/12);
+const THEMES=[
+ {bpm:96,lead:'triangle',mel:[76,79,81,79,76,74,72,74, 76,76,79,81,79,0,0,0, 81,84,81,79,76,79,81,79, 76,74,72,74,72,0,0,0, 72,76,79,76,81,79,76,79, 74,76,74,72,74,0,0,0, 76,79,84,81,79,76,74,76, 79,76,74,76,72,0,0,0],bass:[48,55,45,52,41,48,43,50, 48,55,43,50,41,48,43,48]},
+ {bpm:84,lead:'sine',mel:[69,0,72,0,76,0,74,72, 71,0,0,0,67,0,0,0, 69,0,72,0,76,0,79,77, 76,0,0,0,0,0,0,0, 72,0,74,0,76,0,72,0, 71,0,69,0,67,0,0,0, 65,0,69,0,72,0,71,69, 68,0,0,0,69,0,0,0],bass:[45,52,43,50,41,48,40,47, 45,52,43,50,41,48,40,45]},
+ {bpm:90,lead:'triangle',mel:[65,69,72,0,74,72,69,0, 70,69,67,0,65,0,0,0, 69,72,77,0,76,74,72,0, 74,72,70,69,65,0,0,0, 72,0,74,72,70,0,69,0, 67,69,70,0,72,0,0,0, 77,76,74,72,70,69,67,69, 65,0,0,0,0,0,0,0],bass:[41,48,46,53,41,48,48,55, 45,52,46,53,48,55,41,48]},
+ {bpm:100,lead:'triangle',mel:[62,0,65,69,74,0,72,69, 70,0,69,67,69,0,0,0, 62,0,65,69,74,0,77,76, 74,0,73,0,74,0,0,0, 77,0,76,74,72,0,70,69, 70,0,72,0,69,0,0,0, 67,69,70,72,74,0,73,0, 74,0,0,0,0,0,0,0],bass:[38,45,46,53,43,50,45,52, 46,53,41,48,43,50,45,50]}];
+let theme=0;const MV=.495;
+function init(){if(ctx)return true;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;ctx=new AC();master=ctx.createGain();master.gain.value=.8;master.connect(ctx.destination);musicGain=ctx.createGain();musicGain.gain.value=0;musicGain.connect(master);return true}
+function tone(f,t,d,type,vol,dest,f2){const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d*.8);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(dest||master);o.start(t);o.stop(t+d+.05)}
+function sched(){const th=THEMES[theme],MEL=th.mel,BASS=th.bass,E8=60/th.bpm/2,L=MEL.length;while(next<ctx.currentTime+.25){const i=step%L,m=MEL[i];if(m){let len=1;while(MEL[(i+len)%L]===0&&len<4)len++;tone(mtof(m),next,E8*len+.25,th.lead,.15,musicGain);tone(mtof(m+12),next,.3,'sine',.03,musicGain)}
+if(i%4===0)tone(mtof(BASS[(i/4)%BASS.length]),next,E8*3.6,'sine',.2,musicGain);
+if(i%4===2)tone(mtof(BASS[((i-2)/4)%BASS.length]+12),next,E8*1.4,'sine',.06,musicGain);
+next+=E8;step++}}
+function setTheme(n){n=Math.max(0,Math.min(THEMES.length-1,n));if(n===theme)return;theme=n;step=0;if(ctx&&timer){const t=ctx.currentTime;musicGain.gain.cancelScheduledValues(t);musicGain.gain.setValueAtTime(0,t);musicGain.gain.linearRampToValueAtTime(MV,t+1.2);next=Math.max(next,t+.15)}}
+function startMusic(){if(!init())return;ctx.resume();if(timer)return;next=ctx.currentTime+.08;timer=setInterval(sched,40);musicGain.gain.cancelScheduledValues(ctx.currentTime);musicGain.gain.setValueAtTime(musicGain.gain.value,ctx.currentTime);musicGain.gain.linearRampToValueAtTime(MV,ctx.currentTime+.6)}
+function stopMusic(){if(!ctx||!timer)return;const t=ctx.currentTime;musicGain.gain.cancelScheduledValues(t);musicGain.gain.setValueAtTime(musicGain.gain.value,t);musicGain.gain.linearRampToValueAtTime(0,t+.3);const tm=timer;timer=null;setTimeout(()=>clearInterval(tm),320)}
+function sfx(kind){if(!sfxOn||!init())return;ctx.resume();const t=ctx.currentTime;
+if(kind==='pot'){tone(520,t,.14,'sine',.28,null,1040);tone(1300,t+.05,.08,'sine',.08)}
+else if(kind==='heal'){[79,84,88].forEach((m,k)=>tone(mtof(m),t+k*.07,.3,'sine',.14))}else if(kind==='bigheal'){[72,76,79,84,88,91].forEach((m,k)=>tone(mtof(m),t+k*.08,.5,'triangle',.18));tone(mtof(96),t+.5,.9,'sine',.1)}else if(kind==='ko'){[67,64,60,55].forEach((m,k)=>tone(mtof(m),t+k*.14,.3,'triangle',.18))}
+else if(kind==='bin'){tone(420,t,.22,'triangle',.25,null,160)}
+else if(kind==='tray'){tone(700,t,.1,'sine',.18,null,500)}
+else if(kind==='good'){[72,76,79,84].forEach((m,k)=>tone(mtof(m),t+k*.09,.35,'triangle',.22));tone(mtof(88),t+.38,.6,'sine',.12)}
+else if(kind==='bad'){tone(mtof(67),t,.2,'triangle',.22);tone(mtof(63),t+.18,.35,'triangle',.22,null,mtof(60))}}
+function paint(){const m=document.getElementById('musicBtn'),s=document.getElementById('sfxBtn');m.className='sound '+(musicOn?'on':'off');m.setAttribute('aria-pressed',musicOn);m.title=musicOn?'關閉音樂':'開啟音樂';s.className='sound '+(sfxOn?'':'off');s.setAttribute('aria-pressed',sfxOn);s.title=sfxOn?'關閉音效':'開啟音效'}
+function save(){try{localStorage.setItem('wkMusic',musicOn?'1':'0');localStorage.setItem('wkSfx',sfxOn?'1':'0')}catch{}}
+document.getElementById('musicBtn').addEventListener('click',e=>{e.stopPropagation();started=true;musicOn=!musicOn;musicOn?startMusic():stopMusic();save();paint()});
+document.getElementById('sfxBtn').addEventListener('click',e=>{e.stopPropagation();started=true;sfxOn=!sfxOn;save();paint();if(sfxOn)sfx('pot')});
+document.addEventListener('pointerdown',()=>{if(started||window.introOpen)return;started=true;if(musicOn)startMusic()},{capture:true});
+document.addEventListener('keydown',()=>{if(started||window.introOpen)return;started=true;if(musicOn)startMusic()},{capture:true,once:true});
+const unlock=()=>{if(ctx&&ctx.state==='suspended')ctx.resume()};document.addEventListener('pointerdown',unlock,{capture:true});document.addEventListener('keydown',unlock,{capture:true});
+paint();return {setTheme,running(){return !!ctx&&ctx.state==='running'},sfx,begin(){started=true;if(musicOn)startMusic()},pause(){stopMusic()}}})();
+
+function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const r=$('#pot').getBoundingClientRect(),cs=['#d07a52','#8fa98a','#f2b8a8','#a9bfd0','#f0d48a','#c9b6d6'];for(let i=0;i<26;i++){const c=document.createElement('i');c.className='confetti';const a=Math.random()*Math.PI*2,d=90+Math.random()*140;c.style.left=r.left+r.width/2+'px';c.style.top=r.top+30+'px';c.style.background=cs[i%cs.length];if(i%3==0)c.style.borderRadius='50%';c.style.setProperty('--x',Math.cos(a)*d+'px');c.style.setProperty('--y',Math.sin(a)*d-60+'px');c.style.setProperty('--r',Math.random()*540+'deg');document.body.append(c);setTimeout(()=>c.remove(),1200)}}
+const HP=(()=>{const MAX=500,WIN=30,LOSE=40,BIG=200,START=350,FLOOR=50,REFILL=250;let hp=START;try{const v=localStorage.getItem('wkHP500');if(v!==null&&v!==''&&!isNaN(+v))hp=Math.max(0,Math.min(MAX,+v))}catch{}
+const fill=$('#hpFill'),num=$('#hpNum'),bar=$('#hpbar'),pop=$('#hpPop'),track=bar.querySelector('.hp-track');let tm;
+function save(){try{localStorage.setItem('wkHP500',hp)}catch{}}
+function draw(){fill.style.width=(hp/MAX*100)+'%';num.textContent=hp;track.setAttribute('aria-valuenow',hp);bar.classList.toggle('low',hp<=150)}
+function flash(txt,cls){pop.textContent=txt;pop.className='hp-pop';void pop.offsetWidth;pop.className='hp-pop show '+cls;bar.classList.remove('hit','heal','big');void bar.offsetWidth;bar.classList.add(cls);clearTimeout(tm);tm=setTimeout(()=>{bar.classList.remove('hit','heal','big')},1400)}
+const api={note:'',onWin(wasDone){api.note='';const n=Object.keys(finished).length;const big=!wasDone&&n>0&&n%12===0;hp=Math.min(MAX,hp+WIN+(big?BIG:0));
+if(big){api.note='<div class="hp-note big">完成 '+n+' 道料理，主廚喝下一碗大補湯！體力 +'+BIG+'</div>';flash('大補湯 +'+(WIN+BIG),'big');setTimeout(()=>Sound.sfx('bigheal'),500)}else{flash('+'+WIN,'heal');setTimeout(()=>Sound.sfx('heal'),500)}save();draw()},
+toTen(){hp=Math.min(hp,FLOOR);api.note='<div class="hp-note ko">試了五次還沒過，主廚體力降到 '+hp+'，先看主廚示範，記住正確擺法再出發。</div>';flash('體力 '+hp,'hit');save();draw()},
+onLose(){api.note='';hp=Math.max(0,hp-LOSE);flash('−'+LOSE,'hit');if(hp===0){api.note='<div class="hp-note ko">主廚體力用完了，先喝碗湯休息一下，體力回到 '+REFILL+'。</div>';setTimeout(()=>{hp=REFILL;save();draw();flash('+'+REFILL,'heal');Sound.sfx('ko')},1400)}save();draw()}};
+draw();return api})();
+const CHEF={"happy": "assets/chef-happy.jpg", "confused": "assets/chef-confused.jpg", "reading": "assets/chef-reading.jpg", "pot": "assets/pot-finale.jpg"};
+(function(){const home=$('#home'),cin=$('#cinema'),v=$('#introVideo'),tap=$('#tapPlay');
+function syncHM(){const hm=$('#homeMusic');const playing=!$('#musicBtn').classList.contains('off')&&Sound.running();hm.className='home-music '+(playing?'on':'off');hm.querySelector('span').textContent=playing?'音樂播放中':'點我開音樂'}
+function show(id){home.hidden=id!=='home';cin.hidden=id!=='cinema';window.introOpen=id==='cinema';document.body.classList.toggle('in-intro',id!=='game');if(id!=='cinema'){try{v.pause()}catch{}}if(id==='home'){Sound.begin();syncHM()}}
+$('#homeMusic').onclick=e=>{e.stopPropagation();const off=$('#musicBtn').classList.contains('off');if(off||Sound.running())$('#musicBtn').click();else Sound.begin();setTimeout(syncHM,150)};
+document.addEventListener('pointerdown',()=>{if(!home.hidden)setTimeout(syncHM,150)});
+function enterGame(){show('game');Sound.begin();window.scrollTo(0,0)}
+function playIntro(){Sound.pause();show('cinema');tap.hidden=true;delete tap.dataset.err;tap.querySelector('span').textContent='點一下播放';const want=(matchMedia('(orientation: portrait)').matches&&innerWidth<800)?'assets/intro-vertical.mp4':'assets/intro.mp4';cin.classList.toggle('vertical',want.includes('vertical'));if(v.getAttribute('src')!==want){v.src=want;v.poster=want.includes('vertical')?'':'assets/poster.jpg'}try{v.currentTime=0}catch{}const p=v.play();if(p&&p.catch)p.catch(()=>{tap.hidden=false})}
+v.addEventListener('ended',enterGame);
+v.addEventListener('error',()=>{if(!v.getAttribute('src'))return;tap.querySelector('span').textContent='影片暫時無法播放，直接開店';tap.dataset.err='1';tap.hidden=false});
+tap.onclick=()=>{if(tap.dataset.err){enterGame();return}v.play().then(()=>{tap.hidden=true}).catch(()=>{})};
+$('#start').onclick=playIntro;$('#direct').onclick=enterGame;$('#skip').onclick=enterGame;
+$('#introBtn').onclick=e=>{e.stopPropagation();playIntro()};
+const goHome=()=>{Sound.pause();show('home')};$('#logoHome').onclick=goHome;$('#logoHome').onkeydown=e=>{if(e.key==='Enter')goHome()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!cin.hidden)enterGame()});
+show('home');})();
+function revealAnswer(q){cards.forEach(w=>{positions[w]=q.yes.includes(w)?'pot':q.bad.includes(w)?'bin':'tray'});solved=true;const had=!!finished[level];if(!had)finished[level]=2;try{localStorage.setItem('wordKitchenFinished',JSON.stringify(finished))}catch{}HP.toTen();Sound.sfx('tray');$('#serve').disabled=true;
+$('#feedback').innerHTML='<div class="box chefbox reveal"><img class="chef" alt="戴眼鏡示範的主廚" src="'+CHEF.reading+'"><div class="msg"><strong>主廚親自示範</strong>這道比較難捏，鍋子和廚餘桶已經擺成正確答案，看懂了再往下走。'+HP.note+'<details class="solution" open><summary>這道菜的解析</summary><p><b>入鍋：</b>'+escapeHtml(q.yes.join('、'))+'</p><p><b>廚餘：</b>'+escapeHtml(q.bad.join('、')||'沒有錯字')+'</p><p>'+escapeHtml(q.explain)+'</p></details>'+(level<35?'<button id="next">下一張訂單</button>':'')+'</div></div>';
+if($('#next'))$('#next').onclick=()=>start(level+1);render();checkEnding(had)}
+function checkEnding(had){const n=Object.keys(finished).length;if(n>=36){if(!had)setTimeout(showEnding,1600);else if(level===35&&!$('#toEnd')){const m=$('#feedback .msg');if(m){const bt=document.createElement('button');bt.id='toEnd';bt.textContent='看結業證書';bt.onclick=showEnding;m.append(bt)}}}else if(level===35){const m=$('#feedback .msg');if(m&&!$('#toEnd')){const p=document.createElement('p');p.className='left-note';p.textContent='還有 '+(36-n)+' 道料理沒完成，右上角選單可以回去補做，全部完成就會出現結業證書。';m.append(p)}}}
+function showEnding(){const vals=Object.values(finished);const self=vals.filter(v=>v===true).length,shown=vals.filter(v=>v===2).length;$('#endSelf').textContent=self;$('#endShown').textContent=shown;$('#endHP').textContent=$('#hpNum').textContent;$('#ending').hidden=false;document.body.classList.add('in-intro');window.introOpen=true;Sound.sfx('bigheal');confetti();setTimeout(confetti,500)}
+(function(){const e=$('#ending');function close(){e.hidden=true;document.body.classList.remove('in-intro');window.introOpen=false}
+$('#endClose').onclick=close;
+$('#endRestart').onclick=function(){if(!this.dataset.sure){this.dataset.sure='1';this.textContent='再按一次，確定從第 1 道重新開始';return}finished={};try{localStorage.removeItem('wordKitchenFinished');localStorage.setItem('wkHP500','350')}catch{}location.reload()};
+$('#endIntro').onclick=()=>{close();$('#introBtn').click()};})();
+$('#levels').onchange=e=>start(Number(e.target.value));$('#reset').onclick=()=>start(level);start(0);
+</script></body></html>
+
+
