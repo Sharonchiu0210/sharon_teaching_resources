@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lucky Seats</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f1e9; --card:#fffdf9; --ink:#3b2a1e; --soft:#8a7464;
+    --accent:#b5653f; --line:#e4d8ca; --seat:#efe5d8; --hit:#b5653f; --flash:#e3c2a8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",system-ui,sans-serif;min-height:100vh}
+  .wrap{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .mascot{position:relative;width:84px;height:84px;flex:none;animation:bob 2.6s ease-in-out infinite}
+  .mascot svg{width:84px;height:84px}
+  .bubble{position:absolute;left:72px;top:-6px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:3px 9px;font-size:12px;font-weight:700;white-space:nowrap;color:var(--accent)}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-4px) rotate(2deg)}}
+  h1{font-size:34px;font-weight:900;margin:0;letter-spacing:.03em}
+  .sub{color:var(--soft);font-size:14px;margin-top:4px}
+  .hbtns{display:flex;gap:8px;flex-wrap:wrap}
+  .toggle{background:none;border:1px solid var(--line);color:var(--soft);padding:8px 14px;border-radius:999px;font:inherit;font-size:14px;cursor:pointer}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 20px;display:flex;gap:26px;flex-wrap:wrap;align-items:flex-end;margin-bottom:18px}
+  .panel.hidden{display:none}
+  .field label{display:block;font-size:13px;color:var(--soft);font-weight:700;margin-bottom:6px;letter-spacing:.05em}
+  input[type=number]{width:96px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:18px;background:#fff;color:var(--ink)}
+  .hint{font-size:12px;color:var(--soft)}
+
+  .acts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+  .act{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px 12px;cursor:pointer;text-align:center;font:inherit;color:var(--ink);transition:transform .1s,border-color .2s}
+  .act:hover{border-color:var(--accent)}
+  .act:active{transform:scale(.97)}
+  .act.on{border-color:var(--accent);background:#fbefe6}
+  .act .ic{display:block;margin:0 auto 6px;width:54px;height:54px}
+  .act .nm{font-size:22px;font-weight:900;letter-spacing:.06em}
+  .act .en{font-size:14px;font-weight:700;color:var(--accent);margin-top:1px}
+  @media (max-width:640px){.acts{grid-template-columns:repeat(2,1fr)}}
+  .act .ds{font-size:12.5px;color:var(--soft);margin-top:5px;line-height:1.45}
+  .act:disabled{opacity:.55;cursor:default}
+
+  .random-row{display:flex;justify-content:center;margin:6px 0 18px}
+  .go{background:var(--accent);color:#fff;border:none;font:inherit;font-size:21px;font-weight:900;padding:14px 40px;border-radius:999px;cursor:pointer;letter-spacing:.08em;box-shadow:0 6px 18px rgba(181,101,63,.25)}
+  .go:disabled{opacity:.6;cursor:default}
+
+  .result{text-align:center;min-height:44px;margin-bottom:12px}
+  .result .big{font-size:30px;font-weight:900}
+  .result .big em{font-style:normal;color:var(--accent)}
+  .result .small{font-size:15px;color:var(--soft);margin-top:2px}
+
+  .stage{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 16px 22px;overflow-x:auto}
+  .podium{margin:0 auto 14px;width:min(320px,70%);text-align:center;background:var(--ink);color:#fff;border-radius:10px;padding:7px 0;font-weight:700;letter-spacing:.3em;font-size:15px}
+  .board{display:grid;gap:8px;margin:0 auto;width:max-content}
+  .lab{font-size:13px;color:var(--soft);font-weight:700;display:flex;align-items:center;justify-content:center}
+  .seat{width:var(--sz);height:calc(var(--sz) * .78);background:var(--seat);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:calc(var(--sz) * .34);font-weight:900;color:#fff;transition:background .12s}
+  .seat.flash{background:var(--flash)}
+  .seat.hit{background:var(--hit);color:#fff;animation:pop .35s ease}
+  .seat.center{background:#f3e3cf;box-shadow:0 0 0 3px var(--ink) inset;animation:pop .35s ease}
+  .seat.center svg{width:86%;height:86%}
+  .key{display:inline-block;width:22px;height:18px;border-radius:5px;vertical-align:-3px;font-size:11px;line-height:18px;color:#fff;font-weight:900}
+  .key.c{background:#f3e3cf;box-shadow:0 0 0 2px var(--ink) inset}
+  .key.h{background:var(--hit)}
+  @keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.08)}100%{transform:none}}
+  .note{text-align:center;font-size:14px;color:var(--soft);margin-top:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="mascot"><svg viewBox="0 0 100 100"><ellipse cx="30" cy="24" rx="8" ry="7" fill="#8f5f3e"/><ellipse cx="70" cy="24" rx="8" ry="7" fill="#8f5f3e"/><rect x="18" y="22" width="64" height="66" rx="26" fill="#b07a52"/><rect x="26" y="54" width="48" height="31" rx="15" fill="#c99670"/><circle cx="37" cy="45" r="3.5" fill="#3b2a1e"/><circle cx="63" cy="45" r="3.5" fill="#3b2a1e"/><circle cx="29" cy="55" r="4" fill="#e3a08a" opacity=".55"/><circle cx="71" cy="55" r="4" fill="#e3a08a" opacity=".55"/><ellipse cx="43" cy="63" rx="3" ry="2.2" fill="#3b2a1e"/><ellipse cx="57" cy="63" rx="3" ry="2.2" fill="#3b2a1e"/><path d="M44 73 Q50 77 56 73" stroke="#3b2a1e" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="50" cy="15" r="8" fill="#e3a04c"/><path d="M50 7 q3 -4 8 -3" stroke="#6b8f4e" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg><span class="bubble">Who's next?</span></div>
+      <div>
+        <h1>Lucky Seats</h1>
+        <div class="sub">選一個遊戲，看今天輪到誰　Pick a game and see who's up!</div>
+      </div>
+    </div>
+    <div class="hbtns"><button class="toggle" id="soundBtn">🔊 聲音 Sound on</button><button class="toggle" id="toggleBtn">收起設定 Hide</button></div>
+  </header>
+
+  <section class="panel" id="panel">
+    <div class="field"><label>幾排 Rows（前→後）</label><input type="number" id="rows" min="2" max="15" value="6"></div>
+    <div class="field"><label>每排幾位 Seats per row（左→右）</label><input type="number" id="cols" min="3" max="15" value="6"></div>
+    <div class="hint">左右以「從講台往下看」為準<br>Left / right as seen from the front</div>
+  </section>
+
+  <section class="acts" id="acts"></section>
+
+  <div class="random-row"><button class="go" id="randBtn">🎲 隨機遊戲 Random Game</button></div>
+
+  <div class="result" id="result"><div class="small">按一個遊戲開始　Pick a game to start</div></div>
+
+  <section class="stage">
+    <div class="podium">講 台　FRONT</div>
+    <div class="board" id="board"></div>
+    <div class="note"><span class="key c"></span> 水豚＝抽中的同學 The chosen one　｜　<span class="key h">站</span> 起立 Stand up!</div>
+  </section>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const rand = n => Math.floor(Math.random() * n);
+const ch = n => '第 ' + n;
+
+/* 每個活動：gen 回傳 {center:[r,c]|null, cells:[[r,c]], text} */
+const sq = (x, y, o) => `<rect x="${x}" y="${y}" width="13" height="13" rx="3"${o ? ` opacity="${o}"` : ''}/>`;
+const grid3 = f => { let h = ''; for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) h += sq(4 + j * 17, 4 + i * 17, f(i, j)); return h; };
+const ACTS = [
+  {
+    key: 'cross', name: '大十字', en: 'Cross Challenge', desc: '同一橫排、直排起立<br>Same row & column stand up',
+    icon: grid3((i, j) => (i === 1 || j === 1) ? (i === 1 && j === 1 ? '' : '') : '.18'),
+    gen(R, C) {
+      const r = rand(R), c = rand(C), cells = [];
+      for (let i = 0; i < C; i++) if (i !== c) cells.push([r, i]);
+      for (let i = 0; i < R; i++) if (i !== r) cells.push([i, c]);
+      return { center: [r, c], cells, text: `抽中：${ch(r + 1)} 排、${ch(c + 1)} 個` };
+    }
+  },
+  {
+    key: 'canyon', name: '大峽谷', en: 'The Grand Canyon', desc: '左右兩列起立，中間坐著<br>Columns on both sides stand',
+    icon: grid3((i, j) => j === 1 ? '.18' : ''),
+    gen(R, C) {
+      const r = rand(R), c = 1 + rand(C - 2), cells = [];
+      for (let i = 0; i < R; i++) { cells.push([i, c - 1]); cells.push([i, c + 1]); }
+      return { center: [r, c], cells, text: `抽中：${ch(r + 1)} 排、${ch(c + 1)} 個（這一列坐著）` };
+    }
+  },
+  {
+    key: 'moses', name: '摩西分海', en: 'Parting the Sea', desc: '兩側起立，中央坐著<br>Both sides stand, middle sits',
+    icon: '<rect x="4" y="4" width="16" height="46" rx="3"/><rect x="34" y="4" width="16" height="46" rx="3"/>',
+    gen(R, C) {
+      const w = C % 2 ? 1 : 2, c0 = (C - w) / 2, cells = [];
+      for (let i = 0; i < R; i++) for (let j = 0; j < C; j++) if (j < c0 || j >= c0 + w) cells.push([i, j]);
+      return { center: null, cells, text: `中間 ${w} 列坐著，兩側全部起立` };
+    }
+  },
+  {
+    key: 'nine', name: '九宮格爆彈', en: 'Nine-Square Bomb', desc: '周圍八位起立<br>The 8 around stand up',
+    icon: grid3((i, j) => (i === 1 && j === 1) ? '.18' : ''),
+    gen(R, C) {
+      const r = rand(R), c = rand(C), cells = [];
+      for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) {
+        if (!i && !j) continue;
+        const rr = r + i, cc = c + j;
+        if (rr >= 0 && rr < R && cc >= 0 && cc < C) cells.push([rr, cc]);
+      }
+      return { center: [r, c], cells, text: `抽中：${ch(r + 1)} 排、${ch(c + 1)} 個` };
+    }
+  },
+  {
+    key: 'nuke', name: '核彈引爆', en: 'Nuclear Alert', desc: '除了他，全班起立<br>Everyone stands but one',
+    icon: '<path d="M27 2 L32 18 L46 8 L38 22 L52 27 L38 32 L46 46 L32 36 L27 52 L22 36 L8 46 L16 32 L2 27 L16 22 L8 8 L22 18 Z"/><circle cx="27" cy="27" r="7" fill="#f6ebe0"/>',
+    gen(R, C) {
+      const r = rand(R), c = rand(C), cells = [];
+      for (let i = 0; i < R; i++) for (let j = 0; j < C; j++) if (i !== r || j !== c) cells.push([i, j]);
+      return { center: [r, c], cells, text: `抽中：${ch(r + 1)} 排、${ch(c + 1)} 個（只有他坐著）` };
+    }
+  },
+  {
+    key: 'bolt', name: '大閃電', en: 'Lightning Strike', desc: '斜線上的同學起立<br>The diagonal line stands',
+    icon: grid3((i, j) => i === j ? '' : '.18'),
+    gen(R, C) {
+      const r = rand(R), c = rand(C), dir = Math.random() < .5 ? 1 : -1, cells = [];
+      for (let k = -Math.max(R, C); k <= Math.max(R, C); k++) {
+        if (!k) continue;
+        const rr = r + k, cc = c + dir * k;
+        if (rr >= 0 && rr < R && cc >= 0 && cc < C) cells.push([rr, cc]);
+      }
+      return { center: [r, c], cells, text: `抽中：${ch(r + 1)} 排、${ch(c + 1)} 個，閃電往${dir === 1 ? '右' : '左'}下劈` };
+    }
+  }
+];
+
+const CAPY = `<svg viewBox="0 0 100 100"><ellipse cx="30" cy="24" rx="8" ry="7" fill="#8f5f3e"/><ellipse cx="70" cy="24" rx="8" ry="7" fill="#8f5f3e"/><rect x="18" y="22" width="64" height="66" rx="26" fill="#b07a52"/><rect x="26" y="54" width="48" height="31" rx="15" fill="#c99670"/><circle cx="37" cy="45" r="3.5" fill="#3b2a1e"/><circle cx="63" cy="45" r="3.5" fill="#3b2a1e"/><circle cx="29" cy="55" r="4" fill="#e3a08a" opacity=".55"/><circle cx="71" cy="55" r="4" fill="#e3a08a" opacity=".55"/><ellipse cx="43" cy="63" rx="3" ry="2.2" fill="#3b2a1e"/><ellipse cx="57" cy="63" rx="3" ry="2.2" fill="#3b2a1e"/><path d="M44 73 Q50 77 56 73" stroke="#3b2a1e" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="50" cy="15" r="8" fill="#e3a04c"/><path d="M50 7 q3 -4 8 -3" stroke="#6b8f4e" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`;
+
+/* ---- 聲音 Sound（瀏覽器即時合成，不需音檔） ---- */
+let actx = null, soundOn = true;
+try { soundOn = localStorage.getItem('lucky-seats-sound') !== 'off'; } catch (e) {}
+function ac() {
+  if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return null; } }
+  if (actx.state === 'suspended') actx.resume().catch(() => {});
+  return actx;
+}
+function tone(freq, dur, type = 'sine', vol = .15, delay = 0, slideTo = 0) {
+  if (!soundOn) return; const a = ac(); if (!a) return;
+  try {
+    const t = a.currentTime + delay, o = a.createOscillator(), g = a.createGain();
+    o.type = type; o.frequency.setValueAtTime(freq, t);
+    if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t + dur);
+    g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .012); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    o.connect(g).connect(a.destination); o.start(t); o.stop(t + dur + .03);
+  } catch (e) {}
+}
+function noise(dur, vol = .3, delay = 0) {
+  if (!soundOn) return; const a = ac(); if (!a) return;
+  try {
+    const t = a.currentTime + delay, n = Math.floor(a.sampleRate * dur), buf = a.createBuffer(1, n, a.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 2);
+    const src = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain();
+    src.buffer = buf; f.type = 'lowpass'; f.frequency.setValueAtTime(1800, t); f.frequency.exponentialRampToValueAtTime(120, t + dur);
+    g.gain.setValueAtTime(vol, t); src.connect(f).connect(g).connect(a.destination); src.start(t);
+  } catch (e) {}
+}
+const SFX = {
+  tick() { tone(820 + rand(280), .05, 'triangle', .07); },
+  pick() { tone(520 + rand(160), .07, 'square', .04); },
+  win() { [523, 659, 784, 1047].forEach((f, i) => tone(f, i === 3 ? .5 : .16, 'triangle', .16, i * .09)); tone(1568, .35, 'sine', .05, .3); },
+  boom() { tone(180, .7, 'sawtooth', .12, 0, 40); noise(1.1, .45); tone(1047, .3, 'triangle', .08, .55); },
+  pop() { tone(660, .12, 'sine', .12, 0, 1320); }
+};
+let busy = false;
+
+function dims() {
+  const R = Math.max(2, Math.min(15, parseInt($('rows').value) || 6));
+  const C = Math.max(3, Math.min(15, parseInt($('cols').value) || 6));
+  return { R, C };
+}
+
+function buildBoard() {
+  const { R, C } = dims();
+  const sz = Math.max(38, Math.min(78, Math.floor((Math.min(window.innerWidth, 1160) - 120) / C) - 8));
+  const b = $('board');
+  b.style.setProperty('--sz', sz + 'px');
+  b.style.gridTemplateColumns = `40px repeat(${C}, ${sz}px)`;
+  let html = '<div></div>';
+  for (let c = 0; c < C; c++) html += `<div class="lab">${c + 1}</div>`;
+  for (let r = 0; r < R; r++) {
+    html += `<div class="lab">${r + 1}</div>`;
+    for (let c = 0; c < C; c++) html += `<div class="seat" id="s${r}-${c}"></div>`;
+  }
+  b.innerHTML = html;
+}
+
+function paint(res, final) {
+  document.querySelectorAll('.seat').forEach(s => { s.classList.remove('flash', 'hit', 'center'); s.textContent = ''; });
+  res.cells.forEach(([r, c]) => { const el = $(`s${r}-${c}`); if (el) { el.classList.add(final ? 'hit' : 'flash'); if (final) el.textContent = '站'; } });
+  if (res.center) { const el = $(`s${res.center[0]}-${res.center[1]}`); if (el) { el.classList.add('center'); el.innerHTML = CAPY; } }
+}
+
+function setBusy(v) {
+  busy = v;
+  document.querySelectorAll('.act, .go').forEach(b => b.disabled = v);
+}
+
+function play(act) {
+  if (busy) return;
+  setBusy(true);
+  document.querySelectorAll('.act').forEach(b => b.classList.toggle('on', b.dataset.key === act.key));
+  const { R, C } = dims();
+  $('result').innerHTML = `<div class="big"><em>${act.name}</em> ${act.en}</div><div class="small">……</div>`;
+  let t = 0;
+  const timer = setInterval(() => {
+    paint(act.gen(R, C), false); SFX.tick();
+    if (++t >= 14) {
+      clearInterval(timer);
+      const res = act.gen(R, C);
+      paint(res, true); act.key === 'nuke' ? SFX.boom() : SFX.win();
+      $('result').innerHTML = `<div class="big"><em>${act.name}</em> ${act.en}</div><div class="small">${res.cells.length} 位起立 ${res.cells.length} stand up</div><div class="small">${res.text}</div>`;
+      setBusy(false);
+    }
+  }, 90);
+}
+
+function randomAct() {
+  if (busy) return;
+  setBusy(true);
+  let t = 0, i = 0;
+  const btns = [...document.querySelectorAll('.act')];
+  const timer = setInterval(() => {
+    i = rand(ACTS.length);
+    btns.forEach((b, k) => b.classList.toggle('on', k === i)); SFX.pick();
+    if (++t >= 12) {
+      clearInterval(timer);
+      setBusy(false);
+      SFX.pop(); setTimeout(() => play(ACTS[i]), 300);
+    }
+  }, 110);
+}
+
+$('acts').innerHTML = ACTS.map(a => `
+  <button class="act" data-key="${a.key}">
+    <svg class="ic" viewBox="0 0 54 54" fill="#b5653f">${a.icon}</svg>
+    <div class="nm">${a.name}</div>
+    <div class="en">${a.en}</div>
+    <div class="ds">${a.desc}</div>
+  </button>`).join('');
+$('acts').addEventListener('click', e => {
+  const b = e.target.closest('.act'); if (!b) return; ac();
+  play(ACTS.find(a => a.key === b.dataset.key));
+});
+$('randBtn').addEventListener('click', () => { ac(); randomAct(); });
+function soundLabel() { $('soundBtn').textContent = soundOn ? '🔊 聲音 Sound on' : '🔇 靜音 Sound off'; }
+soundLabel();
+$('soundBtn').addEventListener('click', () => {
+  soundOn = !soundOn; soundLabel();
+  try { localStorage.setItem('lucky-seats-sound', soundOn ? 'on' : 'off'); } catch (e) {}
+  if (soundOn) SFX.pop();
+});
+
+const KEY = 'lucky-seats-dims';
+try { const d = JSON.parse(localStorage.getItem(KEY) || 'null'); if (d) { $('rows').value = d.R; $('cols').value = d.C; } } catch (e) {}
+['rows', 'cols'].forEach(id => $(id).addEventListener('input', () => {
+  buildBoard();
+  $('result').innerHTML = '<div class="small">按一個遊戲開始　Pick a game to start</div>';
+  try { localStorage.setItem(KEY, JSON.stringify(dims())); } catch (e) {}
+}));
+let lastW = window.innerWidth;
+window.addEventListener('resize', () => { if (!busy && Math.abs(window.innerWidth - lastW) > 40) { lastW = window.innerWidth; buildBoard(); $('result').innerHTML = '<div class="small">按一個遊戲開始　Pick a game to start</div>'; } });
+$('toggleBtn').addEventListener('click', () => {
+  const p = $('panel'); p.classList.toggle('hidden');
+  $('toggleBtn').textContent = p.classList.contains('hidden') ? '展開設定 Settings' : '收起設定 Hide';
+});
+buildBoard();
+</script>
+</body>
+</html>
