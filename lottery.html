@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lottery</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f1e9; --card:#fffdf9; --ink:#3b2a1e; --soft:#8a7464;
+    --accent:#b5653f; --line:#e4d8ca; --tag:#efe5d8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",system-ui,sans-serif;min-height:100vh}
+  .wrap{max-width:1200px;margin:0 auto;padding:28px 22px 60px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+  h1{font-size:30px;font-weight:900;margin:0;letter-spacing:.04em}
+  .sub{color:var(--soft);font-size:14px;margin-top:4px}
+  .toggle{background:none;border:1px solid var(--line);color:var(--soft);padding:8px 14px;border-radius:999px;font:inherit;font-size:14px;cursor:pointer}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px 26px;margin-bottom:22px}
+  .panel.hidden{display:none}
+  .field label.t{display:block;font-size:13px;color:var(--soft);font-weight:700;margin-bottom:8px;letter-spacing:.05em}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  input[type=number],input[type=text]{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:17px;background:#fff;color:var(--ink)}
+  input[type=number].sm{width:90px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{position:relative}
+  .chip input{position:absolute;opacity:0;pointer-events:none}
+  .chip span{display:inline-block;padding:9px 15px;border:1px solid var(--line);border-radius:999px;font-size:15px;cursor:pointer;background:#fff;user-select:none}
+  .chip input:checked + span{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .hint{font-size:12px;color:var(--soft);margin-top:6px}
+
+  .go-row{display:flex;justify-content:center;gap:12px;margin:8px 0 26px;flex-wrap:wrap}
+  .go{background:var(--accent);color:#fff;border:none;font:inherit;font-size:24px;font-weight:900;padding:18px 54px;border-radius:999px;cursor:pointer;letter-spacing:.12em;box-shadow:0 6px 18px rgba(181,101,63,.25);transition:transform .1s}
+  .go:active{transform:scale(.97)}
+  .go:disabled{opacity:.6;cursor:default}
+  .ghost{background:none;border:1px solid var(--line);color:var(--ink);font:inherit;font-size:16px;padding:14px 24px;border-radius:999px;cursor:pointer}
+
+  .msg{text-align:center;color:var(--accent);font-weight:700;min-height:22px;margin-bottom:10px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 18px 18px;text-align:center;position:relative;animation:pop .35s ease}
+  .card .no{display:flex;justify-content:center;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+  .card .no svg{width:120px;height:110px}
+  .card .cls.q{color:#d8cabb}
+  .card .cls{font-size:58px;font-weight:900;line-height:1.05;margin-top:8px;letter-spacing:.02em}
+  .card .cls small{font-size:22px;font-weight:700;margin-left:2px}
+  .card .seat{font-size:40px;font-weight:900;color:var(--accent);margin:6px 0 12px}
+  .card .seat small{font-size:20px}
+  .tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;min-height:34px}
+  .tag{background:var(--tag);padding:6px 14px;border-radius:999px;font-size:18px;font-weight:700}
+  .re{margin-top:14px;background:none;border:none;color:var(--soft);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline}
+  .card.rolling .cls,.card.rolling .seat{color:#c9b9a8}
+  @keyframes pop{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+
+  .history{margin-top:34px;font-size:14px;color:var(--soft)}
+  .history b{color:var(--ink)}
+  .history .list{margin-top:6px;line-height:1.9}
+  .empty{text-align:center;color:var(--soft);padding:50px 0;font-size:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Lottery</h1>
+      <div class="sub">按一下，從不同班級抽出同學</div>
+    </div>
+    <button class="toggle" id="toggleBtn">收起設定</button>
+  </header>
+
+  <section class="panel" id="panel">
+    <div class="field">
+      <label class="t">年級</label>
+      <div class="chips" id="grade">
+        <label class="chip"><input type="radio" name="grade" value="7"><span>七年級</span></label>
+        <label class="chip"><input type="radio" name="grade" value="8"><span>八年級</span></label>
+        <label class="chip"><input type="radio" name="grade" value="9" checked><span>九年級</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label class="t">班級數</label>
+      <input type="number" id="classCount" min="1" max="40" value="20">
+      <div class="hint" id="classHint">會從 901–920 班中抽</div>
+    </div>
+    <div class="field">
+      <label class="t">不抽的班級（可留空）</label>
+      <input type="text" id="exclude" placeholder="例如：905, 912">
+    </div>
+    <div class="field">
+      <label class="t">每班最大座號</label>
+      <input type="number" id="maxSeat" min="1" max="60" value="30">
+    </div>
+    <div class="field">
+      <label class="t">性別</label>
+      <div class="chips">
+        <label class="chip"><input type="checkbox" id="male" checked><span>男生</span></label>
+        <label class="chip"><input type="checkbox" id="female" checked><span>女生</span></label>
+      </div>
+      <div class="hint">兩個都勾＝每位隨機；都不勾＝不指定</div>
+    </div>
+    <div class="field">
+      <label class="t">座號</label>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="parity" value="any" checked><span>不限</span></label>
+        <label class="chip"><input type="radio" name="parity" value="odd"><span>單號</span></label>
+        <label class="chip"><input type="radio" name="parity" value="even"><span>雙號</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label class="t">一次抽幾位</label>
+      <input type="number" id="howMany" class="sm" min="1" max="20" value="5">
+      <div class="hint">每位都來自不同班級</div>
+    </div>
+  </section>
+
+  <div class="go-row">
+    <button class="go" id="goBtn">Lottery</button>
+    <button class="ghost" id="clearBtn">清除紀錄</button>
+  </div>
+  <div class="msg" id="msg"></div>
+
+  <section class="grid" id="grid">
+    <div class="empty">設定好之後，按「Lottery」</div>
+  </section>
+
+  <section class="history" id="history"></section>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const rand = n => Math.floor(Math.random() * n);
+const pick = arr => arr[rand(arr.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = rand(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+const TEAMS = ['Capybara', '穿山甲', '袋熊', '樹懶', '大頭鳥'];
+const teamName = i => TEAMS[i] || '#' + (i + 1);
+const ICONS = [
+`<svg viewBox="0 0 100 100"><ellipse cx="30" cy="24" rx="8" ry="7" fill="#8f5f3e"/><ellipse cx="70" cy="24" rx="8" ry="7" fill="#8f5f3e"/><rect x="18" y="22" width="64" height="66" rx="26" fill="#b07a52"/><rect x="26" y="54" width="48" height="31" rx="15" fill="#c99670"/><circle cx="37" cy="45" r="3.5" fill="#3b2a1e"/><circle cx="63" cy="45" r="3.5" fill="#3b2a1e"/><ellipse cx="43" cy="63" rx="3" ry="2.2" fill="#3b2a1e"/><ellipse cx="57" cy="63" rx="3" ry="2.2" fill="#3b2a1e"/><path d="M44 73 Q50 77 56 73" stroke="#3b2a1e" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="50" cy="15" r="8" fill="#e3a04c"/><path d="M50 7 q3 -4 8 -3" stroke="#6b8f4e" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+`<svg viewBox="0 0 100 100"><path d="M88 66 Q102 80 88 90 Q80 89 84 82 Q90 76 82 68 Z" fill="#a5795a"/><path d="M20 72 Q28 26 66 30 Q92 34 90 72 Z" fill="#a5795a"/><path d="M34 46 q5 6 10 0 M44 46 q5 6 10 0 M54 46 q5 6 10 0 M64 46 q5 6 10 0 M28 57 q5 6 10 0 M38 57 q5 6 10 0 M48 57 q5 6 10 0 M58 57 q5 6 10 0 M68 57 q5 6 10 0 M78 57 q4 6 8 0 M24 67 q5 5 10 0 M34 67 q5 5 10 0 M44 67 q5 5 10 0 M54 67 q5 5 10 0 M64 67 q5 5 10 0 M74 67 q5 5 10 0 M46 36 q5 5 10 0 M56 36 q5 5 10 0" stroke="#7d563c" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="30" y="70" width="9" height="9" rx="3" fill="#7d563c"/><rect x="68" y="70" width="9" height="9" rx="3" fill="#7d563c"/><ellipse cx="18" cy="68" rx="12" ry="8" fill="#c99670"/><path d="M9 65 L1 72 L11 72 Z" fill="#c99670"/><circle cx="17" cy="65" r="1.9" fill="#3b2a1e"/></svg>`,
+`<svg viewBox="0 0 100 100"><circle cx="27" cy="28" r="10" fill="#6e5a4a"/><circle cx="73" cy="28" r="10" fill="#6e5a4a"/><circle cx="27" cy="28" r="4.5" fill="#a08a78"/><circle cx="73" cy="28" r="4.5" fill="#a08a78"/><ellipse cx="50" cy="57" rx="37" ry="33" fill="#8c7563"/><circle cx="28" cy="68" r="5" fill="#d9a99a" opacity=".6"/><circle cx="72" cy="68" r="5" fill="#d9a99a" opacity=".6"/><circle cx="37" cy="50" r="3.2" fill="#3b2a1e"/><circle cx="63" cy="50" r="3.2" fill="#3b2a1e"/><rect x="38" y="58" width="24" height="16" rx="8" fill="#3b2a1e"/><path d="M44 81 Q50 85 56 81" stroke="#3b2a1e" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`,
+`<svg viewBox="0 0 100 100"><ellipse cx="50" cy="53" rx="39" ry="37" fill="#8a6a4f"/><path d="M40 18 q4 -8 10 -2 q4 -7 10 1" stroke="#8a6a4f" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="57" rx="30" ry="26" fill="#e8d6bd"/><ellipse cx="37" cy="53" rx="10" ry="6" transform="rotate(-25 37 53)" fill="#6e5038"/><ellipse cx="63" cy="53" rx="10" ry="6" transform="rotate(25 63 53)" fill="#6e5038"/><circle cx="37" cy="52" r="2.8" fill="#1f150e"/><circle cx="63" cy="52" r="2.8" fill="#1f150e"/><ellipse cx="50" cy="63" rx="5" ry="3.5" fill="#3b2a1e"/><path d="M42 71 Q50 78 58 71" stroke="#3b2a1e" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`,
+`<svg viewBox="0 0 100 100"><line x1="35" y1="88" x2="35" y2="98" stroke="#5a5048" stroke-width="3" stroke-linecap="round"/><line x1="46" y1="88" x2="46" y2="98" stroke="#5a5048" stroke-width="3" stroke-linecap="round"/><ellipse cx="40" cy="74" rx="22" ry="17" fill="#8d9aa6"/><ellipse cx="35" cy="75" rx="15" ry="11" fill="#7a8794"/><path d="M28 22 q-5 -9 2 -11 q0 6 5 9 Z" fill="#a3afba"/><circle cx="42" cy="42" r="23" fill="#a3afba"/><path d="M57 34 Q90 35 95 48 Q87 59 59 53 Z" fill="#d8c3a0"/><path d="M60 45 Q80 46 93 48" stroke="#b39d78" stroke-width="1.8" fill="none"/><circle cx="49" cy="37" r="4" fill="#fffdf9"/><circle cx="49.5" cy="37" r="2.2" fill="#3b2a1e"/></svg>`
+];
+const teamIcon = i => ICONS[i] || `<b>#${i + 1}</b>`;
+function renderEmpty() {
+  $('grid').innerHTML = TEAMS.map((t, i) => `<div class="card"><div class="no" title="${t}">${teamIcon(i)}</div><div class="cls q">?</div><div class="seat">&nbsp;</div><div class="tags"></div></div>`).join('');
+}
+let current = [];
+let history = [];
+
+function settings() {
+  const grade = document.querySelector('input[name=grade]:checked').value;
+  const count = Math.max(1, Math.min(40, parseInt($('classCount').value) || 1));
+  const excl = $('exclude').value.split(/[,，、\s]+/).map(s => s.trim()).filter(Boolean);
+  const classes = [];
+  for (let i = 1; i <= count; i++) {
+    const c = grade + String(i).padStart(2, '0');
+    if (!excl.includes(c)) classes.push(c);
+  }
+  const genders = [];
+  if ($('male').checked) genders.push('男生');
+  if ($('female').checked) genders.push('女生');
+  return {
+    grade, count, classes, genders,
+    maxSeat: Math.max(1, parseInt($('maxSeat').value) || 1),
+    parity: document.querySelector('input[name=parity]:checked').value,
+    glasses: 'none',
+    howMany: Math.max(1, parseInt($('howMany').value) || 1)
+  };
+}
+
+function seatPool(s) {
+  const pool = [];
+  for (let i = 1; i <= s.maxSeat; i++) {
+    if (s.parity === 'odd' && i % 2 === 0) continue;
+    if (s.parity === 'even' && i % 2 === 1) continue;
+    pool.push(i);
+  }
+  return pool;
+}
+
+function makeOne(cls, s) {
+  const tags = [];
+  if (s.genders.length) tags.push(pick(s.genders));
+  if (s.glasses === 'yes') tags.push('有戴眼鏡');
+  else if (s.glasses === 'no') tags.push('沒戴眼鏡');
+  else if (s.glasses === 'rand') tags.push(pick(['有戴眼鏡', '沒戴眼鏡']));
+  return { cls, seat: pick(seatPool(s)), tags };
+}
+
+function cardHTML(p, i, rolling) {
+  return `<div class="card${rolling ? ' rolling' : ''}">
+    <div class="no" title="${teamName(i)}">${teamIcon(i)}</div>
+    <div class="cls">${p.cls}<small>班</small></div>
+    <div class="seat">${p.seat}<small> 號</small></div>
+    <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+    ${rolling ? '' : `<button class="re" data-i="${i}">這位不在，換一位</button>`}
+  </div>`;
+}
+
+function render(list, rolling) {
+  $('grid').innerHTML = list.map((p, i) => cardHTML(p, i, rolling)).join('');
+}
+
+function validate(s) {
+  if (!s.classes.length) return '沒有可抽的班級，請檢查班級數或排除名單。';
+  if (!seatPool(s).length) return '座號條件下沒有可抽的號碼。';
+  if (s.howMany > s.classes.length) return `只有 ${s.classes.length} 個班可抽，人數已調整為 ${s.classes.length} 位。`;
+  return '';
+}
+
+function draw() {
+  const s = settings();
+  let warn = validate(s);
+  if (!s.classes.length || !seatPool(s).length) { $('msg').textContent = warn; return; }
+  $('msg').textContent = warn;
+  const n = Math.min(s.howMany, s.classes.length);
+  const btn = $('goBtn'); btn.disabled = true;
+
+  let ticks = 0;
+  const timer = setInterval(() => {
+    const fake = shuffle(s.classes).slice(0, n).map(c => makeOne(c, s));
+    render(fake, true);
+    if (++ticks >= 12) {
+      clearInterval(timer);
+      current = shuffle(s.classes).slice(0, n).map(c => makeOne(c, s));
+      render(current, false);
+      history.push(...current.map((p, i) => ({ ...p, team: teamName(i) })));
+      renderHistory();
+      btn.disabled = false;
+    }
+  }, 70);
+}
+
+function redrawOne(i) {
+  const s = settings();
+  const used = current.map(p => p.cls);
+  const avail = s.classes.filter(c => !used.includes(c) || c === current[i].cls);
+  // 先試其他班；沒有就同班換座號
+  const others = avail.filter(c => c !== current[i].cls);
+  const cls = others.length ? pick(others) : current[i].cls;
+  current[i] = makeOne(cls, s);
+  history.push({ ...current[i], team: teamName(i) });
+  render(current, false);
+  renderHistory();
+}
+
+function renderHistory() {
+  if (!history.length) { $('history').innerHTML = ''; return; }
+  $('history').innerHTML = `<b>本場抽過（${history.length}）</b><div class="list">` +
+    history.map(p => `${p.team ? p.team + '：' : ''}${p.cls} 班 ${p.seat} 號${p.tags.length ? '（' + p.tags.join('・') + '）' : ''}`).join('　｜　') +
+    '</div>';
+}
+
+function updateHint() {
+  const s = settings();
+  const first = s.grade + '01', last = s.grade + String(s.count).padStart(2, '0');
+  $('classHint').textContent = `會從 ${first}–${last} 班中抽（共 ${s.classes.length} 班可抽）`;
+}
+
+// 記住設定（僅此瀏覽器）
+const KEY = 'speech-picker-settings-jh';
+function save() {
+  try {
+    const s = settings();
+    localStorage.setItem(KEY, JSON.stringify({
+      grade: s.grade, count: s.count, exclude: $('exclude').value, maxSeat: s.maxSeat,
+      male: $('male').checked, female: $('female').checked,
+      parity: s.parity, glasses: s.glasses, howMany: s.howMany
+    }));
+  } catch (e) {}
+}
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (!d) return;
+    document.querySelector(`input[name=grade][value="${d.grade}"]`).checked = true;
+    $('classCount').value = d.count; $('exclude').value = d.exclude || '';
+    $('maxSeat').value = d.maxSeat; $('male').checked = d.male; $('female').checked = d.female;
+    document.querySelector(`input[name=parity][value="${d.parity}"]`).checked = true;
+    $('howMany').value = d.howMany;
+  } catch (e) {}
+}
+
+load(); updateHint(); renderEmpty();
+$('panel').addEventListener('input', () => { updateHint(); save(); });
+$('panel').addEventListener('change', () => { updateHint(); save(); });
+$('goBtn').addEventListener('click', draw);
+$('grid').addEventListener('click', e => { if (e.target.classList.contains('re')) redrawOne(+e.target.dataset.i); });
+$('clearBtn').addEventListener('click', () => { history = []; current = []; renderHistory(); $('msg').textContent = ''; renderEmpty(); });
+$('toggleBtn').addEventListener('click', () => {
+  const p = $('panel'); p.classList.toggle('hidden');
+  $('toggleBtn').textContent = p.classList.contains('hidden') ? '展開設定' : '收起設定';
+});
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space' && !['INPUT'].includes(document.activeElement.tagName)) { e.preventDefault(); if (!$('goBtn').disabled) draw(); }
+});
+</script>
+</body>
+</html>
